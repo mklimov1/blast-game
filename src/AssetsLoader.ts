@@ -1,5 +1,5 @@
 export class AssetsLoader {
-  loaded = false
+  loaded = false;
 
   static load() {
 
