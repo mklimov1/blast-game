@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm run typecheck --noEmit
-npx lint-staged --concurrent false --allow-empty
+npx lint-staged
+npm run typecheck
