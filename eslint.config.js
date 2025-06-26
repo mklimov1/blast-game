@@ -18,7 +18,8 @@ export default defineConfig([
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
     rules: {
       "semi": ["error", "always"],
-          "no-multiple-empty-lines": ["error", { max: 1, maxEOF: 1 }]
+      "no-multiple-empty-lines": ["error", { max: 1, maxEOF: 1 }],
+      '@typescript-eslint/no-unused-vars': 'error',
     },
   }
 ]);
