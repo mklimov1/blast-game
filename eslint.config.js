@@ -1,12 +1,13 @@
 import js from "@eslint/js";
+import { defineConfig } from "eslint/config";
+import pluginImport from "eslint-plugin-import";
 import globals from "globals";
 import tseslint from "typescript-eslint";
-import { defineConfig } from "eslint/config";
 
 export default defineConfig([
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
-    plugins: { js },
+    plugins: { js, import: pluginImport },
     extends: ["js/recommended"],
   },
   {
@@ -23,6 +24,38 @@ export default defineConfig([
       "indent": ["error", 2],
       "comma-dangle": ["error", "always-multiline"],
       "lines-between-class-members": ["error", "always"],
+
+      "import/order": ["error", {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling", "index"],
+          "object",
+          "type",
+        ],
+        "pathGroups": [
+          {
+            pattern: "@/**",
+            group: "internal",
+          },
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "newlines-between": "always",
+        "alphabetize": {
+          order: "asc",
+          caseInsensitive: true,
+        },
+      }],
+
+      "max-len": ["error", {
+        "code": 100,
+        "tabWidth": 2,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true,
+      }],
     },
   },
 ]);
