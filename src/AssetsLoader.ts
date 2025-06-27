@@ -1,11 +1,11 @@
 import { Assets } from "pixi.js";
-import fieldImg from './assets/field.png';
+import fieldImg from '/field.png';
 
 const textures = {
   field: {
     alias: "field",
-    src: fieldImg
-  }
+    src: fieldImg,
+  },
 };
 
 export default class AssetsLoader {
