@@ -24,6 +24,16 @@ export default defineConfig([
       "indent": ["error", 2],
       "comma-dangle": ["error", "always-multiline"],
       "lines-between-class-members": ["error", "always"],
+      "object-curly-spacing": ["error", "always"],
+      "no-console": ["warn", { allow: ["warn", "error"] }],
+      "padding-line-between-statements": [
+        "error",
+        { blankLine: "always", prev: "import", next: "*" },
+        { blankLine: "any", prev: "import", next: "import" },
+        { blankLine: "always", prev: "*", next: "return" },
+        { blankLine: "any", prev: ["const", "let", "var"], next: ["const", "let", "var"] },
+        { blankLine: "always", prev: ["const", "let", "var"], next: "*" },
+      ],
 
       "import/order": ["error", {
         "groups": [
