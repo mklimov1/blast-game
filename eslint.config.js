@@ -20,7 +20,8 @@ export default defineConfig([
       "semi": ["error", "always"],
       "no-multiple-empty-lines": ["error", { max: 1, maxEOF: 1 }],
       '@typescript-eslint/no-unused-vars': 'error',
-      "indent": ["error", 2]
+      "indent": ["error", 2],
+      "comma-dangle": ["error", "always-multiline"],
     },
-  }
+  },
 ]);
