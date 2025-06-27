@@ -22,6 +22,7 @@ export default defineConfig([
       '@typescript-eslint/no-unused-vars': 'error',
       "indent": ["error", 2],
       "comma-dangle": ["error", "always-multiline"],
+      "lines-between-class-members": ["error", "always"],
     },
   },
 ]);
