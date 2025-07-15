@@ -7,7 +7,11 @@ import tseslint from "typescript-eslint";
 export default defineConfig([
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
-    plugins: { js, import: pluginImport },
+    plugins: {
+      "@typescript-eslint": tseslint.plugin,
+      import: pluginImport,
+      js,
+    },
     extends: ["js/recommended"],
   },
   {
@@ -34,6 +38,16 @@ export default defineConfig([
         { blankLine: "any", prev: ["const", "let", "var"], next: ["const", "let", "var"] },
         { blankLine: "always", prev: ["const", "let", "var"], next: "*" },
       ],
+      "key-spacing": [2, {
+        "singleLine": {
+          "beforeColon": false,
+          "afterColon": true,
+        },
+        "multiLine": {
+          "beforeColon": false,
+          "afterColon": true,
+        },
+      }],
 
       "import/order": ["error", {
         "groups": [
