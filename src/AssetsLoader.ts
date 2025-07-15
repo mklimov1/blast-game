@@ -1,12 +1,7 @@
 import { Assets } from "pixi.js";
-import fieldImg from '/field.png';
 
-const textures = {
-  field: {
-    alias: "field",
-    src: fieldImg,
-  },
-};
+import { Bundles } from "./generated";
+import manifest from './generated/manifest.json';
 
 export default class AssetsLoader {
   private static loaded = false;
@@ -14,8 +9,8 @@ export default class AssetsLoader {
   static async load() {
     if (AssetsLoader.loaded) return;
 
-    await Assets.addBundle("main", textures);
-    await Assets.loadBundle("main");
+    await Assets.init({ manifest, basePath: 'assets/' });
+    await Assets.loadBundle(Bundles.GAME);
 
     AssetsLoader.loaded = true;
   }
