@@ -1,6 +1,7 @@
 import { Application } from "pixi.js";
 
 import AssetsLoader from "./AssetsLoader";
+import appEventEmitter from "./scene/eventEmitter";
 import Scene from "./scene/Scene";
 
 export default class App {
@@ -12,7 +13,8 @@ export default class App {
     await this.app.init({
       backgroundColor: '#83CFFF',
     });
-    await AssetsLoader.load();
+    await AssetsLoader.init();
+    await AssetsLoader.load('GAME');
   }
 
   public create() {
@@ -23,5 +25,9 @@ export default class App {
   public render(node: HTMLElement) {
     node.appendChild(this.app.canvas);
     this.app.resizeTo = node;
+    appEventEmitter.emit('resize', {
+      width: node.clientWidth,
+      height: node.clientHeight,
+    });
   }
 }
