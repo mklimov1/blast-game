@@ -1,28 +1,36 @@
-import { Assets } from "pixi.js";
+import { Assets } from 'pixi.js';
 
-import { Bundles } from "./generated";
+import { Bundles } from './generated';
 import manifest from './generated/manifest.json';
 
 export default class AssetsLoader {
-  private static bundles: Record<string, boolean>;
+  private static loadedBundles = new Set<string>();
 
   private static inited = false;
 
-  static async init() {
+  static async init(): Promise<void> {
     if (this.inited) return;
+
     await Assets.init({ manifest, basePath: 'assets/' });
-    this.bundles = Object.keys(Bundles).reduce((prev, bundleName) => ({
-      ...prev,
-      [bundleName]: false,
-    }), {});
     this.inited = true;
   }
 
-  static async load(bundle: keyof typeof Bundles) {
-    if (!this.inited) return;
+  static async load(bundle: keyof typeof Bundles): Promise<void> {
+    if (!this.inited) {
+      throw new Error('AssetsLoader.init() must be called before load().');
+    }
+
     const bundleName = Bundles[bundle];
 
-    await Assets.loadBundle(bundleName);
-    this.bundles[bundle] = true;
+    if (!this.loadedBundles.has(bundleName)) {
+      await Assets.loadBundle(bundleName);
+      this.loadedBundles.add(bundleName);
+    }
+  }
+
+  static isLoaded(bundle: keyof typeof Bundles): boolean {
+    const bundleName = Bundles[bundle];
+
+    return this.loadedBundles.has(bundleName);
   }
 }
