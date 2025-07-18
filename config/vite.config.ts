@@ -2,7 +2,7 @@ import path from 'path';
 
 import { defineConfig } from 'vite';
 
-import { assetpackPlugin } from './assetpack';
+import { assetpackPlugin } from './assetpackPlugin';
 
 export default defineConfig({
   resolve: {

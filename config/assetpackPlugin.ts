@@ -5,14 +5,15 @@ import { AssetPack, type AssetPackConfig  } from '@assetpack/core';
 import { pixiPipes } from '@assetpack/core/pixi';
 import { type Plugin, type ResolvedConfig } from 'vite';
 
-const GENERATED_DIR = path.resolve('./src/generated');
+import { generateAssetTypesPipe } from './generateAssetTypesPipe';
 
-import { generateAssetTypes } from './generateAssetTypes';
+const GENERATED_DIR = path.resolve('./src/generated');
 
 export const assetpackPlugin = (): Plugin => {
   const apConfig: AssetPackConfig = {
     entry: './raw-assets',
     output: './public/assets',
+    logLevel: 'warn',
     pipes: [
       ...pixiPipes({
         cacheBust: false,
@@ -36,6 +37,8 @@ export const assetpackPlugin = (): Plugin => {
       }),
     ],
   };
+
+  apConfig.pipes?.push(generateAssetTypesPipe());
 
   let mode: ResolvedConfig['command'];
 
@@ -61,8 +64,6 @@ export const assetpackPlugin = (): Plugin => {
       } else {
         await new AssetPack(apConfig).run();
       }
-      await generateAssetTypes({});
-
     },
     buildEnd: async () => {
       if (ap) {

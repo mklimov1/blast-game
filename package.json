@@ -6,6 +6,7 @@
   "scripts": {
     "vite": "vite --config ./config/vite.config.ts",
     "dev": "npm run vite",
+    "start": "npm run dev",
     "build": "npm run vite build",
     "preview": "npm run vite preview",
     "lint": "eslint . --ext .ts,.tsx",
