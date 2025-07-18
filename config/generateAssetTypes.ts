@@ -19,7 +19,7 @@ export const generateAssetTypes = async ({
 
     const bundles = manifest.bundles.map(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (b: any) => `  ${b.name.toUpperCase()}: "${b.name}"`,
+      (b: any) => `  "${b.name.toUpperCase()}": "${b.name}"`,
     ).join(',\n');
 
     const assetKeys = new Set<string>();
@@ -30,7 +30,7 @@ export const generateAssetTypes = async ({
     );
 
     const assets = [...assetKeys].map(
-      (k) => `  ${k}: "${k}"`,
+      (k) => `  "${k}": "${k}"`,
     ).join(',\n');
 
     const tsContent = `// 🚨 AUTO-GENERATED — DO NOT EDIT\n` +
