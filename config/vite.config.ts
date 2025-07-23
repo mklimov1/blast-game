@@ -7,7 +7,7 @@ import { assetpackPlugin } from './assetpackPlugin';
 export default defineConfig({
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      '@': path.resolve(__dirname, '../src'),
     },
   },
   server: {
