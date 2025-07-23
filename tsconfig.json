@@ -8,7 +8,7 @@
     "baseUrl": ".",
     "paths": {
       "/*": ["public/*"],
-      "@": ["src/"]
+      "@/*": ["src/*"]
     },
 
     /* Bundler mode */
