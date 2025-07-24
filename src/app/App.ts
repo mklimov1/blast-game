@@ -13,6 +13,7 @@ export default class App {
       backgroundColor: '#83CFFF',
     });
     await AssetsLoader.init();
+    await AssetsLoader.load('FONTS');
     await AssetsLoader.load('GAME');
   }
 
