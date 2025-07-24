@@ -4,4 +4,4 @@ type TEvents = {
   resize: (size: Size) => void
 }
 
-export default new EventEmitter<TEvents>();
+export const appEventEmitter = new EventEmitter<TEvents>();

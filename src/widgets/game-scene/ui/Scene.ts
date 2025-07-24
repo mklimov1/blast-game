@@ -1,13 +1,15 @@
 import { Container } from "pixi.js";
 
-import ChipField from "./ChipField";
+import Field from "@/widgets/game-field";
 
 export default class Scene {
   public view = new Container();
 
-  private chipField = new ChipField();
+  private chipField!: Field;
 
   private create() {
+    this.chipField = new Field();
+
     this.view.addChild(this.chipField);
   }
 

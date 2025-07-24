@@ -1,9 +1,9 @@
 import { Assets } from 'pixi.js';
 
-import { Bundles } from './generated';
-import manifest from './generated/manifest.json';
+import { Bundles } from '../../generated';
+import manifest from '../../generated/manifest.json';
 
-export default class AssetsLoader {
+export class AssetsLoader {
   private static loadedBundles = new Set<string>();
 
   private static inited = false;

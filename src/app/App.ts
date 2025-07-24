@@ -1,8 +1,7 @@
 import { Application } from "pixi.js";
 
-import AssetsLoader from "./AssetsLoader";
-import appEventEmitter from "./scene/eventEmitter";
-import Scene from "./scene/Scene";
+import { AssetsLoader, appEventEmitter } from "@/shared/lib";
+import Scene from "@/widgets/game-scene";
 
 export default class App {
   private app = new Application();
