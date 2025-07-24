@@ -6,6 +6,9 @@ import tseslint from "typescript-eslint";
 
 export default defineConfig([
   {
+    ignores: ['node_modules/**', 'dist/**', 'src/shared/generated/**', '.assetpack/**'],
+  },
+  {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
     plugins: {
       "@typescript-eslint": tseslint.plugin,
@@ -32,11 +35,9 @@ export default defineConfig([
       "no-console": ["warn", { allow: ["warn", "error"] }],
       "padding-line-between-statements": [
         "error",
-        { blankLine: "always", prev: "import", next: "*" },
-        { blankLine: "any", prev: "import", next: "import" },
-        { blankLine: "always", prev: "*", next: "return" },
-        { blankLine: "any", prev: ["const", "let", "var"], next: ["const", "let", "var"] },
-        { blankLine: "always", prev: ["const", "let", "var"], next: "*" },
+        { "blankLine": "always", "prev": "return", "next": "*" },
+        { "blankLine": "always", "prev": "block-like", "next": "*" },
+        { "blankLine": "always", "prev": "*", "next": "block-like" },
       ],
       "key-spacing": [2, {
         "singleLine": {
