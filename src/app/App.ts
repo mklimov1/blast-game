@@ -15,6 +15,7 @@ export default class App {
     await AssetsLoader.init();
     await AssetsLoader.load('FONTS');
     await AssetsLoader.load('GAME');
+    await AssetsLoader.load('PROGRESS-BAR');
   }
 
   public create() {
