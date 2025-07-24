@@ -36,8 +36,8 @@ export default defineConfig([
       "padding-line-between-statements": [
         "error",
         { "blankLine": "always", "prev": "return", "next": "*" },
-        { "blankLine": "always", "prev": "block-like", "next": "*" },
-        { "blankLine": "always", "prev": "*", "next": "block-like" },
+        { "blankLine": "any", "prev": "block-like", "next": "*" },
+        { "blankLine": "any", "prev": "*", "next": "block-like" },
       ],
       "key-spacing": [2, {
         "singleLine": {
