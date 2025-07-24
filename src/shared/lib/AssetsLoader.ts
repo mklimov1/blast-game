@@ -1,7 +1,7 @@
 import { Assets } from 'pixi.js';
 
-import { Bundles } from '../../generated';
-import manifest from '../../generated/manifest.json';
+import { Bundles } from '@/shared/generated';
+import manifest from '@/shared/generated/manifest.json';
 
 export class AssetsLoader {
   private static loadedBundles = new Set<string>();

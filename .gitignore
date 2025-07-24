@@ -25,6 +25,6 @@ dist-ssr
 
 # assets
 public/assets/
-src/generated/
+src/shared/generated/
 .assetpack
 _sources

@@ -2,8 +2,8 @@ import fs from 'fs/promises';
 import path from 'path';
 
 export const generateAssetTypes = async ({
-  manifestPath = 'src/generated/manifest.json',
-  outputPath = 'src/generated/index.ts',
+  manifestPath = 'src/shared/generated/manifest.json',
+  outputPath = 'src/shared/generated/index.ts',
 }: {
   manifestPath?: string;
   outputPath?: string;

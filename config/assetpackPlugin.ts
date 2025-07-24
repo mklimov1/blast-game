@@ -7,7 +7,7 @@ import { type Plugin, type ResolvedConfig } from 'vite';
 
 import { generateAssetTypesPipe } from './generateAssetTypesPipe';
 
-const GENERATED_DIR = path.resolve('./src/generated');
+const GENERATED_DIR = path.resolve('./src/shared/generated');
 
 export const assetpackPlugin = (): Plugin => {
   const apConfig: AssetPackConfig = {
@@ -19,7 +19,7 @@ export const assetpackPlugin = (): Plugin => {
         cacheBust: false,
         resolutions: { default: 1 },
         manifest: {
-          output: 'src/generated/manifest.json',
+          output: 'src/shared/generated/manifest.json',
           trimExtensions: true,
           nameStyle: 'relative',
           createShortcuts: true,
