@@ -81,6 +81,9 @@ export default defineConfig([
         "ignoreTemplateLiterals": true,
         "ignoreRegExpLiterals": true,
       }],
+
+      "prefer-template": "error",
+      "template-curly-spacing": ["error", "never"],
     },
   },
 ]);
