@@ -1,18 +1,13 @@
-import { Container, Sprite, Text, TextStyle, type Size } from "pixi.js";
+import { Container, Sprite, type Size } from "pixi.js";
 
 import { appEventEmitter } from "@/shared/lib";
 import { ProgressBar } from "@/shared/ui/ProgressBar";
-
-const textStyle = new TextStyle({
-  fill: 0xffffff,
-  fontFamily: 'LuckiestGuy-Regular',
-  fontSize: 80,
-});
+import { Text } from "@/shared/ui/Text";
 
 export class Progress extends Container {
   private frame = Sprite.from('progress-bar/progressBar');
 
-  private text = new Text({ text: 'progress', style: textStyle });
+  private text = new Text('progress');
 
   private progressBar = new ProgressBar();
 

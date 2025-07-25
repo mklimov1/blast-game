@@ -1,6 +1,7 @@
 import { Container } from "pixi.js";
 
 import Field from "@/widgets/game-field";
+import { GameStats } from "@/widgets/game-stats/ui/GameStats";
 
 import { Progress } from "./Progress";
 
@@ -11,10 +12,11 @@ export default class Scene {
 
   private create() {
     const progress = new Progress();
+    const gameStats = new GameStats(50);
 
     this.chipField = new Field();
 
-    this.view.addChild(this.chipField, progress);
+    this.view.addChild(this.chipField, progress, gameStats);
   }
 
   public init() {
