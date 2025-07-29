@@ -2,8 +2,8 @@ import type { BlockColor } from "@/entities/model/blockColors";
 
 import { BlockView } from "../ui/BlockView";
 
-export const createBlock = (color: BlockColor, width: number): BlockView => {
+export const createBlock = (color: BlockColor): BlockView => {
   const block = new BlockView(color);
-  block.scale.set(width / block.texture.width);
+  block.scale.set(BlockView.SIZE / block.texture.width);
   return block;
 };

@@ -1,8 +1,7 @@
-import type { BlockView } from "@/entities/ui/BlockView";
-import type { Position } from "@/widgets/game-field/model/types";
+import type { Grid, Position } from "@/widgets/game-field/model/types";
 
 export const findConnected = (
-  grid: BlockView[][],
+  grid: Grid,
   startRow: number,
   startCol: number,
   visited: Set<string> = new Set<string>(),
