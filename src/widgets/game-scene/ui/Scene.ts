@@ -15,7 +15,6 @@ export default class Scene {
     const gameStats = new GameStats(50);
 
     this.chipField = new Field(8, 8, 3);
-
     this.view.addChild(this.chipField, progress, gameStats);
   }
 
