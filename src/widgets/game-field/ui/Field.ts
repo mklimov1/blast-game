@@ -1,15 +1,16 @@
 import { Container, type Size } from "pixi.js";
 
-import { createBlock } from "@/entities/lib/createBlock";
-import { blockColors, type BlockColor } from "@/entities/model/blockColors";
 import { BlockView } from "@/entities/ui/BlockView";
-import { onBlockClick } from "@/features/game-field/model/onBlockClick";
+import { createEmptyField } from "@/features/game-field/lib/createEmptyField";
+import { spawnNewBlocks } from "@/features/game-field/model/spawnNewBlocks";
 import { appEventEmitter } from "@/shared/lib";
 
 import Background from "./Background";
 
+import type { Grid } from "../model/types";
+
 export default class Field extends Container {
-  private grid: BlockView[][] = [];
+  private grid: Grid = [];
 
   private background = new Background();
 
@@ -28,29 +29,15 @@ export default class Field extends Container {
       height: BlockView.SIZE * rows,
     };
 
-    for (let row = rows - 1; row >= 0; row--) {
-      for (let col = cols - 1; col >= 0; col--) {
-        this.grid[row] ??= [];
+    this.grid = createEmptyField<BlockView | null>(rows, cols);
+    spawnNewBlocks(this.grid, this.blockContainer, maxColors);
 
-        const color = this.randomColor(maxColors);
-        const block = createBlock(color);
-
-        this.blockContainer.addChild(block);
-        this.grid[row][col] = block;
-        block.setGridPosition(row, col);
-        block.on('pointertap', () => onBlockClick(this.grid, block.row, block.col));
-      }
-    }
     this.blockContainer.pivot.set(
       BlockView.SIZE * rows / 2,
       BlockView.SIZE * cols / 2,
     );
     this.background.width = size.width + 150;
     this.background.height = size.height + 150;
-  }
-
-  private randomColor(maxColors: number): BlockColor {
-    return blockColors[Math.floor(Math.random() * maxColors)];
   }
 
   private resize({ width, height }: Size) {
