@@ -1,6 +1,8 @@
+import { Tween } from "@tweenjs/tween.js";
 import { Sprite, Texture } from "pixi.js";
 
 import type { BlockColor } from "@/entities/model/blockColors";
+import { blockGroup } from "@/shared/lib/tween";
 
 export class BlockView extends Sprite {
   static SIZE = 200;
@@ -20,9 +22,23 @@ export class BlockView extends Sprite {
     this.subcsribeEvents();
   }
 
-  destoryBlock() {
-    this.parent.removeChild(this);
-    this.destroy();
+  destroyBlock(delay = 0): Promise<void> {
+    return new Promise((resolve) => {
+      new Tween({ alpha: 1 })
+        .to({ alpha: 0 })
+        .duration(200)
+        .delay(delay)
+        .onUpdate(({ alpha }) => {
+          this.alpha = alpha;
+        })
+        .onComplete(() => {
+          this.parent.removeChild(this);
+          this.destroy();
+          resolve();
+        })
+        .group(blockGroup)
+        .start();
+    });
   }
 
   setGridPosition(row: number, col: number) {

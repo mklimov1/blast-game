@@ -27,6 +27,7 @@
     "vite": "7.0.0"
   },
   "dependencies": {
+    "@tweenjs/tween.js": "^25.0.0",
     "pixi.js": "8.10.2"
   }
 }

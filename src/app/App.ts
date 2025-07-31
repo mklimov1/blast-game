@@ -1,12 +1,15 @@
-import { Application } from "pixi.js";
+import { Application, Ticker } from "pixi.js";
 
 import { AssetsLoader, appEventEmitter } from "@/shared/lib";
+import { blockGroup } from "@/shared/lib/tween";
 import Scene from "@/widgets/game-scene";
 
 export default class App {
   private app = new Application();
 
   private scene = new Scene();
+
+  private ticker = new Ticker();
 
   public async init() {
     await this.app.init({
@@ -31,5 +34,9 @@ export default class App {
       width: node.clientWidth,
       height: node.clientHeight,
     });
+    this.ticker.add(() => {
+      blockGroup.update();
+    });
+    this.ticker.start();
   }
 }

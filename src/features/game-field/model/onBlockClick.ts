@@ -7,7 +7,7 @@ import { spawnNewBlocks } from "./spawnNewBlocks";
 
 import type { Container } from "pixi.js";
 
-export const onBlockClick = (
+export const onBlockClick = async (
   grid: Grid,
   row: number,
   col: number,
@@ -19,7 +19,7 @@ export const onBlockClick = (
   // eslint-disable-next-line no-console
   console.log(`Clicked block at row=${row}, col=${col}`);
   const positions = findConnected(grid, row, col);
-  destroyBlocks(positions, grid);
+  await destroyBlocks(positions, grid);
   applyGravity(grid);
   spawnNewBlocks(grid, blockContainer, maxColors);
 };

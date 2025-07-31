@@ -1,15 +1,23 @@
 import type { Grid, Position } from "@/widgets/game-field/model/types";
 
-export const destroyBlocks = (
+export const destroyBlocks = async (
   positions: Position[],
   grid: Grid,
 ) => {
-  if (positions.length >= 3) {
-    positions.forEach(({ row, col }) => {
-      const block = grid[row][col];
-      if (!block) return;
-      block.destoryBlock();
-      grid[row][col] = null;
-    });
+  if (positions.length < 3) return;
+
+  const promises: Promise<void>[] = [];
+  let delay = 0;
+
+  for (const { row, col } of positions) {
+    const block = grid[row][col];
+    if (!block) continue;
+
+    grid[row][col] = null;
+
+    promises.push(block.destroyBlock(delay));
+    delay += 50;
   }
+
+  await Promise.all(promises);
 };
