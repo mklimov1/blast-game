@@ -1,4 +1,4 @@
-import { Tween } from "@tweenjs/tween.js";
+import { Easing, Tween } from "@tweenjs/tween.js";
 import { Sprite, Texture } from "pixi.js";
 
 import type { BlockColor } from "@/entities/model/blockColors";
@@ -42,9 +42,28 @@ export class BlockView extends Sprite {
   }
 
   setGridPosition(row: number, col: number) {
-    this.position.set(col * BlockView.SIZE, row * BlockView.SIZE);
     this.row = row;
     this.col = col;
+    this.position.set(col * BlockView.SIZE, row * BlockView.SIZE);
+  }
+
+  animateToGridPosition(row: number, col: number): Promise<void> {
+    const duration = (row - this.row) * 50;
+
+    this.row = row;
+    this.col = col;
+
+    const targetY = row * BlockView.SIZE;
+
+    return new Promise((resolve) => {
+      new Tween(this.position)
+        .to({ y: targetY })
+        .easing(Easing.Quartic.InOut)
+        .duration(duration)
+        .onComplete(() => resolve())
+        .group(blockGroup)
+        .start();
+    });
   }
 
   private subcsribeEvents() {

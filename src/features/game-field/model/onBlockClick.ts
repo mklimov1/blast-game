@@ -19,7 +19,8 @@ export const onBlockClick = async (
   // eslint-disable-next-line no-console
   console.log(`Clicked block at row=${row}, col=${col}`);
   const positions = findConnected(grid, row, col);
+
   await destroyBlocks(positions, grid);
-  applyGravity(grid);
+  await applyGravity(grid);
   spawnNewBlocks(grid, blockContainer, maxColors);
 };
