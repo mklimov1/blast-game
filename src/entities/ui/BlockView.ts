@@ -47,6 +47,18 @@ export class BlockView extends Sprite {
     this.position.set(col * BlockView.SIZE, row * BlockView.SIZE);
   }
 
+  show() {
+    new Tween({ alpha: 0 })
+      .to({ alpha: 1 })
+      .easing(Easing.Quartic.InOut)
+      .duration(100)
+      .onUpdate(({ alpha }) => {
+        this.alpha = alpha;
+      })
+      .group(blockGroup)
+      .start();
+  }
+
   animateToGridPosition(row: number, col: number): Promise<void> {
     const duration = (row - this.row) * 50;
 
@@ -56,10 +68,13 @@ export class BlockView extends Sprite {
     const targetY = row * BlockView.SIZE;
 
     return new Promise((resolve) => {
-      new Tween(this.position)
+      new Tween({ y: this.y })
         .to({ y: targetY })
         .easing(Easing.Quartic.InOut)
         .duration(duration)
+        .onUpdate(({ y }) => {
+          this.y = y;
+        })
         .onComplete(() => resolve())
         .group(blockGroup)
         .start();
