@@ -1,5 +1,6 @@
 import { Container, Sprite, type Size } from "pixi.js";
 
+import { gameFieldEventEmitter } from "@/features/game-field/lib/gameFieldEventEmitter";
 import { appEventEmitter } from "@/shared/lib";
 import { Text } from "@/shared/ui/Text";
 
@@ -71,7 +72,17 @@ export class GameStats extends Container {
     this.scale.set(scale);
   }
 
+  private setStep(value: number) {
+    this.attemptsLeftText.text = value;
+  }
+
+  private setScore(value: number) {
+    this.scoreValueText.text = value;
+  }
+
   private subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
+    gameFieldEventEmitter.on('step:update', this.setStep, this);
+    gameFieldEventEmitter.on('score:update', this.setScore, this);
   }
 }

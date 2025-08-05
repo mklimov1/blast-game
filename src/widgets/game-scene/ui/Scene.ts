@@ -16,6 +16,8 @@ export default class Scene {
 
   private goal = 500;
 
+  private step = 50;
+
   private create() {
     const progress = new Progress();
     const gameStats = new GameStats(50);
@@ -40,8 +42,11 @@ export default class Scene {
     const progress = newScore / this.goal;
 
     this.score = newScore;
+    this.step -= 1;
 
     gameFieldEventEmitter.emit('progress:update', progress);
+    gameFieldEventEmitter.emit('step:update', this.step);
+    gameFieldEventEmitter.emit('score:update', newScore);
   }
 
   private subscribeEvents() {
