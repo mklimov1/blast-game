@@ -1,5 +1,7 @@
 import type { Grid, Position } from "@/widgets/game-field/model/types";
 
+import { gameFieldEventEmitter } from "../lib/gameFieldEventEmitter";
+
 export const destroyBlocks = async (
   positions: Position[],
   grid: Grid,
@@ -18,6 +20,8 @@ export const destroyBlocks = async (
     promises.push(block.destroyBlock(delay));
     delay += 50;
   }
+
+  gameFieldEventEmitter.emit("blocks:destroyed", positions);
 
   await Promise.all(promises);
 };
