@@ -18,7 +18,7 @@ export const destroyBlocks = async (
     grid[row][col] = null;
 
     promises.push(block.destroyBlock(delay));
-    delay += 50;
+    delay += 10;
   }
 
   gameFieldEventEmitter.emit("blocks:destroyed", positions);
