@@ -1,9 +1,9 @@
 import { Container, Sprite, type Size } from "pixi.js";
 
-import { gameFieldEventEmitter } from "@/features/game-field/lib/gameFieldEventEmitter";
 import { appEventEmitter } from "@/shared/lib";
 import { ProgressBar } from "@/shared/ui/ProgressBar";
 import { Text } from "@/shared/ui/Text";
+import { sceneEventEmitter } from "@/widgets/game-scene/model/sceneEventEmitter";
 
 export class Progress extends Container {
   private frame = Sprite.from('progress-bar/progressBar');
@@ -46,6 +46,6 @@ export class Progress extends Container {
 
   private subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
-    gameFieldEventEmitter.on('progress:update', this.setProgress, this);
+    sceneEventEmitter.on('progress:update', this.setProgress, this);
   }
 }

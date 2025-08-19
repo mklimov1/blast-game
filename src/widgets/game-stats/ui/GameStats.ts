@@ -1,8 +1,8 @@
 import { Container, Sprite, type Size } from "pixi.js";
 
-import { gameFieldEventEmitter } from "@/features/game-field/lib/gameFieldEventEmitter";
 import { appEventEmitter } from "@/shared/lib";
 import { Text } from "@/shared/ui/Text";
+import { sceneEventEmitter } from "@/widgets/game-scene/model/sceneEventEmitter";
 
 export class GameStats extends Container {
   private frame = Sprite.from('ui/panel_score');
@@ -82,7 +82,7 @@ export class GameStats extends Container {
 
   private subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
-    gameFieldEventEmitter.on('step:update', this.setStep, this);
-    gameFieldEventEmitter.on('score:update', this.setScore, this);
+    sceneEventEmitter.on('step:update', this.setStep, this);
+    sceneEventEmitter.on('score:update', this.setScore, this);
   }
 }

@@ -21,6 +21,15 @@ export default class Field extends Container {
     this.addChild(this.background, this.blockContainer);
     this.build(rows, cols, maxColors);
     this.subscribeEvents();
+    this.disable();
+  }
+
+  public disable() {
+    this.eventMode = 'none';
+  }
+
+  public enable() {
+    this.eventMode = 'auto';
   }
 
   private build(rows: number, cols: number, maxColors: number) {

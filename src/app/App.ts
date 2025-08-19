@@ -1,7 +1,7 @@
 import { Application, Ticker } from "pixi.js";
 
 import { AssetsLoader, appEventEmitter } from "@/shared/lib";
-import { blockGroup, progressGroup } from "@/shared/lib/tween";
+import { blockGroup, gameOverScreenGroup, progressGroup } from "@/shared/lib/tween";
 import Scene from "@/widgets/game-scene";
 
 export default class App {
@@ -20,6 +20,7 @@ export default class App {
     await AssetsLoader.load('GAME');
     await AssetsLoader.load('PROGRESS-BAR');
     await AssetsLoader.load('UI');
+    await AssetsLoader.load('BUTTONS');
   }
 
   public create() {
@@ -37,6 +38,7 @@ export default class App {
     this.ticker.add(() => {
       blockGroup.update();
       progressGroup.update();
+      gameOverScreenGroup.update();
     });
     this.ticker.start();
   }
