@@ -6,28 +6,33 @@ import { Button } from "@/shared/ui/Button";
 import { Text } from "@/shared/ui/Text";
 import { sceneEventEmitter } from "@/widgets/game-scene/model/sceneEventEmitter";
 
-export class WinScreen extends Container {
-  private background: Graphics = this.createBackground();
+export class GameOverScreen extends Container {
+  private background: Graphics;
 
-  private text: Text = this.createText();
+  private text: Text;
 
   private button: Button;
 
-  constructor() {
+  constructor(text: string) {
     super();
+    this.background = this.createBackground();
+    this.text = this.createText(text);
     this.button = new Button('restart', 1);
+
     this.addChild(this.background, this.text, this.button);
     this.subscribeEvents();
+
+    this.hide(false);
   }
 
-  private createText() {
-    const text = new Text('YOU WIN!', {
+  private createText(text: string) {
+    const textObject = new Text(text, {
       fontSize: 120,
     });
 
-    text.anchor.set(0.5);
+    textObject.anchor.set(0.5);
 
-    return text;
+    return textObject;
   }
 
   private createBackground() {

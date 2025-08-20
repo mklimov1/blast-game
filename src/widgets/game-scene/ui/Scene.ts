@@ -4,7 +4,7 @@ import { gameFieldEventEmitter } from "@/features/game-field/lib/gameFieldEventE
 import { appEventEmitter } from "@/shared/lib";
 import Field from "@/widgets/game-field";
 import type { Position } from "@/widgets/game-field/model/types";
-import { WinScreen } from "@/widgets/game-over/ui/WinScreen";
+import { GameOverScreen } from "@/widgets/game-over/ui/GameOverScreen";
 import { GameStats } from "@/widgets/game-stats/ui/GameStats";
 
 import { Progress } from "../../game-stats/ui/Progress";
@@ -17,7 +17,9 @@ export default class Scene {
 
   private chipField!: Field;
 
-  private winScreen!: WinScreen;
+  private winScreen!: GameOverScreen;
+
+  private loseScreen!: GameOverScreen;
 
   private score!: number;
 
@@ -33,16 +35,15 @@ export default class Scene {
 
     this.score = 0;
     this.goal = 50;
-    this.step = 50;
+    this.step = 5;
 
     this.wrapper = new Container();
     this.chipField = new Field(8, 8, 3);
-    this.winScreen = new WinScreen();
+    this.winScreen = new GameOverScreen('YOU WIN!');
+    this.loseScreen = new GameOverScreen('YOU LOSE :(');
 
-    this.wrapper.addChild(this.chipField, progress, gameStats, this.winScreen);
+    this.wrapper.addChild(this.chipField, progress, gameStats, this.winScreen, this.loseScreen);
     this.view.addChild(this.wrapper);
-
-    this.winScreen.hide(false);
   }
 
   public init() {
@@ -65,9 +66,14 @@ export default class Scene {
     gameFieldEventEmitter.off('blocks:destroyed', this.onBlocksDestroyed);
   }
 
-  private onProgress(value: number) {
-    if (value >= 1) {
+  private onProgress(progress: number) {
+    if (progress >= 1) {
       this.winScreen.show();
+      this.disable();
+      return;
+    }
+    if (this.step <= 0) {
+      this.loseScreen.show();
       this.disable();
     }
   }
