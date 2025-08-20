@@ -3,7 +3,7 @@ import { Container, type Size } from "pixi.js";
 import { BlockView } from "@/entities/ui/BlockView";
 import { createEmptyField } from "@/features/game-field/lib/createEmptyField";
 import { spawnNewBlocks } from "@/features/game-field/model/spawnNewBlocks";
-import { appEventEmitter } from "@/shared/lib";
+import { sceneEventEmitter } from "@/widgets/game-scene/model/sceneEventEmitter";
 
 import Background from "./Background";
 
@@ -58,6 +58,6 @@ export default class Field extends Container {
   }
 
   private subscribeEvents() {
-    appEventEmitter.on('resize', this.resize, this);
+    sceneEventEmitter.on('scene:resize', this.resize, this);
   }
 }

@@ -1,6 +1,5 @@
 import { Container, Sprite, type Size } from "pixi.js";
 
-import { appEventEmitter } from "@/shared/lib";
 import { Text } from "@/shared/ui/Text";
 import { sceneEventEmitter } from "@/widgets/game-scene/model/sceneEventEmitter";
 
@@ -81,7 +80,7 @@ export class GameStats extends Container {
   }
 
   private subscribeEvents() {
-    appEventEmitter.on('resize', this.resize, this);
+    sceneEventEmitter.on('scene:resize', this.resize, this);
     sceneEventEmitter.on('step:update', this.setStep, this);
     sceneEventEmitter.on('score:update', this.setScore, this);
   }

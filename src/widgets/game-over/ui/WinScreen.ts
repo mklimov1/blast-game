@@ -1,10 +1,10 @@
 import { Tween } from "@tweenjs/tween.js";
 import { Container, Graphics, type Size } from "pixi.js";
 
-import { appEventEmitter } from "@/shared/lib";
 import { gameOverScreenGroup } from "@/shared/lib/tween";
 import { Button } from "@/shared/ui/Button";
 import { Text } from "@/shared/ui/Text";
+import { sceneEventEmitter } from "@/widgets/game-scene/model/sceneEventEmitter";
 
 export class WinScreen extends Container {
   private background: Graphics = this.createBackground();
@@ -46,6 +46,8 @@ export class WinScreen extends Container {
   private animate(show: boolean, onComplete?: () => void) {
     const from = show ? 0 : 1;
     const to = show ? 1 : 0;
+
+    this.alpha = from;
 
     return new Tween({ alpha: from })
       .to({ alpha: to })
@@ -90,6 +92,9 @@ export class WinScreen extends Container {
   }
 
   private subscribeEvents() {
-    appEventEmitter.on('resize', this.resize, this);
+    sceneEventEmitter.on('scene:resize', this.resize, this);
+    this.button.on('pointerup', () => {
+      sceneEventEmitter.emit('game:restart');
+    });
   }
 }
