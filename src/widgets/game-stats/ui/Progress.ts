@@ -3,6 +3,7 @@ import { Container, Sprite, type Size } from "pixi.js";
 import { ProgressBar } from "@/shared/ui/ProgressBar";
 import { Text } from "@/shared/ui/Text";
 import { sceneEventEmitter } from "@/widgets/game-scene/model/sceneEventEmitter";
+import type { GameUpdatePayload } from "@/widgets/game-scene/model/types";
 
 export class Progress extends Container {
   private frame = Sprite.from('progress-bar/progressBar');
@@ -39,12 +40,15 @@ export class Progress extends Container {
     this.scale.set(scale);
   }
 
-  private setProgress(value: number, animated?: boolean) {
-    this.progressBar.setProgress(value, animated);
+  private setProgress(payload: GameUpdatePayload) {
+    const animated = payload.score > 0;
+    const progress = Math.min(payload.score / payload.goal, 1);
+
+    this.progressBar.setProgress(progress, animated);
   }
 
   private subscribeEvents() {
     sceneEventEmitter.on('scene:resize', this.resize, this);
-    sceneEventEmitter.on('progress:update', this.setProgress, this);
+    sceneEventEmitter.on('game:update-progress', this.setProgress, this);
   }
 }

@@ -2,6 +2,7 @@ import { Container, Sprite, type Size } from "pixi.js";
 
 import { Text } from "@/shared/ui/Text";
 import { sceneEventEmitter } from "@/widgets/game-scene/model/sceneEventEmitter";
+import type { GameUpdatePayload } from "@/widgets/game-scene/model/types";
 
 export class GameStats extends Container {
   private frame = Sprite.from('ui/panel_score');
@@ -71,17 +72,13 @@ export class GameStats extends Container {
     this.scale.set(scale);
   }
 
-  private setStep(value: number) {
-    this.attemptsLeftText.text = value;
-  }
-
-  private setScore(value: number) {
-    this.scoreValueText.text = value;
+  private updateStats(payload: GameUpdatePayload) {
+    this.attemptsLeftText.text = payload.step;
+    this.scoreValueText.text = payload.score;
   }
 
   private subscribeEvents() {
     sceneEventEmitter.on('scene:resize', this.resize, this);
-    sceneEventEmitter.on('step:update', this.setStep, this);
-    sceneEventEmitter.on('score:update', this.setScore, this);
+    sceneEventEmitter.on('game:update-progress', this.updateStats, this);
   }
 }

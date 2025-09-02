@@ -1,11 +1,10 @@
 import { EventEmitter, type Size } from "pixi.js";
 
+import type { GameUpdatePayload } from "./types";
 type SceneEvents = {
-  "progress:update": (value: number, animated?: boolean) => void;
-  "step:update": (value: number) => void;
-  "score:update": (value: number) => void;
   "game:restart": () => void;
   "scene:resize": (size: Size) => void;
+  "game:update-progress": (payload: GameUpdatePayload) => void;
 };
 
 export const sceneEventEmitter = new EventEmitter<SceneEvents>();
