@@ -4,7 +4,7 @@ import { Container, Graphics, type Size } from "pixi.js";
 import { gameOverScreenGroup } from "@/shared/lib/tween";
 import { Button } from "@/shared/ui/Button";
 import { Text } from "@/shared/ui/Text";
-import { sceneEventEmitter } from "@/widgets/game-scene/model/sceneEventEmitter";
+import { gameStore } from "@/widgets/game-scene/model/GameStore";
 
 export class GameOverScreen extends Container {
   private background: Graphics;
@@ -82,7 +82,7 @@ export class GameOverScreen extends Container {
     }
   }
 
-  private resize({ width, height }: Size) {
+  public resize({ width, height }: Size) {
     this.background.width = width;
     this.background.height = height;
 
@@ -97,9 +97,8 @@ export class GameOverScreen extends Container {
   }
 
   private subscribeEvents() {
-    sceneEventEmitter.on('scene:resize', this.resize, this);
     this.button.on('pointerup', () => {
-      sceneEventEmitter.emit('game:restart');
+      gameStore.restart();
     });
   }
 }

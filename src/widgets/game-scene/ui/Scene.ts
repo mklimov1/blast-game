@@ -8,14 +8,16 @@ import { GameOverScreen } from "@/widgets/game-over/ui/GameOverScreen";
 import { GameStats } from "@/widgets/game-stats/ui/GameStats";
 
 import { Progress } from "../../game-stats/ui/Progress";
-import { sceneEventEmitter } from "../model/sceneEventEmitter";
-
-import type { GameUpdatePayload } from "../model/types";
+import { gameStore } from "../model/GameStore";
 
 export default class Scene {
   public view = new Container();
 
   private wrapper!: Container;
+
+  private gameStats!: GameStats;
+
+  private progress!: Progress;
 
   private chipField!: Field;
 
@@ -23,41 +25,38 @@ export default class Scene {
 
   private loseScreen!: GameOverScreen;
 
-  private score: number = 0;
-
-  private goal: number = 0;
-
-  private step: number = 0;
-
   private size: Size = { width: 0, height: 0 };
 
   private create() {
-    const progress = new Progress();
-    const gameStats = new GameStats(0);
-
     this.wrapper = new Container();
-    this.chipField = new Field(8, 8, 3);
+    this.chipField = new Field();
     this.winScreen = new GameOverScreen('YOU WIN!');
     this.loseScreen = new GameOverScreen('YOU LOSE :(');
+    this.gameStats = new GameStats(0);
+    this.progress = new Progress();
 
-    this.wrapper.addChild(this.chipField, progress, gameStats, this.winScreen, this.loseScreen);
+    this.chipField.build(8, 8, 3);
+
+    this.wrapper.addChild(
+      this.chipField,
+      this.progress,
+      this.gameStats,
+      this.winScreen,
+      this.loseScreen,
+    );
     this.view.addChild(this.wrapper);
-  }
 
-  private initGameSettings() {
-    return {
+    gameStore.init({
+      goal: 100,
+      step: 20,
       score: 0,
-      goal: 50,
-      step: 10,
-    };
+    });
   }
 
   public init() {
     this.create();
     this.subscribeEvents();
-
     this.enable();
-    sceneEventEmitter.emit('game:update-progress', this.initGameSettings());
   }
 
   private enable() {
@@ -72,29 +71,8 @@ export default class Scene {
     gameFieldEventEmitter.off('blocks:destroyed', this.onBlocksDestroyed);
   }
 
-  private onProgress(payload: GameUpdatePayload) {
-    if (payload.score >= payload.goal) {
-      this.disable();
-      this.winScreen.show();
-      return;
-    }
-    if (payload.step <= 0) {
-      this.disable();
-      this.loseScreen.show();
-    }
-  }
-
   private onBlocksDestroyed(positions: Position[]) {
-    const newScore = Math.min(this.goal, this.score + positions.length);
-
-    this.score = newScore;
-    this.step -= 1;
-
-    sceneEventEmitter.emit('game:update-progress', {
-      goal: this.goal,
-      score: this.score,
-      step: this.step,
-    });
+    gameStore.addScore(positions.length);
   }
 
   private restart() {
@@ -108,23 +86,39 @@ export default class Scene {
       style: true,
     });
     this.init();
-    sceneEventEmitter.emit('scene:resize', this.size);
+    this.resize(this.size);
   }
 
   private unsubscribeEvents() {
     gameFieldEventEmitter.removeAllListeners();
-    sceneEventEmitter.removeAllListeners();
+    gameStore.removeAllListeners();
   }
 
   private resize(size: Size) {
     this.size = size;
-    sceneEventEmitter.emit('scene:resize', size);
+
+    this.chipField.resize(size);
+    this.winScreen.resize(size);
+    this.loseScreen.resize(size);
+    this.gameStats.resize(size);
+    this.progress.resize(size);
+  }
+
+  private win() {
+    this.disable();
+    this.winScreen.show();
+  }
+
+  private lose() {
+    this.disable();
+    this.loseScreen.show();
   }
 
   private subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
     gameFieldEventEmitter.on('blocks:destroyed', this.onBlocksDestroyed, this);
-    sceneEventEmitter.on('game:update-progress', this.onProgress, this);
-    sceneEventEmitter.on('game:restart', this.restart, this);
+    gameStore.on('win', this.win, this);
+    gameStore.on('lose', this.lose, this);
+    gameStore.on('restart', this.restart, this);
   }
 }
