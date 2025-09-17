@@ -1,5 +1,7 @@
 import { createBlockView } from "@/entities/lib/createBlockView";
+import type { BlockView } from "@/entities/ui/BlockView";
 
+import { animateSpawnBlocks } from "./animateSpawnBlocks";
 import { onBlockClick } from "./onBlockClick";
 
 import type { Block } from "./types";
@@ -12,29 +14,24 @@ export const spawnNewBlocks = async (
 ): Promise<void> => {
   const promises: Promise<void>[] = [];
 
-  const viewBlocks = newBlocks.map(block => {
+  const viewBlocks: BlockView[] = newBlocks.map(block => {
     const viewBlock = createBlockView(block);
 
     viewBlock.on('pointertap', () =>
       onBlockClick(block.row, block.col, container),
     );
-
-    if (!animated) {
-      viewBlock.setGridPosition(block.row, block.col);
-    } else {
-      viewBlock.setGridPosition(-1, block.col);
-      const p = (async () => {
-        viewBlock.show();
-        await viewBlock.animateToGridPosition(block.row, block.col);
-      })();
-
-      promises.push(p);
-    }
+    viewBlock.setGridPosition(block.row, block.col);
 
     return viewBlock;
   });
 
   container.addChild(...viewBlocks.reverse());
+
+  if (animated) {
+    animateSpawnBlocks(viewBlocks);
+  } else {
+    viewBlocks.forEach((block) => block.show());
+  }
 
   await Promise.all(promises);
 };

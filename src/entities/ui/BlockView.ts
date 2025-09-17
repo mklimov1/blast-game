@@ -59,7 +59,7 @@ export class BlockView extends Sprite {
     new Tween({ alpha: 0 })
       .to({ alpha: 1 })
       .easing(Easing.Quartic.InOut)
-      .duration(100)
+      .duration(50)
       .onUpdate(({ alpha }) => {
         this.alpha = alpha;
       })
