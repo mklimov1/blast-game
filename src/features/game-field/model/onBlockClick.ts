@@ -28,7 +28,7 @@ export const onBlockClick = async (
 
   await destroyBlocks(sortedPositions, displayBlocks);
   applyGravity(grid);
-  await syncBlocks(displayBlocks);
+  syncBlocks(displayBlocks);
   const newBlocks = fieldStore.fill();
   spawnNewBlocks(newBlocks, blockContainer, true);
 };
