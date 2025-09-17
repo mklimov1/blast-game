@@ -1,4 +1,6 @@
-import type { Grid, Position } from "@/widgets/game-field/model/types";
+import type { Position } from "@/widgets/game-field/model/types";
+
+import type { Grid } from "./types";
 
 export const findConnected = (
   grid: Grid,

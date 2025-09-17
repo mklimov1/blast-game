@@ -1,27 +1,16 @@
-import type { Grid, Position } from "@/widgets/game-field/model/types";
+import { BlockView } from "@/entities/ui/BlockView";
+import type { Position } from "@/widgets/game-field/model/types";
 
-import { gameFieldEventEmitter } from "../lib/gameFieldEventEmitter";
+import { fieldStore } from "./FieldStore";
 
 export const destroyBlocks = async (
   positions: Position[],
-  grid: Grid,
+  displayBlocks: BlockView[],
 ) => {
-  if (positions.length < 3) return;
-
-  const promises: Promise<void>[] = [];
-  let delay = 0;
-
-  for (const { row, col } of positions) {
-    const block = grid[row][col];
-    if (!block) continue;
-
-    grid[row][col] = null;
-
-    promises.push(block.destroyBlock(delay));
-    delay += 10;
-  }
-
-  gameFieldEventEmitter.emit("blocks:destroyed", positions);
+  const blocks = fieldStore.removeCluster(...positions);
+  const promises: Promise<void>[] = displayBlocks
+    .filter(block => blocks.includes(block.getBlock()))
+    .map(block => block.destroyBlock());
 
   await Promise.all(promises);
 };

@@ -2,10 +2,13 @@ import { Easing, Tween } from "@tweenjs/tween.js";
 import { Sprite, Texture } from "pixi.js";
 
 import type { BlockColor } from "@/entities/model/blockColors";
+import type { Block } from "@/features/game-field/model/types";
 import { blockGroup } from "@/shared/lib/tween";
 
 export class BlockView extends Sprite {
   static SIZE = 200;
+
+  private block: Block;
 
   row = 0;
 
@@ -13,12 +16,13 @@ export class BlockView extends Sprite {
 
   color: BlockColor;
 
-  constructor(color: BlockColor) {
-    const texture = Texture.from(`game/tile/${color}`);
+  constructor(block: Block) {
+    const texture = Texture.from(`game/tile/${block.color}`);
     super(texture);
+    this.block = block;
     this.cursor = 'pointer';
     this.eventMode = 'static';
-    this.color = color;
+    this.color = block.color;
     this.subcsribeEvents();
   }
 
@@ -39,6 +43,10 @@ export class BlockView extends Sprite {
         .group(blockGroup)
         .start();
     });
+  }
+
+  getBlock() {
+    return this.block;
   }
 
   setGridPosition(row: number, col: number) {

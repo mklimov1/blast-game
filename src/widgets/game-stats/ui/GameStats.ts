@@ -1,7 +1,7 @@
 import { Container, Sprite, type Size } from "pixi.js";
 
 import { Text } from "@/shared/ui/Text";
-import { gameStore } from "@/widgets/game-scene/model/GameStore";
+import { gameSceneStore } from "@/widgets/game-scene/model/gameSceneStore";
 import type { GameState } from "@/widgets/game-scene/model/types";
 
 export class GameStats extends Container {
@@ -78,6 +78,6 @@ export class GameStats extends Container {
   }
 
   private subscribeEvents() {
-    gameStore.on('update', this.updateStats, this);
+    gameSceneStore.on('update', this.updateStats, this);
   }
 }

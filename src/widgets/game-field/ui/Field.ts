@@ -1,15 +1,13 @@
 import { Container, type Size } from "pixi.js";
 
 import { BlockView } from "@/entities/ui/BlockView";
-import { createEmptyField } from "@/features/game-field/lib/createEmptyField";
+import { fieldStore } from "@/features/game-field/model/FieldStore";
 import { spawnNewBlocks } from "@/features/game-field/model/spawnNewBlocks";
+import type { Block } from "@/features/game-field/model/types";
 
 import Background from "./Background";
 
-import type { Grid } from "../model/types";
-
 export default class Field extends Container {
-  private grid: Grid = [];
 
   private background = new Background();
 
@@ -29,14 +27,16 @@ export default class Field extends Container {
     this.eventMode = 'auto';
   }
 
-  public build(rows: number, cols: number, maxColors: number) {
+  public fill(...blocks: Block[]) {
+    spawnNewBlocks(blocks, this.blockContainer);
+  }
+
+  public setup() {
+    const { cols, rows } = fieldStore.getGridSettings();
     const size: Size = {
       width: BlockView.SIZE * cols,
       height: BlockView.SIZE * rows,
     };
-
-    this.grid = createEmptyField<BlockView | null>(rows, cols);
-    spawnNewBlocks(this.grid, this.blockContainer, maxColors);
 
     this.blockContainer.pivot.set(
       BlockView.SIZE * rows / 2,

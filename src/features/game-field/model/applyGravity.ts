@@ -1,9 +1,8 @@
-import type { BlockView } from "@/entities/ui/BlockView";
+import type { Grid } from "./types";
 
-export const applyGravity = async (grid: (BlockView | null)[][]): Promise<void> => {
+export const applyGravity = (grid: Grid) => {
   const rows = grid.length;
   const cols = grid[0].length;
-  const promises: Promise<void>[] = [];
 
   for (let col = 0; col < cols; col++) {
     let emptyRow = rows - 1;
@@ -14,14 +13,12 @@ export const applyGravity = async (grid: (BlockView | null)[][]): Promise<void> 
       if (block) {
         if (row !== emptyRow) {
           grid[emptyRow][col] = block;
+          block.col = col;
+          block.row = emptyRow;
           grid[row][col] = null;
-
-          promises.push(block.animateToGridPosition(emptyRow, col));
         }
         emptyRow--;
       }
     }
   }
-
-  await Promise.all(promises);
 };

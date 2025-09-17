@@ -1,40 +1,42 @@
-import { createBlock } from "@/entities/lib/createBlock";
-import { getRandomBlockColor } from "@/entities/lib/getRandomBlockColor";
-import { BlockView } from "@/entities/ui/BlockView";
+import { createBlockView } from "@/entities/lib/createBlockView";
+import { delay } from "@/shared/lib/delay";
 
 import { onBlockClick } from "./onBlockClick";
-import { forEachGridBottomRight } from "../lib/forEachGridBottomRight";
 
+import type { Block } from "./types";
 import type { Container } from "pixi.js";
 
 export const spawnNewBlocks = async (
-  grid: (BlockView | null)[][],
+  newBlocks: Block[],
   container: Container,
-  maxColors: number,
   animated = false,
 ): Promise<void> => {
   const promises: Promise<void>[] = [];
 
-  forEachGridBottomRight(grid, (row, col, item) => {
-    if (!item) {
-      const color = getRandomBlockColor(maxColors);
-      const block = createBlock(color);
+  const viewBlocks = newBlocks.map(block => {
+    const viewBlock = createBlockView(block);
 
-      block.on('pointertap', () =>
-        onBlockClick(grid, block.row, block.col, container, maxColors),
-      );
-      grid[row][col] = block;
-      container.addChild(block);
+    viewBlock.on('pointertap', () =>
+      onBlockClick(block.row, block.col, container),
+    );
 
-      if (!animated) {
-        block.setGridPosition(row, col);
-        return;
-      }
-      block.setGridPosition(-1, col);
-      block.show();
-      promises.push(block.animateToGridPosition(row, col));
+    if (!animated) {
+      viewBlock.setGridPosition(block.row, block.col);
+      return viewBlock;
     }
+    viewBlock.setGridPosition(-1, block.col);
+    const p = (async () => {
+      await delay(50);
+      viewBlock.show();
+      await viewBlock.animateToGridPosition(block.row, block.col);
+    })();
+
+    promises.push(p);
+
+    return viewBlock;
   });
+
+  container.addChild(...viewBlocks.reverse());
 
   await Promise.all(promises);
 };

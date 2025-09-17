@@ -4,7 +4,7 @@ import { Container, Graphics, type Size } from "pixi.js";
 import { gameOverScreenGroup } from "@/shared/lib/tween";
 import { Button } from "@/shared/ui/Button";
 import { Text } from "@/shared/ui/Text";
-import { gameStore } from "@/widgets/game-scene/model/GameStore";
+import { gameSceneStore } from "@/widgets/game-scene/model/gameSceneStore";
 
 export class GameOverScreen extends Container {
   private background: Graphics;
@@ -98,7 +98,7 @@ export class GameOverScreen extends Container {
 
   private subscribeEvents() {
     this.button.on('pointerup', () => {
-      gameStore.restart();
+      gameSceneStore.restart();
     });
   }
 }

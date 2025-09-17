@@ -1,6 +1,6 @@
 import { Container, type Size } from "pixi.js";
 
-import { gameFieldEventEmitter } from "@/features/game-field/lib/gameFieldEventEmitter";
+import { fieldStore } from "@/features/game-field/model/FieldStore";
 import { appEventEmitter } from "@/shared/lib";
 import Field from "@/widgets/game-field";
 import type { Position } from "@/widgets/game-field/model/types";
@@ -8,7 +8,7 @@ import { GameOverScreen } from "@/widgets/game-over/ui/GameOverScreen";
 import { GameStats } from "@/widgets/game-stats/ui/GameStats";
 
 import { Progress } from "../../game-stats/ui/Progress";
-import { gameStore } from "../model/GameStore";
+import { gameSceneStore } from "../model/gameSceneStore";
 
 export default class Scene {
   public view = new Container();
@@ -35,8 +35,6 @@ export default class Scene {
     this.gameStats = new GameStats(0);
     this.progress = new Progress();
 
-    this.chipField.build(8, 8, 3);
-
     this.wrapper.addChild(
       this.chipField,
       this.progress,
@@ -45,18 +43,24 @@ export default class Scene {
       this.loseScreen,
     );
     this.view.addChild(this.wrapper);
-
-    gameStore.init({
-      goal: 100,
-      step: 20,
-      score: 0,
-    });
   }
 
   public init() {
     this.create();
     this.subscribeEvents();
     this.enable();
+
+    gameSceneStore.init({
+      goal: 100,
+      step: 20,
+      score: 0,
+    });
+
+    fieldStore.init(8, 8, 3);
+    const blocks = fieldStore.fill();
+
+    this.chipField.setup();
+    this.chipField.fill(...blocks);
   }
 
   private enable() {
@@ -68,11 +72,11 @@ export default class Scene {
   }
 
   public destroy() {
-    gameFieldEventEmitter.off('blocks:destroyed', this.onBlocksDestroyed);
+    fieldStore.off('blocks:destroyed', this.onBlocksDestroyed);
   }
 
-  private onBlocksDestroyed(positions: Position[]) {
-    gameStore.addScore(positions.length);
+  private onBlocksDestroyed(...positions: Position[]) {
+    gameSceneStore.addScore(positions.length);
   }
 
   private restart() {
@@ -90,8 +94,8 @@ export default class Scene {
   }
 
   private unsubscribeEvents() {
-    gameFieldEventEmitter.removeAllListeners();
-    gameStore.removeAllListeners();
+    fieldStore.removeAllListeners();
+    gameSceneStore.removeAllListeners();
   }
 
   private resize(size: Size) {
@@ -116,9 +120,9 @@ export default class Scene {
 
   private subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
-    gameFieldEventEmitter.on('blocks:destroyed', this.onBlocksDestroyed, this);
-    gameStore.on('win', this.win, this);
-    gameStore.on('lose', this.lose, this);
-    gameStore.on('restart', this.restart, this);
+    fieldStore.on('blocks:destroyed', this.onBlocksDestroyed, this);
+    gameSceneStore.on('win', this.win, this);
+    gameSceneStore.on('lose', this.lose, this);
+    gameSceneStore.on('restart', this.restart, this);
   }
 }

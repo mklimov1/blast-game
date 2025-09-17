@@ -2,7 +2,7 @@ import { Container, Sprite, type Size } from "pixi.js";
 
 import { ProgressBar } from "@/shared/ui/ProgressBar";
 import { Text } from "@/shared/ui/Text";
-import { gameStore } from "@/widgets/game-scene/model/GameStore";
+import { gameSceneStore } from "@/widgets/game-scene/model/gameSceneStore";
 import type { GameState } from "@/widgets/game-scene/model/types";
 
 export class Progress extends Container {
@@ -48,6 +48,6 @@ export class Progress extends Container {
   }
 
   private subscribeEvents() {
-    gameStore.on('update', this.setProgress, this);
+    gameSceneStore.on('update', this.setProgress, this);
   }
 }
