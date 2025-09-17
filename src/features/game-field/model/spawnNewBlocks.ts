@@ -1,5 +1,4 @@
 import { createBlockView } from "@/entities/lib/createBlockView";
-import { delay } from "@/shared/lib/delay";
 
 import { onBlockClick } from "./onBlockClick";
 
@@ -22,16 +21,15 @@ export const spawnNewBlocks = async (
 
     if (!animated) {
       viewBlock.setGridPosition(block.row, block.col);
-      return viewBlock;
-    }
-    viewBlock.setGridPosition(-1, block.col);
-    const p = (async () => {
-      await delay(50);
-      viewBlock.show();
-      await viewBlock.animateToGridPosition(block.row, block.col);
-    })();
+    } else {
+      viewBlock.setGridPosition(-1, block.col);
+      const p = (async () => {
+        viewBlock.show();
+        await viewBlock.animateToGridPosition(block.row, block.col);
+      })();
 
-    promises.push(p);
+      promises.push(p);
+    }
 
     return viewBlock;
   });
