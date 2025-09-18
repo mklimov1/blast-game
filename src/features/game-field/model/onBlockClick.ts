@@ -30,5 +30,5 @@ export const onBlockClick = async (
   applyGravity(grid);
   syncBlocks(displayBlocks);
   const newBlocks = fieldStore.fill();
-  spawnNewBlocks(newBlocks, blockContainer, true);
+  await spawnNewBlocks(newBlocks, blockContainer, true);
 };

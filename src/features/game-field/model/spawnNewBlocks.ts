@@ -2,6 +2,7 @@ import { createBlockView } from "@/entities/lib/createBlockView";
 import type { BlockView } from "@/entities/ui/BlockView";
 
 import { animateSpawnBlocks } from "./animateSpawnBlocks";
+import { fieldStore } from "./FieldStore";
 import { onBlockClick } from "./onBlockClick";
 
 import type { Block } from "./types";
@@ -34,4 +35,5 @@ export const spawnNewBlocks = async (
   }
 
   await Promise.all(promises);
+  fieldStore.emit('blocks:added');
 };

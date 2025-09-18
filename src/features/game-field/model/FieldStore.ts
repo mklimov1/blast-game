@@ -8,6 +8,7 @@ import type { Block, Grid } from "./types";
 export type FieldEvents = {
   "blocks:destroyed": (...positions: Position[]) => void;
   "blocks:clear": () => void;
+  "blocks:added": () => void;
 };
 
 class FieldStore extends EventEmitter<FieldEvents> {

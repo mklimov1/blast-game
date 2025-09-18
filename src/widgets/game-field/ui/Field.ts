@@ -21,10 +21,14 @@ export default class Field extends Container {
 
   public disable() {
     this.eventMode = 'none';
+    this.interactive = false;
+    this.interactiveChildren = false;
   }
 
   public enable() {
     this.eventMode = 'auto';
+    this.interactive = true;
+    this.interactiveChildren = true;
   }
 
   public fill(...blocks: Block[]) {

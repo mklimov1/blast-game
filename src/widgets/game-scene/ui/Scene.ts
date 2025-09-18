@@ -121,6 +121,8 @@ export default class Scene {
   private subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
     fieldStore.on('blocks:destroyed', this.onBlocksDestroyed, this);
+    fieldStore.on('blocks:destroyed', this.disable, this);
+    fieldStore.on('blocks:added', this.enable, this);
     gameSceneStore.on('win', this.win, this);
     gameSceneStore.on('lose', this.lose, this);
     gameSceneStore.on('restart', this.restart, this);
