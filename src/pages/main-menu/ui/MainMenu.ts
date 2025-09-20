@@ -11,7 +11,7 @@ import type { Size } from "pixi.js";
 export class MainMenu extends Scene {
   private playButton!: Button;
 
-  private create() {
+  protected create() {
     this.playButton = new Button('play', 2);
 
     this.view.addChild(this.playButton);
@@ -27,13 +27,6 @@ export class MainMenu extends Scene {
       .duration(300)
       .group(sceneGroup)
       .start();
-  }
-
-  async init() {
-    await this.load();
-    this.create();
-    this.subscribeEvents();
-    this.show();
   }
 
   protected async load() {
@@ -54,16 +47,16 @@ export class MainMenu extends Scene {
 
   finishScene() {
     this.destroy();
-    sceneManager.changeScene('mainMenu');
+    sceneManager.changeScene(Math.random() > 0.5 ? 'gameWin' : 'gameLose');
   }
 
   protected unsubscribeEvents() {
     appEventEmitter.off('resize', this.resize, this);
-    this.playButton.off('pointertap', this.finishScene, this);
+    this.playButton.off('click', this.finishScene, this);
   }
 
   protected subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
-    this.playButton.on('pointertap', this.finishScene, this);
+    this.playButton.on('click', this.finishScene, this);
   }
 }

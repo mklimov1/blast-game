@@ -28,7 +28,9 @@ class SceneManager {
       this.stage.removeChild(this.currentScene.view);
       this.currentScene.destroy();
     }
+
     const scene = new this.scenes[newScene]();
+
     this.currentScene = scene;
     await scene.init();
     this.stage.addChild(this.currentScene.view);

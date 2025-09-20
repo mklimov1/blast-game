@@ -1,5 +1,7 @@
 import { Application, Ticker } from "pixi.js";
 
+import { GameLose } from "@/pages/game-lose/ui/GameLose";
+import { GameWin } from "@/pages/game-win/ui/GameWin";
 import { MainMenu } from "@/pages/main-menu/ui/MainMenu";
 import { AssetsLoader } from "@/shared/lib";
 import { blockGroup, gameOverScreenGroup, progressGroup, sceneGroup } from "@/shared/lib/tween";
@@ -12,6 +14,8 @@ export default class App {
 
   private scenes: SceneMap = {
     mainMenu: MainMenu,
+    gameWin: GameWin,
+    gameLose: GameLose,
   };
 
   private node!: HTMLElement;

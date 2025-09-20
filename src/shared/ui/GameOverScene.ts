@@ -1,28 +1,35 @@
 import { Tween } from "@tweenjs/tween.js";
-import { Container, Graphics, type Size } from "pixi.js";
+import { Graphics, type Size } from "pixi.js";
 
 import { gameOverScreenGroup } from "@/shared/lib/tween";
 import { Button } from "@/shared/ui/Button";
 import { Text } from "@/shared/ui/Text";
-import { gameSceneStore } from "@/widgets/game-scene/model/gameSceneStore";
 
-export class GameOverScreen extends Container {
-  private background: Graphics;
+import { appEventEmitter, AssetsLoader } from "../lib";
+import { Scene } from "../scene/Scene";
+import { sceneManager } from "../scene/SceneManager";
 
-  private text: Text;
+export class GameOverScene extends Scene {
+  private background!: Graphics;
 
-  private button: Button;
+  protected text: string = '';
 
-  constructor(text: string) {
-    super();
+  private textEl!: Text;
+
+  private button!: Button;
+
+  protected create() {
     this.background = this.createBackground();
-    this.text = this.createText(text);
+    this.textEl = this.createText(this.text);
     this.button = new Button('restart', 1);
 
-    this.addChild(this.background, this.text, this.button);
-    this.subscribeEvents();
+    this.view.addChild(this.background, this.textEl, this.button);
 
     this.hide(false);
+  }
+
+  protected async load() {
+    await AssetsLoader.load('BUTTONS');
   }
 
   private createText(text: string) {
@@ -52,12 +59,12 @@ export class GameOverScreen extends Container {
     const from = show ? 0 : 1;
     const to = show ? 1 : 0;
 
-    this.alpha = from;
+    this.view.alpha = from;
 
     return new Tween({ alpha: from })
       .to({ alpha: to })
       .onUpdate(({ alpha }) => {
-        this.alpha = alpha;
+        this.view.alpha = alpha;
       })
       .group(gameOverScreenGroup)
       .duration(400)
@@ -66,7 +73,7 @@ export class GameOverScreen extends Container {
   }
 
   show(animate = true) {
-    this.visible = true;
+    this.view.visible = true;
     if (animate) {
       this.animate(true);
     }
@@ -75,18 +82,23 @@ export class GameOverScreen extends Container {
   hide(animate = true) {
     if (animate) {
       this.animate(false, () => {
-        this.visible = false;
+        this.view.visible = false;
       });
     } else {
-      this.visible = false;
+      this.view.visible = false;
     }
   }
 
-  public resize({ width, height }: Size) {
+  public destroy() {
+    this.unsubscribeEvents();
+    this.view.destroy();
+  }
+
+  private resize({ width, height }: Size) {
     this.background.width = width;
     this.background.height = height;
 
-    this.text.position.set(
+    this.textEl.position.set(
       width * 0.5,
       height * 0.5,
     );
@@ -96,9 +108,19 @@ export class GameOverScreen extends Container {
     );
   }
 
-  private subscribeEvents() {
-    this.button.on('pointerup', () => {
-      gameSceneStore.restart();
-    });
+  finishScene() {
+    this.destroy();
+    sceneManager.changeScene('mainMenu');
+  }
+
+  protected unsubscribeEvents() {
+    appEventEmitter.off('resize', this.resize, this);
+    this.button.off('pointerup', this.finishScene, this);
+
+  }
+
+  protected subscribeEvents() {
+    appEventEmitter.on('resize', this.resize, this);
+    this.button.on('pointerup', this.finishScene, this);
   }
 }

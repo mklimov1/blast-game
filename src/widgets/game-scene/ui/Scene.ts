@@ -4,7 +4,6 @@ import { fieldStore } from "@/features/game-field/model/FieldStore";
 import { appEventEmitter } from "@/shared/lib";
 import Field from "@/widgets/game-field";
 import type { Position } from "@/widgets/game-field/model/types";
-import { GameOverScreen } from "@/widgets/game-over/ui/GameOverScreen";
 import { GameStats } from "@/widgets/game-stats/ui/GameStats";
 
 import { Progress } from "../../game-stats/ui/Progress";
@@ -21,17 +20,11 @@ export default class Scene {
 
   private chipField!: Field;
 
-  private winScreen!: GameOverScreen;
-
-  private loseScreen!: GameOverScreen;
-
   private size: Size = { width: 0, height: 0 };
 
   private create() {
     this.wrapper = new Container();
     this.chipField = new Field();
-    this.winScreen = new GameOverScreen('YOU WIN!');
-    this.loseScreen = new GameOverScreen('YOU LOSE :(');
     this.gameStats = new GameStats(0);
     this.progress = new Progress();
 
@@ -39,8 +32,6 @@ export default class Scene {
       this.chipField,
       this.progress,
       this.gameStats,
-      this.winScreen,
-      this.loseScreen,
     );
     this.view.addChild(this.wrapper);
   }
@@ -102,20 +93,18 @@ export default class Scene {
     this.size = size;
 
     this.chipField.resize(size);
-    this.winScreen.resize(size);
-    this.loseScreen.resize(size);
+    // this.winScreen.resize(size);
+    // this.loseScreen.resize(size);
     this.gameStats.resize(size);
     this.progress.resize(size);
   }
 
   private win() {
     this.disable();
-    this.winScreen.show();
   }
 
   private lose() {
     this.disable();
-    this.loseScreen.show();
   }
 
   private subscribeEvents() {

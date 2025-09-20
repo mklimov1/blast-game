@@ -5,7 +5,14 @@ export abstract class Scene {
 
   protected abstract load(): void;
 
-  abstract init(): void;
+  protected abstract create(): void;
+
+  async init() {
+    await this.load();
+    this.create();
+    this.subscribeEvents();
+    this.show();
+  }
 
   protected abstract unsubscribeEvents(): void;
 
