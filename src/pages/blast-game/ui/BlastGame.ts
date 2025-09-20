@@ -1,15 +1,17 @@
 import { Container, type Size } from "pixi.js";
 
 import { fieldStore } from "@/features/game-field/model/FieldStore";
-import { appEventEmitter } from "@/shared/lib";
+import { appEventEmitter, AssetsLoader } from "@/shared/lib";
+import { Scene } from "@/shared/scene/Scene";
+import { sceneManager } from "@/shared/scene/SceneManager";
 import Field from "@/widgets/game-field";
 import type { Position } from "@/widgets/game-field/model/types";
 import { GameStats } from "@/widgets/game-stats/ui/GameStats";
+import { Progress } from "@/widgets/game-stats/ui/Progress";
 
-import { Progress } from "../../game-stats/ui/Progress";
-import { gameSceneStore } from "../model/gameSceneStore";
+import { blastGameStore } from "../model/blastGameStore";
 
-export default class Scene {
+export default class BlastGame extends Scene {
   public view = new Container();
 
   private wrapper!: Container;
@@ -20,9 +22,7 @@ export default class Scene {
 
   private chipField!: Field;
 
-  private size: Size = { width: 0, height: 0 };
-
-  private create() {
+  protected create() {
     this.wrapper = new Container();
     this.chipField = new Field();
     this.gameStats = new GameStats(0);
@@ -36,12 +36,19 @@ export default class Scene {
     this.view.addChild(this.wrapper);
   }
 
-  public init() {
-    this.create();
-    this.subscribeEvents();
+  protected async load() {
+    await AssetsLoader.load('FONTS');
+    await AssetsLoader.load('BUTTONS');
+    await AssetsLoader.load('PROGRESS-BAR');
+    await AssetsLoader.load('GAME');
+    await AssetsLoader.load('UI');
+  }
+
+  public async init() {
+    await super.init();
     this.enable();
 
-    gameSceneStore.init({
+    blastGameStore.init({
       goal: 100,
       step: 20,
       score: 0,
@@ -67,53 +74,57 @@ export default class Scene {
   }
 
   private onBlocksDestroyed(...positions: Position[]) {
-    gameSceneStore.addScore(positions.length);
+    blastGameStore.addScore(positions.length);
   }
 
-  private restart() {
+  protected finishScene(isWin: boolean) {
+    super.finishScene();
     this.disable();
-    this.unsubscribeEvents();
-    this.wrapper.destroy({
-      children: true,
-      texture: false,
-      textureSource: false,
-      context: true,
-      style: true,
-    });
-    this.init();
-    this.resize(this.size);
+    sceneManager.changeScene(isWin ? 'gameWin' : "gameLose");
   }
 
-  private unsubscribeEvents() {
+  protected show() {}
+
+  // private restart() {
+  //   this.disable();
+  //   this.unsubscribeEvents();
+  //   this.wrapper.destroy({
+  //     children: true,
+  //     texture: false,
+  //     textureSource: false,
+  //     context: true,
+  //     style: true,
+  //   });
+  //   this.init();
+  //   this.resize(this.size);
+  // }
+
+  protected unsubscribeEvents() {
     fieldStore.removeAllListeners();
-    gameSceneStore.removeAllListeners();
+    blastGameStore.removeAllListeners();
+    appEventEmitter.off('resize', this.resize, this);
   }
 
   private resize(size: Size) {
-    this.size = size;
-
     this.chipField.resize(size);
-    // this.winScreen.resize(size);
-    // this.loseScreen.resize(size);
     this.gameStats.resize(size);
     this.progress.resize(size);
   }
 
   private win() {
-    this.disable();
+    this.finishScene(true);
   }
 
   private lose() {
-    this.disable();
+    this.finishScene(false);
   }
 
-  private subscribeEvents() {
+  protected subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
     fieldStore.on('blocks:destroyed', this.onBlocksDestroyed, this);
     fieldStore.on('blocks:destroyed', this.disable, this);
     fieldStore.on('blocks:added', this.enable, this);
-    gameSceneStore.on('win', this.win, this);
-    gameSceneStore.on('lose', this.lose, this);
-    gameSceneStore.on('restart', this.restart, this);
+    blastGameStore.on('win', this.win, this);
+    blastGameStore.on('lose', this.lose, this);
   }
 }

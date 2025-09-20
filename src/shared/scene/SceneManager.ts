@@ -26,7 +26,6 @@ class SceneManager {
 
     if (this.currentScene) {
       this.stage.removeChild(this.currentScene.view);
-      this.currentScene.destroy();
     }
 
     const scene = new this.scenes[newScene]();

@@ -1,8 +1,8 @@
 import { Container, Sprite, type Size } from "pixi.js";
 
+import { blastGameStore } from "@/pages/blast-game/model/blastGameStore";
+import type { GameState } from "@/pages/blast-game/model/types";
 import { Text } from "@/shared/ui/Text";
-import { gameSceneStore } from "@/widgets/game-scene/model/gameSceneStore";
-import type { GameState } from "@/widgets/game-scene/model/types";
 
 export class GameStats extends Container {
   private frame = Sprite.from('ui/panel_score');
@@ -78,6 +78,6 @@ export class GameStats extends Container {
   }
 
   private subscribeEvents() {
-    gameSceneStore.on('update', this.updateStats, this);
+    blastGameStore.on('update', this.updateStats, this);
   }
 }

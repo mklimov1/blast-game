@@ -30,6 +30,7 @@ export class GameOverScene extends Scene {
 
   protected async load() {
     await AssetsLoader.load('BUTTONS');
+    await AssetsLoader.load('FONTS');
   }
 
   private createText(text: string) {
@@ -89,11 +90,6 @@ export class GameOverScene extends Scene {
     }
   }
 
-  public destroy() {
-    this.unsubscribeEvents();
-    this.view.destroy();
-  }
-
   private resize({ width, height }: Size) {
     this.background.width = width;
     this.background.height = height;
@@ -109,7 +105,7 @@ export class GameOverScene extends Scene {
   }
 
   finishScene() {
-    this.destroy();
+    super.finishScene();
     sceneManager.changeScene('mainMenu');
   }
 

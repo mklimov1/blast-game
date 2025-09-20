@@ -2,14 +2,13 @@ import { EventEmitter } from "pixi.js";
 
 import type { GameState } from "./types";
 
-export type GameSceneEvents = {
+export type BlastGameEvents = {
   "update": (payload: GameState) => void;
   "win": () => void;
   "lose": () => void;
-  "restart": () => void;
 };
 
-class GameSceneStore extends EventEmitter<GameSceneEvents> {
+class BlastGameStore extends EventEmitter<BlastGameEvents> {
   private score: number = 0;
 
   private goal: number = 0;
@@ -53,7 +52,6 @@ class GameSceneStore extends EventEmitter<GameSceneEvents> {
 
   restart() {
     this.init(this.initState);
-    this.emit("restart");
   }
 
   lose() {
@@ -65,4 +63,4 @@ class GameSceneStore extends EventEmitter<GameSceneEvents> {
   }
 }
 
-export const gameSceneStore = new GameSceneStore();
+export const blastGameStore = new BlastGameStore();

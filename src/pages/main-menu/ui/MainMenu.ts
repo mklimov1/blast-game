@@ -30,6 +30,7 @@ export class MainMenu extends Scene {
   }
 
   protected async load() {
+    await AssetsLoader.load('FONTS');
     await AssetsLoader.load('BUTTONS');
   }
 
@@ -46,8 +47,8 @@ export class MainMenu extends Scene {
   }
 
   finishScene() {
-    this.destroy();
-    sceneManager.changeScene(Math.random() > 0.5 ? 'gameWin' : 'gameLose');
+    super.finishScene();
+    sceneManager.changeScene('blastGame');
   }
 
   protected unsubscribeEvents() {
