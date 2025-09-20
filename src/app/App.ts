@@ -5,7 +5,7 @@ import { GameLose } from '@/pages/game-lose/ui/GameLose';
 import { GameWin } from '@/pages/game-win/ui/GameWin';
 import { MainMenu } from '@/pages/main-menu/ui/MainMenu';
 import { AssetsLoader } from '@/shared/lib';
-import { blockGroup, gameOverScreenGroup, progressGroup, sceneGroup } from '@/shared/lib/tween';
+import { tweenGroup } from '@/shared/lib/tween';
 import { sceneManager } from '@/shared/scene/SceneManager';
 
 import type { SceneMap } from './types';
@@ -47,10 +47,7 @@ export default class App {
     this.node.appendChild(this.app.canvas);
     this.app.resizeTo = this.node;
     this.ticker.add(() => {
-      blockGroup.update();
-      progressGroup.update();
-      gameOverScreenGroup.update();
-      sceneGroup.update();
+      tweenGroup.update();
     });
     this.ticker.start();
   }

@@ -1,7 +1,7 @@
 import { Tween } from '@tweenjs/tween.js';
 import { Graphics, type Size } from 'pixi.js';
 
-import { gameOverScreenGroup } from '@/shared/lib/tween';
+import { tweenGroup } from '@/shared/lib/tween';
 import { Button } from '@/shared/ui/Button';
 import { Text } from '@/shared/ui/Text';
 
@@ -67,7 +67,7 @@ export class GameOverScene extends Scene {
       .onUpdate(({ alpha }) => {
         this.view.alpha = alpha;
       })
-      .group(gameOverScreenGroup)
+      .group(tweenGroup)
       .duration(400)
       .onComplete(onComplete)
       .start();

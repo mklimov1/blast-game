@@ -3,7 +3,7 @@ import { Sprite, Texture } from 'pixi.js';
 
 import type { BlockColor } from '@/entities/model/blockColors';
 import type { Block } from '@/features/game-field/model/types';
-import { blockGroup } from '@/shared/lib/tween';
+import { tweenGroup } from '@/shared/lib/tween';
 
 export class BlockView extends Sprite {
   static SIZE = 200;
@@ -40,7 +40,7 @@ export class BlockView extends Sprite {
           this.destroy();
           resolve();
         })
-        .group(blockGroup)
+        .group(tweenGroup)
         .start();
     });
   }
@@ -63,7 +63,7 @@ export class BlockView extends Sprite {
       .onUpdate(({ alpha }) => {
         this.alpha = alpha;
       })
-      .group(blockGroup)
+      .group(tweenGroup)
       .start();
   }
 
@@ -84,7 +84,7 @@ export class BlockView extends Sprite {
           this.y = y;
         })
         .onComplete(() => resolve())
-        .group(blockGroup)
+        .group(tweenGroup)
         .start();
     });
   }

@@ -1,7 +1,7 @@
 import { Easing, Tween } from '@tweenjs/tween.js';
 import { Container, Graphics, Sprite } from 'pixi.js';
 
-import { progressGroup } from '../lib/tween';
+import { tweenGroup } from '../lib/tween';
 
 export class ProgressBar extends Container {
   private progress = Sprite.from('progress-bar/progress');
@@ -41,7 +41,7 @@ export class ProgressBar extends Container {
       .onUpdate(({ x }) => {
         this.progress.x = x;
       })
-      .group(progressGroup)
+      .group(tweenGroup)
       .easing(Easing.Quadratic.InOut)
       .start();
   }

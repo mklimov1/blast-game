@@ -2,6 +2,7 @@ import { Container, type Size } from 'pixi.js';
 
 import { fieldStore } from '@/features/game-field/model/FieldStore';
 import { appEventEmitter, AssetsLoader } from '@/shared/lib';
+import { show } from '@/shared/lib/animations';
 import { Scene } from '@/shared/scene/Scene';
 import { sceneManager } from '@/shared/scene/SceneManager';
 import Field from '@/widgets/game-field';
@@ -83,21 +84,9 @@ export default class BlastGame extends Scene {
     sceneManager.changeScene(isWin ? 'gameWin' : 'gameLose');
   }
 
-  protected show() {}
-
-  // private restart() {
-  //   this.disable();
-  //   this.unsubscribeEvents();
-  //   this.wrapper.destroy({
-  //     children: true,
-  //     texture: false,
-  //     textureSource: false,
-  //     context: true,
-  //     style: true,
-  //   });
-  //   this.init();
-  //   this.resize(this.size);
-  // }
+  protected show() {
+    show(this.view);
+  }
 
   protected unsubscribeEvents() {
     fieldStore.removeAllListeners();
