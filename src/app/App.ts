@@ -40,10 +40,6 @@ export default class App {
   }
 
   public create() {
-    // this.scene.init();
-    // this.app.stage.addChild(this.scene.view);
-    // this.playScene('mainMenu');
-    // appEventEmitter.emit('playScene', 'mainMenu');
     sceneManager.changeScene('mainMenu');
   }
 

@@ -19,6 +19,10 @@ class SceneManager {
     this.stage = stage;
     this.node = node;
     this.scenes = scenes;
+
+    const resize = () => this.resize();
+
+    window.addEventListener('resize', resize);
   }
 
   public async changeScene(newScene: SceneName) {
