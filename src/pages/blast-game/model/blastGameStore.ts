@@ -1,11 +1,11 @@
-import { EventEmitter } from "pixi.js";
+import { EventEmitter } from 'pixi.js';
 
-import type { GameState } from "./types";
+import type { GameState } from './types';
 
 export type BlastGameEvents = {
-  "update": (payload: GameState) => void;
-  "win": () => void;
-  "lose": () => void;
+  'update': (payload: GameState) => void;
+  'win': () => void;
+  'lose': () => void;
 };
 
 class BlastGameStore extends EventEmitter<BlastGameEvents> {
@@ -23,7 +23,7 @@ class BlastGameStore extends EventEmitter<BlastGameEvents> {
     this.goal = initState.goal;
     this.step = initState.step;
 
-    this.emit("update", {
+    this.emit('update', {
       score: this.score,
       goal: this.goal,
       step: this.step,
@@ -34,14 +34,14 @@ class BlastGameStore extends EventEmitter<BlastGameEvents> {
     this.score = Math.min(this.goal, this.score + points);
     this.step -= 1;
 
-    this.emit("update", {
+    this.emit('update', {
       score: this.score,
       goal: this.goal,
       step: this.step,
     });
 
     if (this.score >= this.goal) {
-      this.emit("win");
+      this.emit('win');
       return;
     }
 
@@ -55,7 +55,7 @@ class BlastGameStore extends EventEmitter<BlastGameEvents> {
   }
 
   lose() {
-    this.emit("lose");
+    this.emit('lose');
   }
 
   getState() {

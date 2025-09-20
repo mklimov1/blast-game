@@ -1,4 +1,4 @@
-import type { Position } from "@/widgets/game-field/model/types";
+import type { Position } from '@/widgets/game-field/model/types';
 
 export const sortByDistance = (
   positions: Position[],

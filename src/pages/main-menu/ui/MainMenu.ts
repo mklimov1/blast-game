@@ -1,12 +1,12 @@
-import { Tween } from "@tweenjs/tween.js";
+import { Tween } from '@tweenjs/tween.js';
 
-import { appEventEmitter, AssetsLoader } from "@/shared/lib";
-import { sceneGroup } from "@/shared/lib/tween";
-import { Scene } from "@/shared/scene/Scene";
-import { sceneManager } from "@/shared/scene/SceneManager";
-import { Button } from "@/shared/ui/Button";
+import { appEventEmitter, AssetsLoader } from '@/shared/lib';
+import { sceneGroup } from '@/shared/lib/tween';
+import { Scene } from '@/shared/scene/Scene';
+import { sceneManager } from '@/shared/scene/SceneManager';
+import { Button } from '@/shared/ui/Button';
 
-import type { Size } from "pixi.js";
+import type { Size } from 'pixi.js';
 
 export class MainMenu extends Scene {
   private playButton!: Button;

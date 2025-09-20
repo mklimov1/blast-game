@@ -1,5 +1,5 @@
-import type { BlockView } from "@/entities/ui/BlockView";
-import { delay } from "@/shared/lib/delay";
+import type { BlockView } from '@/entities/ui/BlockView';
+import { delay } from '@/shared/lib/delay';
 
 export const animateSpawnBlocks = async (viewBlocks: BlockView[]): Promise<void> => {
   const byColumn: Record<number, BlockView[]> = {};

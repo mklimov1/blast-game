@@ -1,15 +1,15 @@
-import { Container, type Size } from "pixi.js";
+import { Container, type Size } from 'pixi.js';
 
-import { fieldStore } from "@/features/game-field/model/FieldStore";
-import { appEventEmitter, AssetsLoader } from "@/shared/lib";
-import { Scene } from "@/shared/scene/Scene";
-import { sceneManager } from "@/shared/scene/SceneManager";
-import Field from "@/widgets/game-field";
-import type { Position } from "@/widgets/game-field/model/types";
-import { GameStats } from "@/widgets/game-stats/ui/GameStats";
-import { Progress } from "@/widgets/game-stats/ui/Progress";
+import { fieldStore } from '@/features/game-field/model/FieldStore';
+import { appEventEmitter, AssetsLoader } from '@/shared/lib';
+import { Scene } from '@/shared/scene/Scene';
+import { sceneManager } from '@/shared/scene/SceneManager';
+import Field from '@/widgets/game-field';
+import type { Position } from '@/widgets/game-field/model/types';
+import { GameStats } from '@/widgets/game-stats/ui/GameStats';
+import { Progress } from '@/widgets/game-stats/ui/Progress';
 
-import { blastGameStore } from "../model/blastGameStore";
+import { blastGameStore } from '../model/blastGameStore';
 
 export default class BlastGame extends Scene {
   public view = new Container();
@@ -80,7 +80,7 @@ export default class BlastGame extends Scene {
   protected finishScene(isWin: boolean) {
     super.finishScene();
     this.disable();
-    sceneManager.changeScene(isWin ? 'gameWin' : "gameLose");
+    sceneManager.changeScene(isWin ? 'gameWin' : 'gameLose');
   }
 
   protected show() {}

@@ -1,4 +1,4 @@
-import type { BlockView } from "@/entities/ui/BlockView";
+import type { BlockView } from '@/entities/ui/BlockView';
 
 export type GridSize = {
   rows: number;

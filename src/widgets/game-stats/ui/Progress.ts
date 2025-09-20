@@ -1,9 +1,9 @@
-import { Container, Sprite, type Size } from "pixi.js";
+import { Container, Sprite, type Size } from 'pixi.js';
 
-import { blastGameStore } from "@/pages/blast-game/model/blastGameStore";
-import type { GameState } from "@/pages/blast-game/model/types";
-import { ProgressBar } from "@/shared/ui/ProgressBar";
-import { Text } from "@/shared/ui/Text";
+import { blastGameStore } from '@/pages/blast-game/model/blastGameStore';
+import type { GameState } from '@/pages/blast-game/model/types';
+import { ProgressBar } from '@/shared/ui/ProgressBar';
+import { Text } from '@/shared/ui/Text';
 
 export class Progress extends Container {
   private frame = Sprite.from('progress-bar/progressBar');

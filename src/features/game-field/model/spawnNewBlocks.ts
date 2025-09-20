@@ -1,12 +1,12 @@
-import { createBlockView } from "@/entities/lib/createBlockView";
-import type { BlockView } from "@/entities/ui/BlockView";
+import { createBlockView } from '@/entities/lib/createBlockView';
+import type { BlockView } from '@/entities/ui/BlockView';
 
-import { animateSpawnBlocks } from "./animateSpawnBlocks";
-import { fieldStore } from "./FieldStore";
-import { onBlockClick } from "./onBlockClick";
+import { animateSpawnBlocks } from './animateSpawnBlocks';
+import { fieldStore } from './FieldStore';
+import { onBlockClick } from './onBlockClick';
 
-import type { Block } from "./types";
-import type { Container } from "pixi.js";
+import type { Block } from './types';
+import type { Container } from 'pixi.js';
 
 export const spawnNewBlocks = async (
   newBlocks: Block[],

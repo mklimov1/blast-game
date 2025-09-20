@@ -1,7 +1,7 @@
-import { BlockView } from "@/entities/ui/BlockView";
-import type { Position } from "@/widgets/game-field/model/types";
+import { BlockView } from '@/entities/ui/BlockView';
+import type { Position } from '@/widgets/game-field/model/types';
 
-import { fieldStore } from "./FieldStore";
+import { fieldStore } from './FieldStore';
 
 export const destroyBlocks = async (
   positions: Position[],

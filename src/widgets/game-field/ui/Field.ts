@@ -1,11 +1,11 @@
-import { Container, type Size } from "pixi.js";
+import { Container, type Size } from 'pixi.js';
 
-import { BlockView } from "@/entities/ui/BlockView";
-import { fieldStore } from "@/features/game-field/model/FieldStore";
-import { spawnNewBlocks } from "@/features/game-field/model/spawnNewBlocks";
-import type { Block } from "@/features/game-field/model/types";
+import { BlockView } from '@/entities/ui/BlockView';
+import { fieldStore } from '@/features/game-field/model/FieldStore';
+import { spawnNewBlocks } from '@/features/game-field/model/spawnNewBlocks';
+import type { Block } from '@/features/game-field/model/types';
 
-import Background from "./Background";
+import Background from './Background';
 
 export default class Field extends Container {
 

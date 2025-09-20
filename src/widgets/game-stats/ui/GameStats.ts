@@ -1,8 +1,8 @@
-import { Container, Sprite, type Size } from "pixi.js";
+import { Container, Sprite, type Size } from 'pixi.js';
 
-import { blastGameStore } from "@/pages/blast-game/model/blastGameStore";
-import type { GameState } from "@/pages/blast-game/model/types";
-import { Text } from "@/shared/ui/Text";
+import { blastGameStore } from '@/pages/blast-game/model/blastGameStore';
+import type { GameState } from '@/pages/blast-game/model/types';
+import { Text } from '@/shared/ui/Text';
 
 export class GameStats extends Container {
   private frame = Sprite.from('ui/panel_score');

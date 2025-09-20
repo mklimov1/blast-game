@@ -1,10 +1,10 @@
-import { Container } from "pixi.js";
+import { Container } from 'pixi.js';
 
-import type { SceneMap, SceneName } from "@/app/types";
+import type { SceneMap, SceneName } from '@/app/types';
 
-import { appEventEmitter } from "../lib";
+import { appEventEmitter } from '../lib';
 
-import type { Scene } from "./Scene";
+import type { Scene } from './Scene';
 
 class SceneManager {
   private currentScene: Scene | null = null;

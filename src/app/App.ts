@@ -1,14 +1,14 @@
-import { Application, Ticker } from "pixi.js";
+import { Application, Ticker } from 'pixi.js';
 
-import BlastGame from "@/pages/blast-game";
-import { GameLose } from "@/pages/game-lose/ui/GameLose";
-import { GameWin } from "@/pages/game-win/ui/GameWin";
-import { MainMenu } from "@/pages/main-menu/ui/MainMenu";
-import { AssetsLoader } from "@/shared/lib";
-import { blockGroup, gameOverScreenGroup, progressGroup, sceneGroup } from "@/shared/lib/tween";
-import { sceneManager } from "@/shared/scene/SceneManager";
+import BlastGame from '@/pages/blast-game';
+import { GameLose } from '@/pages/game-lose/ui/GameLose';
+import { GameWin } from '@/pages/game-win/ui/GameWin';
+import { MainMenu } from '@/pages/main-menu/ui/MainMenu';
+import { AssetsLoader } from '@/shared/lib';
+import { blockGroup, gameOverScreenGroup, progressGroup, sceneGroup } from '@/shared/lib/tween';
+import { sceneManager } from '@/shared/scene/SceneManager';
 
-import type { SceneMap } from "./types";
+import type { SceneMap } from './types';
 
 export default class App {
   private app = new Application();

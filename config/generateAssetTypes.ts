@@ -33,12 +33,12 @@ export const generateAssetTypes = async ({
       (k) => `  "${k}": "${k}"`,
     ).join(',\n');
 
-    const tsContent = `// 🚨 AUTO-GENERATED — DO NOT EDIT\n` +
-      `// Generated from manifest.json\n\n` +
+    const tsContent = '// 🚨 AUTO-GENERATED — DO NOT EDIT\n' +
+      '// Generated from manifest.json\n\n' +
       `export const Bundles = {\n${bundles}\n} as const;\n\n` +
       `export const Assets = {\n${assets}\n} as const;\n\n` +
-      `export type BundleName = keyof typeof Bundles;\n` +
-      `export type AssetName = keyof typeof Assets;\n`;
+      'export type BundleName = keyof typeof Bundles;\n' +
+      'export type AssetName = keyof typeof Assets;\n';
 
     await fs.writeFile(absOutputPath, tsContent, 'utf-8');
     // eslint-disable-next-line no-console

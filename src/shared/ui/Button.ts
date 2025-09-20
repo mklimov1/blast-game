@@ -1,6 +1,6 @@
-import { Container, Sprite, type Size } from "pixi.js";
+import { Container, Sprite, type Size } from 'pixi.js';
 
-import { Text } from "./Text";
+import { Text } from './Text';
 
 type ButtonType = 1 | 2;
 

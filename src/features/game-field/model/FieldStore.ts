@@ -1,14 +1,14 @@
-import { EventEmitter } from "pixi.js";
+import { EventEmitter } from 'pixi.js';
 
-import { getRandomBlockColor } from "@/entities/lib/getRandomBlockColor";
-import type { Position } from "@/widgets/game-field/model/types";
+import { getRandomBlockColor } from '@/entities/lib/getRandomBlockColor';
+import type { Position } from '@/widgets/game-field/model/types';
 
-import type { Block, Grid } from "./types";
+import type { Block, Grid } from './types';
 
 export type FieldEvents = {
-  "blocks:destroyed": (...positions: Position[]) => void;
-  "blocks:clear": () => void;
-  "blocks:added": () => void;
+  'blocks:destroyed': (...positions: Position[]) => void;
+  'blocks:clear': () => void;
+  'blocks:added': () => void;
 };
 
 class FieldStore extends EventEmitter<FieldEvents> {
@@ -69,7 +69,7 @@ class FieldStore extends EventEmitter<FieldEvents> {
       this.grid[row][col] = null;
     });
 
-    this.emit("blocks:destroyed", ...positions);
+    this.emit('blocks:destroyed', ...positions);
 
     return removedBlocks;
   }

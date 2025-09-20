@@ -1,4 +1,4 @@
-import type { Grid } from "./types";
+import type { Grid } from './types';
 
 export const applyGravity = (grid: Grid) => {
   const rows = grid.length;

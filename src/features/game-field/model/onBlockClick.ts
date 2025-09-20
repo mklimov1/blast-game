@@ -1,14 +1,14 @@
-import type { BlockView } from "@/entities/ui/BlockView";
-import { destroyBlocks } from "@/features/game-field/model/destroyBlocks";
-import { findConnected } from "@/features/game-field/model/findConnected";
+import type { BlockView } from '@/entities/ui/BlockView';
+import { destroyBlocks } from '@/features/game-field/model/destroyBlocks';
+import { findConnected } from '@/features/game-field/model/findConnected';
 
-import { applyGravity } from "./applyGravity";
-import { fieldStore } from "./FieldStore";
-import { sortByDistance } from "./sortByDistance";
-import { spawnNewBlocks } from "./spawnNewBlocks";
-import { syncBlocks } from "./syncBlocks";
+import { applyGravity } from './applyGravity';
+import { fieldStore } from './FieldStore';
+import { sortByDistance } from './sortByDistance';
+import { spawnNewBlocks } from './spawnNewBlocks';
+import { syncBlocks } from './syncBlocks';
 
-import type { Container } from "pixi.js";
+import type { Container } from 'pixi.js';
 
 export const onBlockClick = async (
   row: number,
