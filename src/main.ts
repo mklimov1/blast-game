@@ -2,12 +2,10 @@ import '@/shared/styles/global.scss';
 import App from '@/app/App';
 
 (async () => {
+  const node = document.querySelector('#app');
   const app = new App();
 
-  await app.init();
-  app.create();
-
-  const node = document.querySelector('#app');
-
-  app.render(node as HTMLElement);
+  await app.init(node as HTMLElement);
+  await app.create();
+  app.render();
 })();

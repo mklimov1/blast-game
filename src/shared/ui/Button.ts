@@ -1,4 +1,4 @@
-import { Container, Sprite } from "pixi.js";
+import { Container, Sprite, type Size } from "pixi.js";
 
 import { Text } from "./Text";
 
@@ -9,10 +9,16 @@ export class Button extends Container {
 
   private button: Sprite;
 
+  defaultSize: Size;
+
   constructor(text: string, buttonType: ButtonType) {
     super();
     this.text = this.createText(text);
     this.button = this.createButton(buttonType);
+    this.defaultSize = {
+      width: this.button.width,
+      height: this.button.height,
+    };
     this.addChild(this.button, this.text);
     this.eventMode = 'static';
     this.cursor = 'pointer';
