@@ -1,4 +1,5 @@
 import { Tween } from '@tweenjs/tween.js';
+import { Graphics, type Size } from 'pixi.js';
 
 import { appEventEmitter, AssetsLoader } from '@/shared/lib';
 import { sceneGroup } from '@/shared/lib/tween';
@@ -6,15 +7,23 @@ import { Scene } from '@/shared/scene/Scene';
 import { sceneManager } from '@/shared/scene/SceneManager';
 import { Button } from '@/shared/ui/Button';
 
-import type { Size } from 'pixi.js';
-
 export class MainMenu extends Scene {
   private playButton!: Button;
+
+  private background = this.createBackground();
 
   protected create() {
     this.playButton = new Button('play', 2);
 
-    this.view.addChild(this.playButton);
+    this.view.addChild(this.background, this.playButton);
+  }
+
+  private createBackground() {
+    const g = new Graphics()
+      .rect(0, 0, 100, 100)
+      .fill('#1b1b21');
+
+    return g;
   }
 
   protected show() {
@@ -40,6 +49,9 @@ export class MainMenu extends Scene {
   }
 
   private resize(size: Size) {
+    this.background.width = size.width;
+    this.background.height = size.height;
+
     this.playButton.x = size.width * 0.5;
     this.playButton.y = size.height * 0.5;
 

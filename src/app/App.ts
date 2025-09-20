@@ -26,7 +26,7 @@ export default class App {
 
   public async init(node: HTMLElement) {
     await this.app.init({
-      backgroundColor: '#83CFFF',
+      backgroundColor: '#000000',
     });
     await AssetsLoader.init();
     await AssetsLoader.load('FONTS');
