@@ -29,7 +29,7 @@ export const spawnNewBlocks = async (
   container.addChild(...viewBlocks.reverse());
 
   if (animated) {
-    animateSpawnBlocks(viewBlocks);
+    promises.push(animateSpawnBlocks(viewBlocks));
   } else {
     viewBlocks.forEach((block) => block.show());
   }

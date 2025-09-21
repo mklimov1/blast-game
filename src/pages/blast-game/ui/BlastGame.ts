@@ -3,6 +3,7 @@ import { Container, type Size } from 'pixi.js';
 import { fieldStore } from '@/features/game-field/model/FieldStore';
 import { appEventEmitter, AssetsLoader } from '@/shared/lib';
 import { show } from '@/shared/lib/animations';
+import { delay } from '@/shared/lib/delay';
 import { Scene } from '@/shared/scene/Scene';
 import { sceneManager } from '@/shared/scene/SceneManager';
 import Field from '@/widgets/game-field';
@@ -80,7 +81,6 @@ export default class BlastGame extends Scene {
 
   protected finishScene(isWin: boolean) {
     super.finishScene();
-    this.disable();
     sceneManager.changeScene(isWin ? 'gameWin' : 'gameLose');
   }
 
@@ -100,11 +100,15 @@ export default class BlastGame extends Scene {
     this.progress.resize(size);
   }
 
-  private win() {
+  private async win() {
+    this.disable();
+    await delay(1000);
     this.finishScene(true);
   }
 
-  private lose() {
+  private async lose() {
+    this.disable();
+    await delay(1000);
     this.finishScene(false);
   }
 

@@ -39,15 +39,6 @@ class BlastGameStore extends EventEmitter<BlastGameEvents> {
       goal: this.goal,
       step: this.step,
     });
-
-    if (this.score >= this.goal) {
-      this.emit('win');
-      return;
-    }
-
-    if (this.step <= 0) {
-      this.emit('lose');
-    }
   }
 
   restart() {
@@ -56,6 +47,17 @@ class BlastGameStore extends EventEmitter<BlastGameEvents> {
 
   lose() {
     this.emit('lose');
+  }
+
+  checkStatus() {
+    if (this.score >= this.goal) {
+      this.emit('win');
+      return;
+    }
+
+    if (this.step <= 0) {
+      this.emit('lose');
+    }
   }
 
   getState() {

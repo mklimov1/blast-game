@@ -1,6 +1,7 @@
 import type { BlockView } from '@/entities/ui/BlockView';
 import { destroyBlocks } from '@/features/game-field/model/destroyBlocks';
 import { findConnected } from '@/features/game-field/model/findConnected';
+import { blastGameStore } from '@/pages/blast-game/model/blastGameStore';
 
 import { applyGravity } from './applyGravity';
 import { fieldStore } from './FieldStore';
@@ -31,4 +32,5 @@ export const onBlockClick = async (
   syncBlocks(displayBlocks);
   const newBlocks = fieldStore.fill();
   await spawnNewBlocks(newBlocks, blockContainer, true);
+  blastGameStore.checkStatus();
 };
