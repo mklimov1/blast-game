@@ -1,6 +1,7 @@
 import { Application, Ticker } from 'pixi.js';
 
-import BlastGame from '@/pages/blast-game';
+import { DefaultBlastGame } from '@/pages/blast-game/ui/DefaultBlastGame';
+import { TimedBlastGame } from '@/pages/blast-game/ui/TimedBlastGame';
 import { GameLose } from '@/pages/game-lose/ui/GameLose';
 import { GameWin } from '@/pages/game-win/ui/GameWin';
 import { MainMenu } from '@/pages/main-menu/ui/MainMenu';
@@ -17,7 +18,8 @@ export default class App {
     mainMenu: MainMenu,
     gameWin: GameWin,
     gameLose: GameLose,
-    blastGame: BlastGame,
+    defaultBlastGame: DefaultBlastGame,
+    timedBlastGame: TimedBlastGame,
   };
 
   private node!: HTMLElement;

@@ -1,5 +1,10 @@
+export enum Mode {
+  DEFAULT = 'DEFAULT',
+  TIMED = 'TIMED'
+}
+
 export type TTimedModeProgress = {
-  type: 'timed';
+  type: Mode.TIMED;
   score: number;
   startTime: number;
   currentTime: number;
@@ -7,7 +12,7 @@ export type TTimedModeProgress = {
 }
 
 export type TDefaultModeProgress = {
-  type: 'default';
+  type: Mode.DEFAULT;
   score: number;
   step: number;
   goal: number;

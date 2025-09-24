@@ -23,6 +23,9 @@ export class Button extends Container {
     this.eventMode = 'static';
     this.cursor = 'pointer';
 
+    const textScale = Math.min(this.defaultSize.width * 0.85 / this.text.width, 1);
+    this.text.scale.set(textScale);
+
     this.on('pointerenter', () => {
       this.tint = '#dddddd';
     });

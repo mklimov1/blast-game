@@ -1,9 +1,8 @@
 import { blastGameStore } from '../blastGameStore';
-
-import type { IGameMode, TDefaultModeInitState } from './types';
+import { Mode, type IGameMode, type TDefaultModeInitState } from './types';
 
 export class DefaultMode implements IGameMode {
-  private type = 'default' as const;
+  private type: Mode.DEFAULT = Mode.DEFAULT;
 
   private score = 0;
 

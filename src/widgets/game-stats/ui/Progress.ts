@@ -1,7 +1,7 @@
 import { Container, Sprite, type Size } from 'pixi.js';
 
 import { blastGameStore } from '@/pages/blast-game/model/blastGameStore';
-import type { TProgress } from '@/pages/blast-game/model/game-mode/types';
+import { Mode, type TProgress } from '@/pages/blast-game/model/game-mode/types';
 import { ProgressBar } from '@/shared/ui/ProgressBar';
 import { Text } from '@/shared/ui/Text';
 
@@ -41,7 +41,7 @@ export class Progress extends Container {
   }
 
   private setProgress(payload: TProgress) {
-    if (payload.type !== 'default') return;
+    if (payload.type !== Mode.DEFAULT) return;
     const animated = payload.score > 0;
     const progress = Math.min(payload.score / payload.goal, 1);
 

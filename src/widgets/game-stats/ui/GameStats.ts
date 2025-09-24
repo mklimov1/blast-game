@@ -1,7 +1,7 @@
 import { Container, Sprite, type Size } from 'pixi.js';
 
 import { blastGameStore } from '@/pages/blast-game/model/blastGameStore';
-import type { TProgress } from '@/pages/blast-game/model/game-mode/types';
+import { Mode, type TProgress } from '@/pages/blast-game/model/game-mode/types';
 import { Text } from '@/shared/ui/Text';
 
 export class GameStats extends Container {
@@ -73,7 +73,7 @@ export class GameStats extends Container {
   }
 
   private updateStats(payload: TProgress) {
-    if (payload.type !== 'default') return;
+    if (payload.type !== Mode.DEFAULT) return;
     this.attemptsLeftText.text = payload.step;
     this.scoreValueText.text = payload.score;
   }

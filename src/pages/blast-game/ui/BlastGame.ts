@@ -49,16 +49,6 @@ export default class BlastGame extends Scene {
     await super.init();
     this.enable();
 
-    // blastGameStore.init('default', {
-    //   goal: 100,
-    //   step: 20,
-    //   score: 0,
-    // });
-
-    blastGameStore.init('timed', {
-      duration: 10000,
-    });
-
     fieldStore.init(8, 8, 3);
     const blocks = fieldStore.fill();
 

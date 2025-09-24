@@ -1,9 +1,8 @@
 import { blastGameStore } from '../blastGameStore';
-
-import type { IGameMode, TTimedModeInitState } from './types';
+import { Mode, type IGameMode, type TTimedModeInitState } from './types';
 
 export class TimedMode implements IGameMode {
-  private type = 'timed' as const;
+  private type: Mode.TIMED = Mode.TIMED;
 
   private score = 0;
 

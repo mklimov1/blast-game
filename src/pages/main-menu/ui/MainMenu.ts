@@ -7,14 +7,17 @@ import { sceneManager } from '@/shared/scene/SceneManager';
 import { Button } from '@/shared/ui/Button';
 
 export class MainMenu extends Scene {
-  private playButton!: Button;
+  private playDefaultButton!: Button;
+
+  private playTimedButton!: Button;
 
   private background = this.createBackground();
 
   protected create() {
-    this.playButton = new Button('play', 2);
+    this.playDefaultButton = new Button('default mode', 2);
+    this.playTimedButton = new Button('timed mode', 2);
 
-    this.view.addChild(this.background, this.playButton);
+    this.view.addChild(this.background, this.playDefaultButton, this.playTimedButton);
   }
 
   private createBackground() {
@@ -43,24 +46,35 @@ export class MainMenu extends Scene {
     this.background.width = size.width;
     this.background.height = size.height;
 
-    this.playButton.x = size.width * 0.5;
-    this.playButton.y = size.height * 0.5;
+    this.playDefaultButton.scale.set(size.height * 0.2 / this.playDefaultButton.defaultSize.height);
+    this.playDefaultButton.x = size.width * 0.5;
+    this.playDefaultButton.y = size.height * 0.5 + this.playDefaultButton.height;
 
-    this.playButton.scale.set(size.height * 0.2 / this.playButton.defaultSize.height);
+    this.playTimedButton.scale.set(size.height * 0.2 / this.playTimedButton.defaultSize.height);
+    this.playTimedButton.x = size.width * 0.5;
+    this.playTimedButton.y = size.height * 0.5 - this.playTimedButton.height;
+
   }
 
-  finishScene() {
+  playDefaultBlastGame() {
     super.finishScene();
-    sceneManager.changeScene('blastGame');
+    sceneManager.changeScene('defaultBlastGame');
+  }
+
+  playTimedBlastGame() {
+    super.finishScene();
+    sceneManager.changeScene('timedBlastGame');
   }
 
   protected unsubscribeEvents() {
     appEventEmitter.off('resize', this.resize, this);
-    this.playButton.off('click', this.finishScene, this);
+    this.playDefaultButton.off('click', this.playDefaultBlastGame, this);
+    this.playTimedButton.off('click', this.playTimedBlastGame, this);
   }
 
   protected subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
-    this.playButton.on('click', this.finishScene, this);
+    this.playDefaultButton.on('click', this.playDefaultBlastGame, this);
+    this.playTimedButton.on('click', this.playTimedBlastGame, this);
   }
 }
