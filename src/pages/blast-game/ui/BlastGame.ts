@@ -7,7 +7,6 @@ import { delay } from '@/shared/lib/delay';
 import { Scene } from '@/shared/scene/Scene';
 import { sceneManager } from '@/shared/scene/SceneManager';
 import Field from '@/widgets/game-field';
-import type { Position } from '@/widgets/game-field/model/types';
 import { GameStats } from '@/widgets/game-stats/ui/GameStats';
 import { Progress } from '@/widgets/game-stats/ui/Progress';
 
@@ -50,10 +49,14 @@ export default class BlastGame extends Scene {
     await super.init();
     this.enable();
 
-    blastGameStore.init({
-      goal: 100,
-      step: 20,
-      score: 0,
+    // blastGameStore.init('default', {
+    //   goal: 100,
+    //   step: 20,
+    //   score: 0,
+    // });
+
+    blastGameStore.init('timed', {
+      duration: 10000,
     });
 
     fieldStore.init(8, 8, 3);
@@ -69,14 +72,6 @@ export default class BlastGame extends Scene {
 
   private disable() {
     this.chipField.disable();
-  }
-
-  public destroy() {
-    fieldStore.off('blocks:destroyed', this.onBlocksDestroyed);
-  }
-
-  private onBlocksDestroyed(...positions: Position[]) {
-    blastGameStore.addScore(positions.length);
   }
 
   protected finishScene(isWin: boolean) {
@@ -112,12 +107,19 @@ export default class BlastGame extends Scene {
     this.finishScene(false);
   }
 
+  private finish({ status }: {status: 'win' | 'lose'}) {
+    if (status === 'win') {
+      this.win();
+      return;
+    } else if (status === 'lose') {
+      this.lose();
+    }
+  }
+
   protected subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
-    fieldStore.on('blocks:destroyed', this.onBlocksDestroyed, this);
     fieldStore.on('blocks:destroyed', this.disable, this);
     fieldStore.on('blocks:added', this.enable, this);
-    blastGameStore.on('win', this.win, this);
-    blastGameStore.on('lose', this.lose, this);
+    blastGameStore.on('finish', this.finish, this);
   }
 }

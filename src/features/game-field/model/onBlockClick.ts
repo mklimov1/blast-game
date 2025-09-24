@@ -32,5 +32,5 @@ export const onBlockClick = async (
   syncBlocks(displayBlocks);
   const newBlocks = fieldStore.fill();
   await spawnNewBlocks(newBlocks, blockContainer, true);
-  blastGameStore.checkStatus();
+  blastGameStore.update(positions.length);
 };
