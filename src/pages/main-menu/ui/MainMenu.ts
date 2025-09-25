@@ -5,7 +5,7 @@ import { show } from '@/shared/lib/animations';
 import { Scene } from '@/shared/scene/Scene';
 import { sceneManager } from '@/shared/scene/SceneManager';
 import { Button } from '@/shared/ui/Button';
-
+import { Text } from '@/shared/ui/Text';
 export class MainMenu extends Scene {
   private playClassicButton!: Button;
 
@@ -13,11 +13,13 @@ export class MainMenu extends Scene {
 
   private background = this.createBackground();
 
+  private title = this.createTitleText();
+
   protected create() {
     this.playClassicButton = new Button('classic mode', 2);
     this.playTimerButton = new Button('timer mode', 2);
 
-    this.view.addChild(this.background, this.playClassicButton, this.playTimerButton);
+    this.view.addChild(this.background, this.title, this.playClassicButton, this.playTimerButton);
   }
 
   private createBackground() {
@@ -26,6 +28,12 @@ export class MainMenu extends Scene {
       .fill('#1b1b21');
 
     return g;
+  }
+
+  private createTitleText() {
+    const text = new Text('BLAST GAME');
+    text.anchor.set(0.5);
+    return text;
   }
 
   protected show() {
@@ -42,18 +50,28 @@ export class MainMenu extends Scene {
     this.view.destroy();
   }
 
+  private resizeButton(button: Button, size: Size, yOffset: number) {
+    button.scale.set(size.height * 0.15 / button.defaultSize.height);
+    button.x = size.width * 0.5;
+    button.y = size.height * 0.5 + button.height * yOffset;
+  }
+
+  private resizeTitle(size: Size) {
+    const defaultHeight = this.title.height / this.title.scale.y;
+
+    this.title.scale.set(size.height * 0.1 / defaultHeight);
+    this.title.x = size.width * 0.5;
+    this.title.y = size.height * 0.3;
+  }
+
   private resize(size: Size) {
     this.background.width = size.width;
     this.background.height = size.height;
 
-    this.playClassicButton.scale.set(size.height * 0.2 / this.playClassicButton.defaultSize.height);
-    this.playClassicButton.x = size.width * 0.5;
-    this.playClassicButton.y = size.height * 0.5 + this.playClassicButton.height;
+    this.resizeButton(this.playClassicButton, size, 0);
+    this.resizeButton(this.playTimerButton, size, 1.05);
 
-    this.playTimerButton.scale.set(size.height * 0.2 / this.playTimerButton.defaultSize.height);
-    this.playTimerButton.x = size.width * 0.5;
-    this.playTimerButton.y = size.height * 0.5 - this.playTimerButton.height;
-
+    this.resizeTitle(size);
   }
 
   playClassicBlastGame() {
