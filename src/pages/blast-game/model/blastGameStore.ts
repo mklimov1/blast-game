@@ -21,7 +21,6 @@ class BlastGameStore extends EventEmitter<BlastGameEvents> {
     this.mode = new modeMap[mode]();
 
     this.mode.init(initState);
-    this.emit('update', this.getProgress());
   }
 
   update(points: number) {

@@ -29,6 +29,7 @@ export class ClassicBlastGame extends BlastGame {
     this.progress = new Progress();
 
     this.wrapper.addChild(this.gameStats, this.progress);
+    blastGameStore.emit('update', blastGameStore.getProgress());
   }
 
   protected resize(size: Size) {
@@ -36,5 +37,4 @@ export class ClassicBlastGame extends BlastGame {
     this.gameStats.resize(size);
     this.progress.resize(size);
   }
-
 }
