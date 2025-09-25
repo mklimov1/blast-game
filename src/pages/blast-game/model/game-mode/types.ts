@@ -7,6 +7,8 @@ export type TTimerModeProgress = {
   type: Mode.TIMER;
   score: number;
   startTime: number;
+  endTime: number;
+  leftTime: number;
   currentTime: number;
   duration: number;
 }

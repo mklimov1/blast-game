@@ -8,12 +8,15 @@ export class TimerMode implements IGameMode {
 
   private startTime = 0;
 
+  private endTime = 0;
+
   private duration!: number;
 
   init(initState: TTimerModeInitState) {
     this.score = 0;
     this.startTime = Date.now();
     this.duration = initState.duration;
+    this.endTime = this.startTime + this.duration;
 
     setTimeout(() => {
       blastGameStore.emit('finish', { status: 'win', score: this.score });
@@ -25,12 +28,16 @@ export class TimerMode implements IGameMode {
   }
 
   getProgress() {
+    const currentTime = Date.now();
+    const leftTime = Math.max(this.endTime - currentTime, 0);
     return {
+      currentTime,
+      leftTime,
       type: this.type,
       score: this.score,
       startTime: this.startTime,
-      currentTime: Date.now() - this.startTime,
       duration: this.duration,
+      endTime: this.endTime,
     };
   }
 }

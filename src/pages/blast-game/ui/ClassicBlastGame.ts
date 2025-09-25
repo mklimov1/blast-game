@@ -15,13 +15,12 @@ export class ClassicBlastGame extends BlastGame {
   private progress!: Progress;
 
   public async init() {
-    await super.init();
-
     blastGameStore.init(this.mode, {
       goal: 100,
       step: 20,
       score: 0,
     });
+    await super.init();
   }
 
   protected create() {
