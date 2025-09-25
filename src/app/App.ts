@@ -29,14 +29,11 @@ export default class App {
   public async init(node: HTMLElement) {
     await this.app.init({
       backgroundColor: '#000000',
+      antialias: true,
+      resolution: window.devicePixelRatio,
+      autoDensity: true,
     });
     await AssetsLoader.init();
-    await AssetsLoader.load('FONTS');
-    await AssetsLoader.load('GAME');
-    await AssetsLoader.load('PROGRESS-BAR');
-    await AssetsLoader.load('UI');
-    await AssetsLoader.load('BUTTONS');
-
     sceneManager.init(this.scenes, this.app.stage, node);
     this.node = node;
   }
