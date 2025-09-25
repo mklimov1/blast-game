@@ -1,8 +1,8 @@
 import { blastGameStore } from '../blastGameStore';
-import { Mode, type IGameMode, type TTimedModeInitState } from './types';
+import { Mode, type IGameMode, type TTimerModeInitState } from './types';
 
-export class TimedMode implements IGameMode {
-  private type: Mode.TIMED = Mode.TIMED;
+export class TimerMode implements IGameMode {
+  private type: Mode.TIMER = Mode.TIMER;
 
   private score = 0;
 
@@ -10,7 +10,7 @@ export class TimedMode implements IGameMode {
 
   private duration!: number;
 
-  init(initState: TTimedModeInitState) {
+  init(initState: TTimerModeInitState) {
     this.score = 0;
     this.startTime = Date.now();
     this.duration = initState.duration;

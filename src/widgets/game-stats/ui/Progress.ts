@@ -41,7 +41,7 @@ export class Progress extends Container {
   }
 
   private setProgress(payload: TProgress) {
-    if (payload.type !== Mode.DEFAULT) return;
+    if (payload.type !== Mode.CLASSIC) return;
     const animated = payload.score > 0;
     const progress = Math.min(payload.score / payload.goal, 1);
 

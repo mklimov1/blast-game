@@ -73,7 +73,7 @@ export class GameStats extends Container {
   }
 
   private updateStats(payload: TProgress) {
-    if (payload.type !== Mode.DEFAULT) return;
+    if (payload.type !== Mode.CLASSIC) return;
     this.attemptsLeftText.text = payload.step;
     this.scoreValueText.text = payload.score;
   }

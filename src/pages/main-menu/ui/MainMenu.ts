@@ -7,17 +7,17 @@ import { sceneManager } from '@/shared/scene/SceneManager';
 import { Button } from '@/shared/ui/Button';
 
 export class MainMenu extends Scene {
-  private playDefaultButton!: Button;
+  private playClassicButton!: Button;
 
-  private playTimedButton!: Button;
+  private playTimerButton!: Button;
 
   private background = this.createBackground();
 
   protected create() {
-    this.playDefaultButton = new Button('default mode', 2);
-    this.playTimedButton = new Button('timed mode', 2);
+    this.playClassicButton = new Button('classic mode', 2);
+    this.playTimerButton = new Button('timer mode', 2);
 
-    this.view.addChild(this.background, this.playDefaultButton, this.playTimedButton);
+    this.view.addChild(this.background, this.playClassicButton, this.playTimerButton);
   }
 
   private createBackground() {
@@ -46,35 +46,35 @@ export class MainMenu extends Scene {
     this.background.width = size.width;
     this.background.height = size.height;
 
-    this.playDefaultButton.scale.set(size.height * 0.2 / this.playDefaultButton.defaultSize.height);
-    this.playDefaultButton.x = size.width * 0.5;
-    this.playDefaultButton.y = size.height * 0.5 + this.playDefaultButton.height;
+    this.playClassicButton.scale.set(size.height * 0.2 / this.playClassicButton.defaultSize.height);
+    this.playClassicButton.x = size.width * 0.5;
+    this.playClassicButton.y = size.height * 0.5 + this.playClassicButton.height;
 
-    this.playTimedButton.scale.set(size.height * 0.2 / this.playTimedButton.defaultSize.height);
-    this.playTimedButton.x = size.width * 0.5;
-    this.playTimedButton.y = size.height * 0.5 - this.playTimedButton.height;
+    this.playTimerButton.scale.set(size.height * 0.2 / this.playTimerButton.defaultSize.height);
+    this.playTimerButton.x = size.width * 0.5;
+    this.playTimerButton.y = size.height * 0.5 - this.playTimerButton.height;
 
   }
 
-  playDefaultBlastGame() {
+  playClassicBlastGame() {
     super.finishScene();
-    sceneManager.changeScene('defaultBlastGame');
+    sceneManager.changeScene('classicBlastGame');
   }
 
-  playTimedBlastGame() {
+  playTimerBlastGame() {
     super.finishScene();
-    sceneManager.changeScene('timedBlastGame');
+    sceneManager.changeScene('timerBlastGame');
   }
 
   protected unsubscribeEvents() {
     appEventEmitter.off('resize', this.resize, this);
-    this.playDefaultButton.off('click', this.playDefaultBlastGame, this);
-    this.playTimedButton.off('click', this.playTimedBlastGame, this);
+    this.playClassicButton.off('click', this.playClassicBlastGame, this);
+    this.playTimerButton.off('click', this.playTimerBlastGame, this);
   }
 
   protected subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
-    this.playDefaultButton.on('click', this.playDefaultBlastGame, this);
-    this.playTimedButton.on('click', this.playTimedBlastGame, this);
+    this.playClassicButton.on('click', this.playClassicBlastGame, this);
+    this.playTimerButton.on('click', this.playTimerBlastGame, this);
   }
 }

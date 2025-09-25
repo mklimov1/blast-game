@@ -1,24 +1,24 @@
 export enum Mode {
-  DEFAULT = 'DEFAULT',
-  TIMED = 'TIMED'
+  CLASSIC = 'CLASSIC',
+  TIMER = 'TIMER'
 }
 
-export type TTimedModeProgress = {
-  type: Mode.TIMED;
+export type TTimerModeProgress = {
+  type: Mode.TIMER;
   score: number;
   startTime: number;
   currentTime: number;
   duration: number;
 }
 
-export type TDefaultModeProgress = {
-  type: Mode.DEFAULT;
+export type TClassicModeProgress = {
+  type: Mode.CLASSIC;
   score: number;
   step: number;
   goal: number;
 }
 
-export type TProgress = TTimedModeProgress | TDefaultModeProgress;
+export type TProgress = TTimerModeProgress | TClassicModeProgress;
 
 export interface IGameMode {
   init(state: unknown): void;
@@ -26,14 +26,14 @@ export interface IGameMode {
   getProgress(): TProgress;
 }
 
-export type TTimedModeInitState = {
+export type TTimerModeInitState = {
   duration: number;
 }
 
-export type TDefaultModeInitState = {
+export type TClassicModeInitState = {
   goal: number;
   step: number;
   score: number;
 }
 
-export type TInitState = TTimedModeInitState | TDefaultModeInitState;
+export type TInitState = TTimerModeInitState | TClassicModeInitState;

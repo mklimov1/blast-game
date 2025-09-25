@@ -1,8 +1,8 @@
 import { blastGameStore } from '../blastGameStore';
-import { Mode, type IGameMode, type TDefaultModeInitState } from './types';
+import { Mode, type IGameMode, type TClassicModeInitState } from './types';
 
-export class DefaultMode implements IGameMode {
-  private type: Mode.DEFAULT = Mode.DEFAULT;
+export class ClassicMode implements IGameMode {
+  private type: Mode.CLASSIC = Mode.CLASSIC;
 
   private score = 0;
 
@@ -10,7 +10,7 @@ export class DefaultMode implements IGameMode {
 
   private step!: number;
 
-  init(initState: TDefaultModeInitState) {
+  init(initState: TClassicModeInitState) {
     this.score = 0;
     this.goal = initState.goal;
     this.step = initState.step;

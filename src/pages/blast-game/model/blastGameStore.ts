@@ -1,7 +1,7 @@
 import { EventEmitter } from 'pixi.js';
 
-import { DefaultMode } from './game-mode/DefaultMode';
-import { TimedMode } from './game-mode/TimedMode';
+import { ClassicMode } from './game-mode/ClassicMode';
+import { TimerMode } from './game-mode/TimerMode';
 import { Mode, type IGameMode, type TInitState, type TProgress } from './game-mode/types';
 
 export type BlastGameEvents = {
@@ -10,8 +10,8 @@ export type BlastGameEvents = {
 };
 
 const modeMap = {
-  [Mode.DEFAULT]: DefaultMode,
-  [Mode.TIMED]: TimedMode,
+  [Mode.CLASSIC]: ClassicMode,
+  [Mode.TIMER]: TimerMode,
 };
 
 class BlastGameStore extends EventEmitter<BlastGameEvents> {
