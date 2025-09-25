@@ -7,33 +7,21 @@ import { delay } from '@/shared/lib/delay';
 import { Scene } from '@/shared/scene/Scene';
 import { sceneManager } from '@/shared/scene/SceneManager';
 import Field from '@/widgets/game-field';
-import { GameStats } from '@/widgets/game-stats/ui/GameStats';
-import { Progress } from '@/widgets/game-stats/ui/Progress';
 
 import { blastGameStore } from '../model/blastGameStore';
 
 export default class BlastGame extends Scene {
   public view = new Container();
 
-  private wrapper!: Container;
-
-  private gameStats!: GameStats;
-
-  private progress!: Progress;
+  protected wrapper!: Container;
 
   private chipField!: Field;
 
   protected create() {
     this.wrapper = new Container();
     this.chipField = new Field();
-    this.gameStats = new GameStats(0);
-    this.progress = new Progress();
 
-    this.wrapper.addChild(
-      this.chipField,
-      this.progress,
-      this.gameStats,
-    );
+    this.wrapper.addChild(this.chipField);
     this.view.addChild(this.wrapper);
   }
 
@@ -79,10 +67,8 @@ export default class BlastGame extends Scene {
     appEventEmitter.off('resize', this.resize, this);
   }
 
-  private resize(size: Size) {
+  protected resize(size: Size) {
     this.chipField.resize(size);
-    this.gameStats.resize(size);
-    this.progress.resize(size);
   }
 
   private async win() {
