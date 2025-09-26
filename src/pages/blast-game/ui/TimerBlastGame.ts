@@ -1,4 +1,5 @@
 import { Timer } from '@/shared/ui/Timer';
+import { Score } from '@/widgets/game-stats/ui/Score';
 
 import BlastGame from './BlastGame';
 import { blastGameStore } from '../model/blastGameStore';
@@ -10,6 +11,8 @@ export class TimerBlastGame extends BlastGame {
   private mode = Mode.TIMER;
 
   private timer!: Timer;
+
+  private score!: Score;
 
   protected intervalId!: NodeJS.Timeout;
 
@@ -23,17 +26,25 @@ export class TimerBlastGame extends BlastGame {
   protected create(): void {
     super.create();
     this.timer = new Timer();
-    this.wrapper.addChild(this.timer);
+    this.score = new Score();
+    this.wrapper.addChild(this.timer, this.score);
     this.updateTimer();
+    this.updateScore();
   }
 
   protected resize(size: Size): void {
     super.resize(size);
     this.timer.resize(size);
+    this.score.resize(size);
   }
 
   private stopTimer() {
     clearInterval(this.intervalId);
+  }
+
+  private updateScore() {
+    const { score } = blastGameStore.getProgress();
+    this.score.updateScore(score);
   }
 
   private updateTimer() {
@@ -52,6 +63,7 @@ export class TimerBlastGame extends BlastGame {
   protected subscribeEvents(): void {
     super.subscribeEvents();
     blastGameStore.on('finish', this.stopTimer, this);
+    blastGameStore.on('update', this.updateScore, this);
     this.intervalId = setInterval(() => this.updateTimer(), 200);
   }
 }
