@@ -1,4 +1,4 @@
-import { Container, Graphics, Ticker } from 'pixi.js';
+import { Container, Graphics, Ticker, type Size } from 'pixi.js';
 
 interface Point {
   x: number;
@@ -124,7 +124,7 @@ export class AnimatedGrid extends Container {
     this.ticker = undefined;
   }
 
-  public resize(width: number, height: number) {
+  public resize({ width, height }: Size) {
     this.areaWidth = width;
     this.areaHeight = height;
     this.calculateCountAndDistance(width, height);

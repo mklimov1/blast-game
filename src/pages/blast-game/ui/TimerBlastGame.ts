@@ -1,3 +1,5 @@
+import { AssetsLoader } from '@/shared/lib';
+import { ParallaxBackground } from '@/shared/ui/ParallaxBackground';
 import { Timer } from '@/shared/ui/Timer';
 import { Score } from '@/widgets/game-stats/ui/Score';
 
@@ -14,6 +16,8 @@ export class TimerBlastGame extends BlastGame {
 
   private score!: Score;
 
+  private background!: ParallaxBackground;
+
   protected intervalId!: NodeJS.Timeout;
 
   public async init() {
@@ -23,11 +27,20 @@ export class TimerBlastGame extends BlastGame {
     await super.init();
   }
 
+  protected async load(): Promise<void> {
+    await super.load();
+    await AssetsLoader.load('CITY3');
+  }
+
   protected create(): void {
     super.create();
     this.timer = new Timer();
     this.score = new Score();
+    this.background = new ParallaxBackground(['city3/1','city3/2', 'city3/3', 'city3/4', 'city3/5']);
+
+    this.wrapper.addChildAt(this.background, 0);
     this.wrapper.addChild(this.timer, this.score);
+
     this.updateTimer();
     this.updateScore();
   }
@@ -36,6 +49,7 @@ export class TimerBlastGame extends BlastGame {
     super.resize(size);
     this.timer.resize(size);
     this.score.resize(size);
+    this.background.resize(size);
   }
 
   private stopTimer() {

@@ -85,7 +85,7 @@ export class MainMenu extends Scene {
     this.resizeButton(this.playTimerButton, size, 1.05);
 
     this.resizeTitle(size);
-    this.bgGrid.resize(size.width, size.height);
+    this.bgGrid.resize(size);
   }
 
   playClassicBlastGame() {
