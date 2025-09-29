@@ -4,12 +4,15 @@ import { appEventEmitter, AssetsLoader } from '@/shared/lib';
 import { show } from '@/shared/lib/animations';
 import { Scene } from '@/shared/scene/Scene';
 import { sceneManager } from '@/shared/scene/SceneManager';
+import { AnimatedGrid } from '@/shared/ui/AnimatedGrid';
 import { Button } from '@/shared/ui/Button';
 import { Text } from '@/shared/ui/Text';
 export class MainMenu extends Scene {
   private playClassicButton!: Button;
 
   private playTimerButton!: Button;
+
+  private bgGrid!: AnimatedGrid;
 
   private background = this.createBackground();
 
@@ -18,8 +21,16 @@ export class MainMenu extends Scene {
   protected create() {
     this.playClassicButton = new Button('classic mode', 2);
     this.playTimerButton = new Button('timer mode', 2);
+    this.bgGrid = new AnimatedGrid(1000, 1000);
 
-    this.view.addChild(this.background, this.title, this.playClassicButton, this.playTimerButton);
+    this.view.addChild(
+      this.background,
+      this.bgGrid,
+      this.title,
+      this.playClassicButton,
+      this.playTimerButton,
+    );
+
   }
 
   private createBackground() {
@@ -38,6 +49,7 @@ export class MainMenu extends Scene {
 
   protected show() {
     show(this.view);
+    this.bgGrid.start();
   }
 
   protected async load() {
@@ -47,6 +59,7 @@ export class MainMenu extends Scene {
 
   public destroy() {
     this.unsubscribeEvents();
+    this.bgGrid.stop();
     this.view.destroy();
   }
 
@@ -72,6 +85,7 @@ export class MainMenu extends Scene {
     this.resizeButton(this.playTimerButton, size, 1.05);
 
     this.resizeTitle(size);
+    this.bgGrid.resize(size.width, size.height);
   }
 
   playClassicBlastGame() {
