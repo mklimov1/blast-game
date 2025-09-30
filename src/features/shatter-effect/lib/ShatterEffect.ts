@@ -54,20 +54,22 @@ export class ShatterEffect extends Container {
     }
   }
 
-  update() {
+  update(ticker: Ticker) {
+    const dt = ticker.deltaTime;
+
     this.g.clear();
 
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i];
 
-      p.vx *= this.friction;
-      p.vy *= this.friction;
+      p.vx *= Math.pow(this.friction, dt);
+      p.vy *= Math.pow(this.friction, dt);
       p.vy += this.gravity;
 
-      p.x += p.vx;
-      p.y += p.vy;
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
 
-      p.life--;
+      p.life -= dt;
 
       if (p.life <= 0 || p.y > window.innerHeight + 50) {
         this.particles.splice(i, 1);
