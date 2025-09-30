@@ -22,7 +22,7 @@ export class Score extends Container {
 
   private createScoreLabel() {
     const text = new Text('score', {
-      fontSize: 190,
+      fontSize: 130,
     });
 
     text.anchor.set(0.5);
@@ -34,12 +34,12 @@ export class Score extends Container {
 
   private createScoreValueText() {
     const text = new Text('0', {
-      fontSize: 250,
+      fontSize: 150,
     });
 
     text.anchor.set(0.5);
     text.x = this.frame.width * 0.5;
-    text.y = this.frame.height * 0.285;
+    text.y = this.frame.height * 0.3;
 
     return text;
   }

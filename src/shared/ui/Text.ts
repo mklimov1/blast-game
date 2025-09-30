@@ -2,8 +2,8 @@ import { TextStyle, Text as PixiText, type TextStyleOptions } from 'pixi.js';
 
 const defaultTextStyle: Partial<TextStyleOptions> = {
   fill: 0xffffff,
-  fontFamily: 'LuckiestGuy-Regular',
-  fontSize: 80,
+  fontFamily: 'PublicPixel',
+  fontSize: 70,
 };
 
 export class Text extends PixiText {

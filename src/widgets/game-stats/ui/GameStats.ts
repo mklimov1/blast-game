@@ -30,11 +30,11 @@ export class GameStats extends Container {
 
   private createAttemptsLeftText() {
     const text = new Text('', {
-      fontSize: 270,
+      fontSize: 200,
     });
     text.anchor.set(0.5);
-    text.x = this.frame.width * 0.5;
-    text.y = this.frame.height * 0.29;
+    text.x = this.frame.width * 0.51;
+    text.y = this.frame.height * 0.3;
 
     return text;
   }
@@ -53,12 +53,12 @@ export class GameStats extends Container {
 
   private createScoreValueText() {
     const text = new Text('0', {
-      fontSize: 200,
+      fontSize: 160,
     });
 
     text.anchor.set(0.5);
     text.x = this.frame.width * 0.5;
-    text.y = this.frame.height * 0.77;
+    text.y = this.frame.height * 0.79;
 
     return text;
   }

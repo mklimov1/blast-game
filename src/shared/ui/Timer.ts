@@ -13,7 +13,7 @@ export class Timer extends Container {
     this.frame.anchor.set(0.5, 0);
     this.addChild(this.frame, this.timer);
     this.frame.scale.set(0.5, 1);
-    this.timer.y = this.frame.height * 0.4;
+    this.timer.y = this.frame.height * 0.45;
   }
 
   public setTime(ms: number) {
@@ -23,7 +23,7 @@ export class Timer extends Container {
 
   private createTimer() {
     const text = new Text('', {
-      fontSize: 200,
+      fontSize: 150,
     });
     text.anchor.set(0.5);
     return text;

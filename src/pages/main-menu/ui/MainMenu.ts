@@ -19,8 +19,8 @@ export class MainMenu extends Scene {
   private title = this.createTitleText();
 
   protected create() {
-    this.playClassicButton = new Button('classic mode', 2);
-    this.playTimerButton = new Button('timer mode', 2);
+    this.playClassicButton = new Button('CLASSIC', 2);
+    this.playTimerButton = new Button('TIMER', 2);
     this.bgGrid = new AnimatedGrid(1000, 1000);
 
     this.view.addChild(
