@@ -62,7 +62,7 @@ export class ParallaxBackground extends Container {
 
   public resize({ width, height }: Size) {
     const { defaultSize } = this;
-    const scale = Math.max(width / defaultSize.width, height / defaultSize.height);
+    const scale = Math.max(width / defaultSize.width, height / defaultSize.height) * 1.05;
 
     this.x = width * 0.5;
     this.y = height * 0.5;
