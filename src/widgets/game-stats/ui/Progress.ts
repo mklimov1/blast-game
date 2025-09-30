@@ -8,7 +8,7 @@ import { Text } from '@/shared/ui/Text';
 export class Progress extends Container {
   private frame = Sprite.from('progress-bar/progressBar');
 
-  private text = new Text('progress');
+  private text = new Text('PROGRESS');
 
   private progressBar = new ProgressBar();
 
@@ -24,7 +24,7 @@ export class Progress extends Container {
     this.progressBar.y = this.frame.height * 0.65;
 
     this.text.anchor.set(0.5);
-    this.text.y = this.frame.height * 0.2;
+    this.text.y = this.frame.height * 0.23;
 
     this.addChild(this.frame, this.progressBar, this.text);
 

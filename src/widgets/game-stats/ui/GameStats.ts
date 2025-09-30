@@ -40,13 +40,13 @@ export class GameStats extends Container {
   }
 
   private createScoreLabel() {
-    const text = new Text('score:', {
-      fontSize: 90,
+    const text = new Text('SCORE:', {
+      fontSize: 85,
     });
 
     text.anchor.set(0.5);
     text.x = this.frame.width * 0.5;
-    text.y = this.frame.height * 0.65;
+    text.y = this.frame.height * 0.66;
 
     return text;
   }

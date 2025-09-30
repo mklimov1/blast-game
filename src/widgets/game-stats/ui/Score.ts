@@ -21,13 +21,13 @@ export class Score extends Container {
   }
 
   private createScoreLabel() {
-    const text = new Text('score', {
+    const text = new Text('SCORE', {
       fontSize: 130,
     });
 
     text.anchor.set(0.5);
     text.x = this.frame.width * 0.5;
-    text.y = this.frame.height * 0.725;
+    text.y = this.frame.height * 0.74;
 
     return text;
   }
