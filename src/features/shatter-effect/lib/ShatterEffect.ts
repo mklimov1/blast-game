@@ -9,8 +9,16 @@ interface Particle {
   vy: number;
   life: number;
   size: number;
-  color: BlockColor;
+  color: string;
 }
+
+const colorMap: Record<BlockColor, string> = {
+  blue: '#0098E8',
+  green: '#3BBD23',
+  orange: '#F19E00',
+  purple: '#C8399D',
+  red: '#EC2C44',
+};
 
 export class ShatterEffect extends Container {
   private g: Graphics;
@@ -40,8 +48,8 @@ export class ShatterEffect extends Container {
         vx: (Math.random() - 0.5) * 10,
         vy: (Math.random() - 0.5) * 10,
         life: this.life,
-        size: 6 + Math.random() * 3,
-        color,
+        size: 8 + Math.random() * 3,
+        color: colorMap[color],
       });
     }
   }
@@ -67,7 +75,7 @@ export class ShatterEffect extends Container {
       }
 
       const alpha = p.life / this.life;
-      this.g.star(p.x, p.y, 5, p.size);
+      this.g.rect(p.x, p.y, p.size, p.size);
       this.g.fill({
         alpha,
         color: p.color,
