@@ -4,15 +4,15 @@ import { appEventEmitter, AssetsLoader } from '@/shared/lib';
 import { show } from '@/shared/lib/animations';
 import { Scene } from '@/shared/scene/Scene';
 import { sceneManager } from '@/shared/scene/SceneManager';
-import { AnimatedGrid } from '@/shared/ui/AnimatedGrid';
 import { Button } from '@/shared/ui/Button';
+import { StarField } from '@/shared/ui/StarField';
 import { Text } from '@/shared/ui/Text';
 export class MainMenu extends Scene {
   private playClassicButton!: Button;
 
   private playTimerButton!: Button;
 
-  private bgGrid!: AnimatedGrid;
+  private animatedBg!: StarField;
 
   private background = this.createBackground();
 
@@ -21,11 +21,11 @@ export class MainMenu extends Scene {
   protected create() {
     this.playClassicButton = new Button('CLASSIC', 2);
     this.playTimerButton = new Button('TIMER', 2);
-    this.bgGrid = new AnimatedGrid(1000, 1000);
+    this.animatedBg = new StarField();
 
     this.view.addChild(
       this.background,
-      this.bgGrid,
+      this.animatedBg,
       this.title,
       this.playClassicButton,
       this.playTimerButton,
@@ -36,7 +36,7 @@ export class MainMenu extends Scene {
   private createBackground() {
     const g = new Graphics()
       .rect(0, 0, 100, 100)
-      .fill('#1b1b21');
+      .fill('#1A1A2E');
 
     return g;
   }
@@ -49,7 +49,7 @@ export class MainMenu extends Scene {
 
   protected show() {
     show(this.view);
-    this.bgGrid.start();
+    this.animatedBg.start();
   }
 
   protected async load() {
@@ -59,7 +59,7 @@ export class MainMenu extends Scene {
 
   public destroy() {
     this.unsubscribeEvents();
-    this.bgGrid.stop();
+    this.animatedBg.stop();
     this.view.destroy();
   }
 
@@ -85,7 +85,7 @@ export class MainMenu extends Scene {
     this.resizeButton(this.playTimerButton, size, 1.05);
 
     this.resizeTitle(size);
-    this.bgGrid.resize(size);
+    this.animatedBg.resize(size);
   }
 
   playClassicBlastGame() {
