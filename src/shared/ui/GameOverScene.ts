@@ -21,7 +21,7 @@ export class GameOverScene extends Scene {
   protected create() {
     this.background = this.createBackground();
     this.textEl = this.createText(this.text);
-    this.button = new Button('restart', 1);
+    this.button = new Button('MAIN MENU', 1);
 
     this.view.addChild(this.background, this.textEl, this.button);
 
