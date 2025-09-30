@@ -11,7 +11,7 @@ export default class Field extends Container {
 
   private background = new Background();
 
-  private blockContainer = new Container();
+  public blockContainer = new Container();
 
   constructor() {
     super();

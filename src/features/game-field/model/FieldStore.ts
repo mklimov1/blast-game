@@ -6,7 +6,7 @@ import type { Position } from '@/widgets/game-field/model/types';
 import type { Block, Grid } from './types';
 
 export type FieldEvents = {
-  'blocks:destroyed': (...positions: Position[]) => void;
+  'blocks:destroyed': (...blocks: Block[]) => void;
   'blocks:clear': () => void;
   'blocks:added': () => void;
 };
@@ -69,7 +69,7 @@ class FieldStore extends EventEmitter<FieldEvents> {
       this.grid[row][col] = null;
     });
 
-    this.emit('blocks:destroyed', ...positions);
+    this.emit('blocks:destroyed', ...removedBlocks);
 
     return removedBlocks;
   }
