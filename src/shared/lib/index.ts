@@ -1,3 +1,6 @@
-export * from './AssetsLoader';
-export * from './appEventEmitter';
-export * from './formatTime';
+export { AssetsLoader } from './AssetsLoader';
+export { appEventEmitter } from './appEventEmitter';
+export { formatTime } from './formatTime';
+export { tweenGroup } from './tween';
+export * as animations from './animations';
+export { delay } from './delay';

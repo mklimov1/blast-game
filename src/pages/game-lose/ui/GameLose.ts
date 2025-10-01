@@ -1,4 +1,4 @@
-import { GameOverScene } from '@/shared/ui/GameOverScene';
+import { GameOverScene } from '@/shared';
 
 export class GameLose extends GameOverScene {
   protected text = 'YOU LOSE:(';

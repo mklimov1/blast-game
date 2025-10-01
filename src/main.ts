@@ -1,5 +1,5 @@
 import '@/shared/styles/global.scss';
-import App from '@/app/App';
+import { App } from '@/app';
 
 (async () => {
   const node = document.querySelector('#app');

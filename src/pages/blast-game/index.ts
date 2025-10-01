@@ -1,1 +1,3 @@
-export { default } from './ui/BlastGame';
+export { ClassicBlastGame, TimerBlastGame } from './ui';
+export { blastGameStore } from './model/blastGameStore';
+export * from './model/game-mode/types';

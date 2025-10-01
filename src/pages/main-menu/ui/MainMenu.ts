@@ -1,12 +1,8 @@
 import { Graphics, type Size } from 'pixi.js';
 
-import { appEventEmitter, AssetsLoader } from '@/shared/lib';
-import { show } from '@/shared/lib/animations';
-import { Scene } from '@/shared/scene/Scene';
-import { sceneManager } from '@/shared/scene/SceneManager';
-import { Button } from '@/shared/ui/Button';
-import { StarField } from '@/shared/ui/StarField';
-import { Text } from '@/shared/ui/Text';
+import { sceneManager } from '@/app';
+import { appEventEmitter, AssetsLoader, animations, Scene, Button, StarField, Text } from '@/shared';
+
 export class MainMenu extends Scene {
   private playClassicButton!: Button;
 
@@ -48,7 +44,7 @@ export class MainMenu extends Scene {
   }
 
   protected show() {
-    show(this.view);
+    animations.show(this.view);
     this.animatedBg.start();
   }
 

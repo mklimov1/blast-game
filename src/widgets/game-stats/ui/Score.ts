@@ -1,6 +1,6 @@
 import { Container, Sprite, type Size } from 'pixi.js';
 
-import { Text } from '@/shared/ui/Text';
+import { Text } from '@/shared';
 
 export class Score extends Container {
   private frame = Sprite.from('ui/panel_score');

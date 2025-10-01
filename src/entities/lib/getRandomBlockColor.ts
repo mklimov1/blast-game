@@ -1,6 +1,4 @@
 import { blockColors, type BlockColor } from '../model/blockColors';
 
-export const getRandomBlockColor = (maxColors: number): BlockColor => {
-  return blockColors[Math.floor(Math.random() * maxColors)];
-
-};
+export const getRandomBlockColor = (maxColors: number): BlockColor =>
+  blockColors[Math.floor(Math.random() * maxColors)];

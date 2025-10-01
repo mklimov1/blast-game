@@ -1,13 +1,8 @@
 import { Tween } from '@tweenjs/tween.js';
 import { Graphics, type Size } from 'pixi.js';
 
-import { tweenGroup } from '@/shared/lib/tween';
-import { Button } from '@/shared/ui/Button';
-import { Text } from '@/shared/ui/Text';
-
-import { appEventEmitter, AssetsLoader } from '../lib';
-import { Scene } from '../scene/Scene';
-import { sceneManager } from '../scene/SceneManager';
+import { sceneManager } from '@/app';
+import { tweenGroup, Button, Text, AssetsLoader, appEventEmitter, Scene } from '@/shared';
 
 export class GameOverScene extends Scene {
   private background!: Graphics;

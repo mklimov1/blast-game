@@ -1,5 +1,5 @@
-import { createBlockView } from '@/entities/lib/createBlockView';
-import type { BlockView } from '@/entities/ui/BlockView';
+import { createBlockView } from '@/entities';
+import type { BlockView } from '@/entities';
 
 import { animateSpawnBlocks } from './animateSpawnBlocks';
 import { fieldStore } from './FieldStore';

@@ -1,7 +1,7 @@
 import { Easing, Tween } from '@tweenjs/tween.js';
 import { Container, Graphics, Sprite } from 'pixi.js';
 
-import { tweenGroup } from '../lib/tween';
+import { tweenGroup } from '@/shared';
 
 export class ProgressBar extends Container {
   private progress = Sprite.from('progress-bar/progress');

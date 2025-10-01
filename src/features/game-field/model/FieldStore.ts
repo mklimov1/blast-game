@@ -1,7 +1,7 @@
 import { EventEmitter } from 'pixi.js';
 
-import { getRandomBlockColor } from '@/entities/lib/getRandomBlockColor';
-import type { Position } from '@/widgets/game-field/model/types';
+import { getRandomBlockColor } from '@/entities';
+import type { Position } from '@/widgets';
 
 import type { Block, Grid } from './types';
 

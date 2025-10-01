@@ -1,4 +1,4 @@
-import type { BlockView } from '@/entities/ui/BlockView';
+import type { BlockView } from '@/entities';
 
 export const syncBlocks = async (displayBlocks: BlockView[]) => {
   const promises: Promise<void>[] = displayBlocks

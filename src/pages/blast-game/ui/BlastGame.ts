@@ -1,19 +1,14 @@
 import { Container, type Size } from 'pixi.js';
 
-import type { BlockView } from '@/entities/ui/BlockView';
-import { fieldStore } from '@/features/game-field/model/FieldStore';
-import type { Block } from '@/features/game-field/model/types';
-import { ShatterEffect } from '@/features/shatter-effect/lib/ShatterEffect';
-import { appEventEmitter, AssetsLoader } from '@/shared/lib';
-import { show } from '@/shared/lib/animations';
-import { delay } from '@/shared/lib/delay';
-import { Scene } from '@/shared/scene/Scene';
-import { sceneManager } from '@/shared/scene/SceneManager';
-import Field from '@/widgets/game-field';
+import { sceneManager } from '@/app';
+import type { BlockView } from '@/entities';
+import { fieldStore, type Block } from '@/features';
+import { delay, appEventEmitter, AssetsLoader, Scene, ShatterEffect, animations } from '@/shared';
+import { Field } from '@/widgets';
 
 import { blastGameStore } from '../model/blastGameStore';
 
-export default class BlastGame extends Scene {
+export class BlastGame extends Scene {
   public view = new Container();
 
   protected wrapper!: Container;
@@ -66,7 +61,7 @@ export default class BlastGame extends Scene {
   }
 
   protected show() {
-    show(this.view);
+    animations.show(this.view);
   }
 
   protected unsubscribeEvents() {

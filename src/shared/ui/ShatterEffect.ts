@@ -1,6 +1,6 @@
 import { Container, Graphics, Ticker } from 'pixi.js';
 
-import type { BlockColor } from '@/entities/model/blockColors';
+import type { BlockColor } from '@/entities';
 
 interface Particle {
   x: number;

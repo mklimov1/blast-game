@@ -1,8 +1,4 @@
-import type { ClassicBlastGame } from '@/pages/blast-game/ui/ClassicBlastGame';
-import type { TimerBlastGame } from '@/pages/blast-game/ui/TimerBlastGame';
-import type { GameLose } from '@/pages/game-lose/ui/GameLose';
-import type { GameWin } from '@/pages/game-win/ui/GameWin';
-import type { MainMenu } from '@/pages/main-menu/ui/MainMenu';
+import type { ClassicBlastGame, TimerBlastGame, GameLose, GameWin, MainMenu } from '@/pages';
 
 export type SceneMap = {
   mainMenu: typeof MainMenu;

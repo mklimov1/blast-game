@@ -1,11 +1,9 @@
 import { type Size } from 'pixi.js';
 
-import { AssetsLoader } from '@/shared/lib';
-import { ParallaxBackground } from '@/shared/ui/ParallaxBackground';
-import { GameStats } from '@/widgets/game-stats/ui/GameStats';
-import { Progress } from '@/widgets/game-stats/ui/Progress';
+import { AssetsLoader, ParallaxBackground } from '@/shared';
+import { GameStats, Progress } from '@/widgets';
 
-import BlastGame from './BlastGame';
+import { BlastGame } from './BlastGame';
 import { blastGameStore } from '../model/blastGameStore';
 import { Mode } from '../model/game-mode/types';
 

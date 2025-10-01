@@ -1,9 +1,9 @@
 import { Easing, Tween } from '@tweenjs/tween.js';
 import { Sprite, Texture } from 'pixi.js';
 
-import type { BlockColor } from '@/entities/model/blockColors';
-import type { Block } from '@/features/game-field/model/types';
-import { tweenGroup } from '@/shared/lib/tween';
+import { type BlockColor } from '@/entities';
+import { type Block } from '@/features';
+import { tweenGroup } from '@/shared';
 
 export class BlockView extends Sprite {
   static SIZE = 200;

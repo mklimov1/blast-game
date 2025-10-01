@@ -1,5 +1,5 @@
-import { BlockView } from '@/entities/ui/BlockView';
-import type { Position } from '@/widgets/game-field/model/types';
+import { BlockView } from '@/entities';
+import type { Position } from '@/widgets';
 
 import { fieldStore } from './FieldStore';
 

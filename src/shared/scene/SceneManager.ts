@@ -1,21 +1,19 @@
 import { Container } from 'pixi.js';
 
-import type { SceneMap, SceneName } from '@/app/types';
-
 import { appEventEmitter } from '../lib';
 
 import type { Scene } from './Scene';
 
-class SceneManager {
+export class SceneManager<T extends Record<string, new () => Scene>> {
   private currentScene: Scene | null = null;
 
-  private scenes!: SceneMap;
+  private scenes!: T;
 
   private stage!: Container;
 
   private node!: HTMLElement;
 
-  public init(scenes: SceneMap, stage: Container, node: HTMLElement) {
+  public init(scenes: T, stage: Container, node: HTMLElement) {
     this.stage = stage;
     this.node = node;
     this.scenes = scenes;
@@ -25,7 +23,7 @@ class SceneManager {
     window.addEventListener('resize', resize);
   }
 
-  public async changeScene(newScene: SceneName) {
+  public async changeScene(newScene: keyof T) {
     if (!this.stage || !this.scenes) return;
 
     if (this.currentScene) {
@@ -48,5 +46,3 @@ class SceneManager {
     });
   }
 }
-
-export const sceneManager = new SceneManager();

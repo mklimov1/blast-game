@@ -1,4 +1,4 @@
-import type { BlockColor } from '@/entities/model/blockColors';
+import type { BlockColor } from '@/entities';
 
 export type Block = {
   row: number;

@@ -1,4 +1,4 @@
-import type { Block } from '@/features/game-field/model/types';
+import type { Block } from '@/features';
 
 import { BlockView } from '../ui/BlockView';
 

@@ -1,10 +1,10 @@
-import type { BlockView } from '@/entities/ui/BlockView';
-import { destroyBlocks } from '@/features/game-field/model/destroyBlocks';
-import { findConnected } from '@/features/game-field/model/findConnected';
-import { blastGameStore } from '@/pages/blast-game/model/blastGameStore';
+import type { BlockView } from '@/entities';
+import { blastGameStore } from '@/pages';
 
 import { applyGravity } from './applyGravity';
+import { destroyBlocks } from './destroyBlocks';
 import { fieldStore } from './FieldStore';
+import { findConnected } from './findConnected';
 import { sortByDistance } from './sortByDistance';
 import { spawnNewBlocks } from './spawnNewBlocks';
 import { syncBlocks } from './syncBlocks';

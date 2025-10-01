@@ -1,8 +1,7 @@
 import { Container, Sprite, type Size } from 'pixi.js';
 
-import { blastGameStore } from '@/pages/blast-game/model/blastGameStore';
-import { Mode, type TProgress } from '@/pages/blast-game/model/game-mode/types';
-import { Text } from '@/shared/ui/Text';
+import { Mode, type TProgress, blastGameStore } from '@/pages';
+import { Text } from '@/shared';
 
 export class GameStats extends Container {
   private frame = Sprite.from('ui/panel_score');

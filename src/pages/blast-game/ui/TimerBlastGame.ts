@@ -1,11 +1,8 @@
-import { AssetsLoader } from '@/shared/lib';
-import { ParallaxBackground } from '@/shared/ui/ParallaxBackground';
-import { Timer } from '@/shared/ui/Timer';
-import { Score } from '@/widgets/game-stats/ui/Score';
+import { blastGameStore, Mode } from '@/pages';
+import { AssetsLoader, ParallaxBackground, Timer } from '@/shared';
+import { Score } from '@/widgets';
 
-import BlastGame from './BlastGame';
-import { blastGameStore } from '../model/blastGameStore';
-import { Mode } from '../model/game-mode/types';
+import { BlastGame } from './BlastGame';
 
 import type { Size } from 'pixi.js';
 
