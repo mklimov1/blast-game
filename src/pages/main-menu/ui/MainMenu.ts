@@ -1,4 +1,4 @@
-import { Graphics, type Size } from 'pixi.js';
+import { type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
 import { appEventEmitter, AssetsLoader, animations, Scene, Button, StarField, Text } from '@/shared';
@@ -8,33 +8,22 @@ export class MainMenu extends Scene {
 
   private playTimerButton!: Button;
 
-  private animatedBg!: StarField;
-
-  private background = this.createBackground();
+  private background!: StarField;
 
   private title = this.createTitleText();
 
   protected create() {
     this.playClassicButton = new Button('CLASSIC', 2);
     this.playTimerButton = new Button('TIMER', 2);
-    this.animatedBg = new StarField();
+    this.background = new StarField('#1A1A2E');
 
     this.view.addChild(
       this.background,
-      this.animatedBg,
       this.title,
       this.playClassicButton,
       this.playTimerButton,
     );
 
-  }
-
-  private createBackground() {
-    const g = new Graphics()
-      .rect(0, 0, 100, 100)
-      .fill('#1A1A2E');
-
-    return g;
   }
 
   private createTitleText() {
@@ -45,7 +34,7 @@ export class MainMenu extends Scene {
 
   protected show() {
     animations.show(this.view);
-    this.animatedBg.start();
+    this.background.start();
   }
 
   protected async load() {
@@ -55,7 +44,7 @@ export class MainMenu extends Scene {
 
   public destroy() {
     this.unsubscribeEvents();
-    this.animatedBg.stop();
+    this.background.stop();
     this.view.destroy();
   }
 
@@ -81,7 +70,7 @@ export class MainMenu extends Scene {
     this.resizeButton(this.playTimerButton, size, 1.05);
 
     this.resizeTitle(size);
-    this.animatedBg.resize(size);
+    this.background.resize(size);
   }
 
   playClassicBlastGame() {

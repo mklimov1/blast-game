@@ -1,4 +1,4 @@
-import { Container, Graphics, Ticker, type Size } from 'pixi.js';
+import { Container, Graphics, Ticker, type FillInput, type Size } from 'pixi.js';
 
 interface Star {
     x: number;
@@ -11,6 +11,8 @@ interface Star {
 export class StarField extends Container {
   private stars: Star[] = [];
 
+  private backgroundColor: FillInput;
+
   private graphics: Graphics = new Graphics();
 
   private ticker: Ticker = new Ticker();
@@ -19,9 +21,10 @@ export class StarField extends Container {
 
   private screenSize: Size = { width: 0, height: 0 };
 
-  constructor(starCount: number = 200) {
+  constructor(backgroundColor: FillInput = { color: '#000000' }, starCount: number = 200) {
     super();
     this.starCount = starCount;
+    this.backgroundColor = backgroundColor;
 
     this.addChild(this.graphics);
     this.ticker.add(this.update, this);
@@ -44,7 +47,11 @@ export class StarField extends Container {
   }
 
   private update() {
+    const { screenSize } = this;
     this.graphics.clear();
+
+    this.graphics.rect(0, 0, screenSize.width, screenSize.height);
+    this.graphics.fill(this.backgroundColor);
 
     for (const star of this.stars) {
       star.y += star.speed;
