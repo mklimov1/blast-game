@@ -84,13 +84,13 @@ export class MainMenu extends Scene {
 
   protected unsubscribeEvents() {
     appEventEmitter.off('resize', this.resize, this);
-    this.playClassicButton.off('click', this.playClassicBlastGame, this);
-    this.playTimerButton.off('click', this.playTimerBlastGame, this);
+    this.playClassicButton.off('pointertap', this.playClassicBlastGame, this);
+    this.playTimerButton.off('pointertap', this.playTimerBlastGame, this);
   }
 
   protected subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
-    this.playClassicButton.on('click', this.playClassicBlastGame, this);
-    this.playTimerButton.on('click', this.playTimerBlastGame, this);
+    this.playClassicButton.on('pointertap', this.playClassicBlastGame, this);
+    this.playTimerButton.on('pointertap', this.playTimerBlastGame, this);
   }
 }
