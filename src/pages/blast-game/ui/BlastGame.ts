@@ -1,9 +1,9 @@
-import { Container, type Size } from 'pixi.js';
+import { Container, Ticker, type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
-import type { BlockView } from '@/entities';
+import { type BlockView, blockTweenGroup } from '@/entities';
 import { fieldStore, type Block } from '@/features';
-import { delay, appEventEmitter, AssetsLoader, Scene, ShatterEffect, animations } from '@/shared';
+import { delay, appEventEmitter, AssetsLoader, Scene, ShatterEffect, animations, tweenGroup } from '@/shared';
 import { Field } from '@/widgets';
 
 import { blastGameStore } from '../model/blastGameStore';
@@ -16,6 +16,8 @@ export class BlastGame extends Scene {
   private chipField!: Field;
 
   private destroyEffect!: ShatterEffect;
+
+  private ticker = new Ticker();
 
   protected create() {
     this.wrapper = new Container();
@@ -44,6 +46,11 @@ export class BlastGame extends Scene {
 
     this.chipField.setup();
     this.chipField.fill(...blocks);
+
+    this.ticker.add(() => {
+      blockTweenGroup.update();
+    });
+    this.ticker.start();
   }
 
   private enable() {
@@ -61,7 +68,7 @@ export class BlastGame extends Scene {
   }
 
   protected show() {
-    animations.show(this.view);
+    animations.show(this.view, tweenGroup);
   }
 
   protected unsubscribeEvents() {
@@ -104,6 +111,13 @@ export class BlastGame extends Scene {
       const global = block.toGlobal({ x: block.width * 0.5, y: block.height * 0.5 });
       this.destroyEffect.spawn(global.x, global.y, block.color);
     });
+  }
+
+  protected destroy() {
+    this.ticker.stop();
+    this.ticker.destroy();
+    blockTweenGroup.removeAll();
+    super.destroy();
   }
 
   protected subscribeEvents() {

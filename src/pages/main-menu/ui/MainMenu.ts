@@ -1,7 +1,7 @@
 import { type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
-import { appEventEmitter, AssetsLoader, animations, Scene, Button, StarField, Text } from '@/shared';
+import { appEventEmitter, AssetsLoader, animations, Scene, Button, StarField, Text, tweenGroup } from '@/shared';
 
 export class MainMenu extends Scene {
   private playClassicButton!: Button;
@@ -33,7 +33,7 @@ export class MainMenu extends Scene {
   }
 
   protected show() {
-    animations.show(this.view);
+    animations.show(this.view, tweenGroup);
     this.background.start();
   }
 

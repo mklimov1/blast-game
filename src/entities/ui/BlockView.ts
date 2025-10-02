@@ -1,9 +1,8 @@
 import { Easing, Tween } from '@tweenjs/tween.js';
 import { Sprite, Texture } from 'pixi.js';
 
-import { type BlockColor } from '@/entities';
+import { type BlockColor, blockTweenGroup } from '@/entities';
 import { type Block } from '@/features';
-import { tweenGroup } from '@/shared';
 
 export class BlockView extends Sprite {
   static SIZE = 200;
@@ -40,7 +39,7 @@ export class BlockView extends Sprite {
           this.destroy();
           resolve();
         })
-        .group(tweenGroup)
+        .group(blockTweenGroup)
         .start();
     });
   }
@@ -63,7 +62,7 @@ export class BlockView extends Sprite {
       .onUpdate(({ alpha }) => {
         this.alpha = alpha;
       })
-      .group(tweenGroup)
+      .group(blockTweenGroup)
       .start();
   }
 
@@ -84,7 +83,7 @@ export class BlockView extends Sprite {
           this.y = y;
         })
         .onComplete(() => resolve())
-        .group(tweenGroup)
+        .group(blockTweenGroup)
         .start();
     });
   }

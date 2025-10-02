@@ -1,10 +1,8 @@
-import { Tween } from '@tweenjs/tween.js';
-
-import { tweenGroup } from '../tween';
+import { Group, Tween } from '@tweenjs/tween.js';
 
 import type { Container } from 'pixi.js';
 
-export const show = (target: Container) => {
+export const show = (target: Container, group: Group) => {
   target.alpha = 0;
   return new Tween({ alpha: 0 })
     .to({ alpha: 1 })
@@ -12,6 +10,6 @@ export const show = (target: Container) => {
       target.alpha = alpha;
     })
     .duration(300)
-    .group(tweenGroup)
+    .group(group)
     .start();
 };
