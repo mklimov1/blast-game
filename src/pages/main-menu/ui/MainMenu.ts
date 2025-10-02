@@ -43,9 +43,8 @@ export class MainMenu extends Scene {
   }
 
   public destroy() {
-    this.unsubscribeEvents();
     this.background.stop();
-    this.view.destroy();
+    super.destroy();
   }
 
   private resizeButton(button: Button, size: Size, yOffset: number) {

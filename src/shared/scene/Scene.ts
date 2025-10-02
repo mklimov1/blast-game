@@ -27,6 +27,6 @@ export abstract class Scene {
 
   protected destroy() {
     this.unsubscribeEvents();
-    this.view.destroy();
+    this.view.destroy({ children: true });
   }
 }

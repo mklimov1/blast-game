@@ -48,8 +48,8 @@ export class StarField extends Container {
 
   private update() {
     const { screenSize } = this;
-    this.graphics.clear();
 
+    this.graphics.clear();
     this.graphics.rect(0, 0, screenSize.width, screenSize.height);
     this.graphics.fill(this.backgroundColor);
 
