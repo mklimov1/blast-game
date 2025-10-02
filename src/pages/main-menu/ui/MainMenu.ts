@@ -62,9 +62,6 @@ export class MainMenu extends Scene {
   }
 
   private resize(size: Size) {
-    this.background.width = size.width;
-    this.background.height = size.height;
-
     this.resizeButton(this.playClassicButton, size, 0);
     this.resizeButton(this.playTimerButton, size, 1.05);
 

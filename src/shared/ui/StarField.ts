@@ -30,10 +30,7 @@ export class StarField extends Container {
     this.ticker.add(this.update, this);
   }
 
-  private createStars(size: Size) {
-    this.width = size.width;
-    this.height = size.height;
-
+  private createStars() {
     this.stars = [];
     for (let i = 0; i < this.starCount; i++) {
       this.stars.push({
@@ -47,10 +44,8 @@ export class StarField extends Container {
   }
 
   private update() {
-    const { screenSize } = this;
-
     this.graphics.clear();
-    this.graphics.rect(0, 0, screenSize.width, screenSize.height);
+    this.graphics.rect(0, 0, this.screenSize.width, this.screenSize.height);
     this.graphics.fill(this.backgroundColor);
 
     for (const star of this.stars) {
@@ -75,6 +70,6 @@ export class StarField extends Container {
 
   public resize(size: Size) {
     this.screenSize = size;
-    this.createStars(size);
+    this.createStars();
   }
 }
