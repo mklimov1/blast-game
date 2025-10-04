@@ -17,6 +17,19 @@ export const assetpackPlugin = (): Plugin => {
     pipes: [
       ...pixiPipes({
         cacheBust: false,
+        texturePacker: {
+          addFrameNames: false,
+          texturePacker: {
+            nameStyle: 'relative',
+            removeFileExtension: true,
+            allowTrim: true,
+            allowRotation: true,
+          },
+          resolutionOptions: {
+            resolutions: { default: 1 },
+            fixedResolution: 'default',
+          },
+        },
         resolutions: { default: 1 },
         manifest: {
           output: 'src/shared/generated/manifest.json',

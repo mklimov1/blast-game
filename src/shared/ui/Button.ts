@@ -43,7 +43,7 @@ export class Button extends Container {
   }
 
   private createButton(buttonType: ButtonType) {
-    const button = Sprite.from(`buttons/${buttonType}`);
+    const button = Sprite.from(`button-${buttonType}`);
 
     button.anchor.set(0.5, 0.45);
 

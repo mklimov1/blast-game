@@ -33,7 +33,7 @@ export class TimerBlastGame extends BlastGame {
     super.create();
     this.timer = new Timer();
     this.score = new Score();
-    this.background = new ParallaxBackground(['city3/1','city3/2', 'city3/3', 'city3/4', 'city3/5']);
+    this.background = new ParallaxBackground(['city3-1','city3-2', 'city3-3', 'city3-4', 'city3-5']);
 
     this.wrapper.addChildAt(this.background, 0);
     this.wrapper.addChild(this.timer, this.score);

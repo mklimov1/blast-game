@@ -34,7 +34,7 @@ export class ClassicBlastGame extends BlastGame {
     super.create();
     this.gameStats = new GameStats(0);
     this.progress = new Progress();
-    this.background = new ParallaxBackground(['Ocean_6/1','Ocean_6/2', 'Ocean_6/3', 'Ocean_6/4']);
+    this.background = new ParallaxBackground(['Ocean_6-1','Ocean_6-2', 'Ocean_6-3', 'Ocean_6-4']);
 
     this.wrapper.addChildAt(this.background, 0);
     this.wrapper.addChild(this.gameStats, this.progress);
