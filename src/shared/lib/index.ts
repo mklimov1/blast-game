@@ -4,3 +4,4 @@ export { formatTime } from './formatTime';
 export { tweenGroup } from './tween';
 export * as animations from './animations';
 export { delay } from './delay';
+export { defer, type Defer } from './defer';

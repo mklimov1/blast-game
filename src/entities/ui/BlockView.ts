@@ -3,15 +3,16 @@ import { Sprite, Texture } from 'pixi.js';
 
 import { type BlockColor, blockTweenGroup } from '@/entities';
 import { type Block } from '@/features';
+import type { Position } from '@/widgets';
 
 export class BlockView extends Sprite {
   static SIZE = 200;
 
   private block: Block;
 
-  row = 0;
+  row = -1;
 
-  col = 0;
+  col = -1;
 
   color: BlockColor;
 
@@ -19,8 +20,6 @@ export class BlockView extends Sprite {
     const texture = Texture.from(`game/tile/${block.color}`);
     super(texture);
     this.block = block;
-    this.cursor = 'pointer';
-    this.eventMode = 'static';
     this.color = block.color;
     this.subcsribeEvents();
   }
@@ -66,16 +65,17 @@ export class BlockView extends Sprite {
       .start();
   }
 
-  animateToGridPosition(row: number, col: number): Promise<void> {
-    const duration = (row - this.row) * 50;
+  moveOnGrid(to: Position): Promise<void> {
+    const duration = (to.row - this.row) * 50;
+    const fromY = this.y;
+    const targetY = to.row * BlockView.SIZE;
 
-    this.row = row;
-    this.col = col;
-
-    const targetY = row * BlockView.SIZE;
+    this.position.x = to.col * BlockView.SIZE;
+    this.row = to.row;
+    this.col = to.col;
 
     return new Promise((resolve) => {
-      new Tween({ y: this.y })
+      new Tween({ y: fromY })
         .to({ y: targetY })
         .easing(Easing.Quartic.InOut)
         .duration(duration)

@@ -1,5 +1,6 @@
 import type { BlockView } from '@/entities';
 import { blastGameStore } from '@/pages';
+import type { Field } from '@/widgets';
 
 import { applyGravity } from './applyGravity';
 import { destroyBlocks } from './destroyBlocks';
@@ -9,18 +10,17 @@ import { sortByDistance } from './sortByDistance';
 import { spawnNewBlocks } from './spawnNewBlocks';
 import { syncBlocks } from './syncBlocks';
 
-import type { Container } from 'pixi.js';
+import type { FederatedPointerEvent } from 'pixi.js';
 
-export const onBlockClick = async (
-  row: number,
-  col: number,
-  blockContainer: Container,
-) => {
+export const onFieldClick = async (e: FederatedPointerEvent, field: Field) => {
+  const chip = field.getChipByPosition({ x: e.globalX, y: e.globalY });
+  if (!chip) return;
+
   const grid = fieldStore.getGrid();
+  const { row, col } = chip.getBlock();
   if (!grid?.[row]?.[col]) return;
 
-  // eslint-disable-next-line no-console
-  console.log(`Clicked block at row=${row}, col=${col}`);
+  const { blockContainer } = field;
   const positions = findConnected(grid, row, col);
 
   if (positions.length < 3) return;

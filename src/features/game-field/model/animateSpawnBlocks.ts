@@ -5,7 +5,7 @@ export const animateSpawnBlocks = async (viewBlocks: BlockView[]): Promise<void>
   const byColumn: Record<number, BlockView[]> = {};
 
   viewBlocks.forEach(block => {
-    const col = block.col;
+    const { col } = block.getBlock();
     if (!byColumn[col]) byColumn[col] = [];
     byColumn[col].push(block);
     block.alpha = 0;
@@ -23,12 +23,11 @@ export const animateSpawnBlocks = async (viewBlocks: BlockView[]): Promise<void>
       const block = colBlocks[i];
       if (!block) continue;
 
-      const { row, col } = block;
+      const { row, col } = block.getBlock();
 
       block.setGridPosition(-1, col);
       block.show();
-
-      promises.push(block.animateToGridPosition(row, col));
+      promises.push(block.moveOnGrid({ row, col }));
     }
 
     await delay(100);

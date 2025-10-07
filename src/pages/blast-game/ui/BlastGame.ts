@@ -2,8 +2,8 @@ import { Container, Ticker, type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
 import { type BlockView, blockTweenGroup } from '@/entities';
-import { fieldStore, type Block } from '@/features';
-import { delay, appEventEmitter, AssetsLoader, Scene, ShatterEffect, animations, tweenGroup } from '@/shared';
+import { fieldStore, onFieldClick, type Block } from '@/features';
+import { delay, appEventEmitter, AssetsLoader, Scene, ShatterEffect, animations, tweenGroup, defer, type Defer } from '@/shared';
 import { Field } from '@/widgets';
 
 import { blastGameStore } from '../model/blastGameStore';
@@ -18,6 +18,8 @@ export class BlastGame extends Scene {
   private destroyEffect!: ShatterEffect;
 
   private ticker = new Ticker();
+
+  private deferred!: Defer;
 
   protected create() {
     this.wrapper = new Container();
@@ -93,7 +95,9 @@ export class BlastGame extends Scene {
     this.finishScene(false);
   }
 
-  private finish({ status }: {status: 'win' | 'lose'}) {
+  private async finish({ status }: {status: 'win' | 'lose'}) {
+    await this.deferred.promise;
+
     if (status === 'win') {
       this.win();
       return;
@@ -126,5 +130,14 @@ export class BlastGame extends Scene {
     fieldStore.on('blocks:destroyed', this.showDestroyEffect, this);
     fieldStore.on('blocks:added', this.enable, this);
     blastGameStore.on('finish', this.finish, this);
+
+    fieldStore.on('blocks:destroyed', () => {
+      this.deferred = defer();
+    }, this);
+    blastGameStore.on('update', () => {
+      this.deferred.resolve();
+    });
+
+    this.chipField.on('pointertap', (e) => onFieldClick(e, this.chipField));
   }
 }

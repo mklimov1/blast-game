@@ -3,7 +3,6 @@ import type { BlockView } from '@/entities';
 
 import { animateSpawnBlocks } from './animateSpawnBlocks';
 import { fieldStore } from './FieldStore';
-import { onBlockClick } from './onBlockClick';
 
 import type { Block } from './types';
 import type { Container } from 'pixi.js';
@@ -17,12 +16,7 @@ export const spawnNewBlocks = async (
 
   const viewBlocks: BlockView[] = newBlocks.map(block => {
     const viewBlock = createBlockView(block);
-
-    viewBlock.on('pointertap', () =>
-      onBlockClick(block.row, block.col, container),
-    );
     viewBlock.setGridPosition(block.row, block.col);
-
     return viewBlock;
   });
 
