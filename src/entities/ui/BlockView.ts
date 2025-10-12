@@ -2,25 +2,20 @@ import { Easing, Tween } from '@tweenjs/tween.js';
 import { Sprite, Texture } from 'pixi.js';
 
 import { type BlockColor, blockTweenGroup } from '@/entities';
-import { type Block } from '@/features';
 import type { Position } from '@/widgets';
 
 export class BlockView extends Sprite {
   static SIZE = 200;
 
-  private block: Block;
-
-  row = -1;
-
-  col = -1;
+  readonly id: string;
 
   color: BlockColor;
 
-  constructor(block: Block) {
-    const texture = Texture.from(`game/tile/${block.color}`);
+  constructor(id: string, color: BlockColor) {
+    const texture = Texture.from(`game/tile/${color}`);
     super(texture);
-    this.block = block;
-    this.color = block.color;
+    this.id = id;
+    this.color = color;
     this.subcsribeEvents();
   }
 
@@ -34,7 +29,6 @@ export class BlockView extends Sprite {
           this.alpha = alpha;
         })
         .onComplete(() => {
-          this.parent.removeChild(this);
           this.destroy();
           resolve();
         })
@@ -43,13 +37,7 @@ export class BlockView extends Sprite {
     });
   }
 
-  getBlock() {
-    return this.block;
-  }
-
   setGridPosition(row: number, col: number) {
-    this.row = row;
-    this.col = col;
     this.position.set(col * BlockView.SIZE, row * BlockView.SIZE);
   }
 
@@ -65,14 +53,11 @@ export class BlockView extends Sprite {
       .start();
   }
 
-  moveOnGrid(to: Position): Promise<void> {
-    const duration = (to.row - this.row) * 50;
+  moveY(to: Position, duration: number): Promise<void> {
     const fromY = this.y;
     const targetY = to.row * BlockView.SIZE;
 
     this.position.x = to.col * BlockView.SIZE;
-    this.row = to.row;
-    this.col = to.col;
 
     return new Promise((resolve) => {
       new Tween({ y: fromY })

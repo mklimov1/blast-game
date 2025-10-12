@@ -1,7 +1,7 @@
 import { Container, Rectangle, type Size } from 'pixi.js';
 
 import { BlockView } from '@/entities';
-import { fieldStore, spawnNewBlocks, type Block } from '@/features';
+import { fieldStore, spawnNewBlocks, type Chip } from '@/features';
 
 import Background from './Background';
 
@@ -11,6 +11,8 @@ export class Field extends Container {
 
   public blockContainer = new Container<BlockView>();
 
+  protected chipMap: Map<string, BlockView>;
+
   constructor() {
     super();
     this.addChild(this.background, this.blockContainer);
@@ -18,6 +20,7 @@ export class Field extends Container {
     this.interactiveChildren = false;
     this.eventMode = 'static';
     this.cursor = 'pointer';
+    this.chipMap = new Map();
   }
 
   public disable() {
@@ -28,8 +31,25 @@ export class Field extends Container {
     this.interactive = true;
   }
 
-  public fill(...blocks: Block[]) {
-    spawnNewBlocks(blocks, this.blockContainer);
+  public getChipById(id: string) {
+    return this.chipMap.get(id);
+  }
+
+  removeChips(...ids: string[]) {
+    const chips = ids.map(id => this.chipMap.get(id)).filter(chip => !!chip);
+
+    this.blockContainer.removeChild(...chips);
+    ids.forEach(id => {
+      this.chipMap.delete(id);
+    });
+  }
+
+  public fill(...chips: Chip[]) {
+    spawnNewBlocks(chips, this.blockContainer);
+
+    this.blockContainer.children.forEach(block => {
+      this.chipMap.set(block.id, block);
+    });
 
     this.hitArea = new Rectangle(
       this.blockContainer.width * -0.5,
@@ -39,8 +59,8 @@ export class Field extends Container {
     );
   }
 
-  public getChipByPosition(globalPosition: {x: number; y: number}): BlockView | undefined {
-    const [chip] = this.blockContainer.children.filter(chip =>
+  public getChipByPosition(globalPosition: {x: number; y: number}) {
+    const chip = this.blockContainer.children.find(chip =>
       chip.getBounds().containsPoint(globalPosition.x, globalPosition.y),
     );
     return chip;

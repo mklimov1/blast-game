@@ -1,11 +1,17 @@
 import type { BlockView } from '@/entities';
 import { delay } from '@/shared';
 
-export const animateSpawnBlocks = async (viewBlocks: BlockView[]): Promise<void> => {
+import { Chip } from './Chip';
+import { moveChipOnGrid } from './moveChipOnGrid';
+
+export const animateSpawnBlocks = async (
+  viewBlocks: BlockView[],
+  blockMap: Map<string, Chip>,
+): Promise<void> => {
   const byColumn: Record<number, BlockView[]> = {};
 
   viewBlocks.forEach(block => {
-    const { col } = block.getBlock();
+    const { col } = blockMap.get(block.id) as Chip;
     if (!byColumn[col]) byColumn[col] = [];
     byColumn[col].push(block);
     block.alpha = 0;
@@ -23,11 +29,12 @@ export const animateSpawnBlocks = async (viewBlocks: BlockView[]): Promise<void>
       const block = colBlocks[i];
       if (!block) continue;
 
-      const { row, col } = block.getBlock();
-
-      block.setGridPosition(-1, col);
+      const chip = blockMap.get(block.id);
+      if (!chip) continue;
+      chip.prevRow = -1;
+      block.setGridPosition(chip.prevRow, chip.col);
       block.show();
-      promises.push(block.moveOnGrid({ row, col }));
+      promises.push(moveChipOnGrid(chip, block));
     }
 
     await delay(100);
