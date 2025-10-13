@@ -1,4 +1,4 @@
-import { Container, Graphics, Ticker } from 'pixi.js';
+import { Graphics, Ticker } from 'pixi.js';
 
 import type { BlockColor } from '@/entities';
 
@@ -20,9 +20,7 @@ const colorMap: Record<BlockColor, string> = {
   red: '#EC2C44',
 };
 
-export class ShatterEffect extends Container {
-  private g: Graphics;
-
+export class ShatterEffect extends Graphics {
   private particles: Particle[] = [];
 
   private gravity = 0.5;
@@ -36,8 +34,6 @@ export class ShatterEffect extends Container {
   constructor() {
     super();
     this.ticker = new Ticker();
-    this.g = new Graphics();
-    this.addChild(this.g);
   }
 
   spawn(x: number, y: number, color: BlockColor) {
@@ -57,7 +53,7 @@ export class ShatterEffect extends Container {
   update(ticker: Ticker) {
     const dt = ticker.deltaTime;
 
-    this.g.clear();
+    this.clear();
 
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i];
@@ -77,8 +73,8 @@ export class ShatterEffect extends Container {
       }
 
       const alpha = p.life / this.life;
-      this.g.rect(p.x, p.y, p.size, p.size);
-      this.g.fill({
+      this.rect(p.x, p.y, p.size, p.size);
+      this.fill({
         alpha,
         color: p.color,
       });
