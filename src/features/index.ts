@@ -1,1 +1,1 @@
-export { type Block, fieldStore, spawnNewBlocks, onFieldClick } from './game-field/model';
+export { type Chip, fieldStore, spawnNewBlocks, onFieldClick } from './game-field/model';

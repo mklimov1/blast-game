@@ -1,9 +1,3 @@
-import type { BlockColor } from '@/entities';
+import type { Chip } from './Chip';
 
-export type Block = {
-  row: number;
-  col: number;
-  color: BlockColor;
-}
-
-export type Grid = (Block | null)[][];
+export type Grid = (Chip | null)[][];

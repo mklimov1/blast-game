@@ -1,16 +1,22 @@
 import { BlockView } from '@/entities';
-import type { Position } from '@/widgets';
+import type { Field } from '@/widgets';
 
 import { fieldStore } from './FieldStore';
 
+import type { Chip } from './Chip';
+
 export const destroyBlocks = async (
-  positions: Position[],
+  blocks: Chip[],
   displayBlocks: BlockView[],
+  field: Field,
 ) => {
-  const blocks = fieldStore.removeCluster(...positions);
+  const removedBlocks = fieldStore.removeCluster(...blocks);
+
   const promises: Promise<void>[] = displayBlocks
-    .filter(block => blocks.includes(block.getBlock()))
+    .filter(block => removedBlocks.some(({ id }) => block.id === id))
     .map(block => block.destroyBlock());
+
+  field.removeChips(...blocks.map(({ id }) => id));
 
   await Promise.all(promises);
 };

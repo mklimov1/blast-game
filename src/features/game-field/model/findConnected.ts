@@ -1,5 +1,7 @@
 import type { Position } from '@/widgets';
 
+import { Chip } from './Chip';
+
 import type { Grid } from './types';
 
 export const findConnected = (
@@ -7,13 +9,14 @@ export const findConnected = (
   startRow: number,
   startCol: number,
   visited: Set<string> = new Set<string>(),
-): Position[] => {
+): Chip[] => {
   const key = `${startRow},${startCol}`;
   if (visited.has(key)) return [];
 
   visited.add(key);
 
-  const color = grid[startRow][startCol]?.color;
+  const targetBlock = grid[startRow][startCol];
+  const color = targetBlock?.color;
   if (!color) return [];
 
   const neighbors: Position[] = [
@@ -23,7 +26,7 @@ export const findConnected = (
     { row: startRow, col: startCol + 1 },
   ];
 
-  const connected: Position[] = [];
+  const connected: Chip[] = [];
 
   for (const { row, col } of neighbors) {
     const block = grid?.[row]?.[col];
@@ -34,5 +37,5 @@ export const findConnected = (
     connected.push(...findConnected(grid, row, col, visited));
   }
 
-  return [{ row: startRow, col: startCol }, ...connected];
+  return [targetBlock, ...connected];
 };

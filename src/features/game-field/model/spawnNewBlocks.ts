@@ -1,18 +1,19 @@
 import { createBlockView } from '@/entities';
 import type { BlockView } from '@/entities';
+import type { Field } from '@/widgets';
 
 import { animateSpawnBlocks } from './animateSpawnBlocks';
 import { fieldStore } from './FieldStore';
 
-import type { Block } from './types';
-import type { Container } from 'pixi.js';
+import type { Chip } from './Chip';
 
 export const spawnNewBlocks = async (
-  newBlocks: Block[],
-  container: Container,
+  newBlocks: Chip[],
+  field: Field,
   animated = false,
 ): Promise<void> => {
   const promises: Promise<void>[] = [];
+  const blockMap = new Map(newBlocks.map(block => [block.id, block]));
 
   const viewBlocks: BlockView[] = newBlocks.map(block => {
     const viewBlock = createBlockView(block);
@@ -20,10 +21,10 @@ export const spawnNewBlocks = async (
     return viewBlock;
   });
 
-  container.addChild(...viewBlocks.reverse());
+  field.addChips(...viewBlocks.reverse());
 
   if (animated) {
-    promises.push(animateSpawnBlocks(viewBlocks));
+    promises.push(animateSpawnBlocks(viewBlocks, blockMap));
   } else {
     viewBlocks.forEach((block) => block.show());
   }

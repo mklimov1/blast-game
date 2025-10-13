@@ -2,7 +2,7 @@ import { Container, Ticker, type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
 import { type BlockView, blockTweenGroup } from '@/entities';
-import { fieldStore, onFieldClick, type Block } from '@/features';
+import { fieldStore, onFieldClick, type Chip } from '@/features';
 import { delay, appEventEmitter, AssetsLoader, Scene, ShatterEffect, animations, tweenGroup, defer, type Defer } from '@/shared';
 import { Field } from '@/widgets';
 
@@ -106,13 +106,18 @@ export class BlastGame extends Scene {
     }
   }
 
-  private showDestroyEffect(...blocks: Block[]) {
-    const displayBlocks = this.chipField.blockContainer.children as BlockView[];
-    const destroyedBlocks = displayBlocks
-      .filter(block => blocks.includes(block.getBlock()));
+  private showDestroyEffect(...chips: Chip[]) {
+    const displayBlocks = this.chipField.blockContainer.children;
+    const displayBlockMap = new Map(displayBlocks.map(block => [block.id, block]));
+    const destroyedBlocks: BlockView[] = chips
+      .map(chip => displayBlockMap.get(chip.id))
+      .filter((b): b is BlockView => b !== undefined);
 
-    destroyedBlocks.forEach(block => {
-      const global = block.toGlobal({ x: block.width * 0.5, y: block.height * 0.5 });
+    destroyedBlocks.forEach((block) => {
+      const global = block.toGlobal({
+        x: block.width * 0.5,
+        y: block.height * 0.5,
+      });
       this.destroyEffect.spawn(global.x, global.y, block.color);
     });
   }
