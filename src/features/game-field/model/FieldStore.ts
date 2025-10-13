@@ -67,49 +67,35 @@ class FieldStore extends EventEmitter<FieldEvents> {
     };
   }
 
-  gravityColumn(col: number) {
+  gravityColumn(col: number): (Chip|null)[] {
     const { grid } = this;
     const columnChips = grid.map(row => row[col]);
-    const result = Array(columnChips.length).fill(null);
-    const movedChips: Chip[] = [];
+    const filteredColmun = columnChips.filter(chip => chip !== null);
+    const result: (Chip|null)[] = Array(columnChips.length - filteredColmun.length)
+      .fill(null)
+      .concat(...filteredColmun);
 
-    let index = columnChips.length - 1;
+    result.forEach((chip, index) => {
+      if (!chip) return;
+      chip.row = index;
+    });
 
-    for (let i = columnChips.length - 1; i >= 0; i--) {
-      const chip = columnChips[i];
-      if (chip !== null) {
-        result[index] = chip;
-
-        if (chip.row !== index) {
-          movedChips.push(chip);
-        }
-
-        chip.row = index;
-        chip.col = col;
-        index--;
-      }
-    }
-
-    return { result, movedChips };
+    return result;
   }
 
-  gravityGrid() {
-    const { grid } = this;
-    const cols = grid[0].length;
-    const rows = grid.length;
-    const allMovedChips: Chip[] = [];
+  gravityGrid(): Chip[] {
+    const cols = this.grid[0].length;
 
     for (let col = 0; col < cols; col++) {
-      const { result, movedChips } = this.gravityColumn(col);
+      const chips = this.gravityColumn(col);
 
-      for (let row = 0; row < rows; row++) {
-        grid[row][col] = result[row];
-      }
-
-      allMovedChips.push(...movedChips);
+      chips.forEach((chip, row) => {
+        this.grid[row][col] = chip;
+      });
     }
 
-    return allMovedChips;
+    return this.grid.flat().filter((chip) =>
+      chip !== null && chip.row !== chip.prevRow) as Chip[];
   }
 
   clear() {

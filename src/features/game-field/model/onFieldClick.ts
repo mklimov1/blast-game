@@ -48,11 +48,10 @@ export const onFieldClick = async (e: FederatedPointerEvent, field: Field) => {
   await destroyBlocks(sortedBlocks, displayBlocks, field);
 
   const movedChips = fieldStore.gravityGrid();
-  console.log(movedChips);
 
   await dropChips(movedChips, field);
   const newBlocks = fieldStore.fill();
-  await spawnNewBlocks(newBlocks, blockContainer, true);
+  await spawnNewBlocks(newBlocks, field, true);
 
   const points = connectedChips.length;
   blastGameStore.update(points);

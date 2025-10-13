@@ -1,15 +1,15 @@
 import { createBlockView } from '@/entities';
 import type { BlockView } from '@/entities';
+import type { Field } from '@/widgets';
 
 import { animateSpawnBlocks } from './animateSpawnBlocks';
 import { fieldStore } from './FieldStore';
 
 import type { Chip } from './Chip';
-import type { Container } from 'pixi.js';
 
 export const spawnNewBlocks = async (
   newBlocks: Chip[],
-  container: Container,
+  field: Field,
   animated = false,
 ): Promise<void> => {
   const promises: Promise<void>[] = [];
@@ -21,7 +21,7 @@ export const spawnNewBlocks = async (
     return viewBlock;
   });
 
-  container.addChild(...viewBlocks.reverse());
+  field.addChips(...viewBlocks.reverse());
 
   if (animated) {
     promises.push(animateSpawnBlocks(viewBlocks, blockMap));

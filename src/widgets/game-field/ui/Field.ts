@@ -45,11 +45,7 @@ export class Field extends Container {
   }
 
   public fill(...chips: Chip[]) {
-    spawnNewBlocks(chips, this.blockContainer);
-
-    this.blockContainer.children.forEach(block => {
-      this.chipMap.set(block.id, block);
-    });
+    spawnNewBlocks(chips, this);
 
     this.hitArea = new Rectangle(
       this.blockContainer.width * -0.5,
@@ -57,6 +53,14 @@ export class Field extends Container {
       this.blockContainer.width,
       this.blockContainer.height,
     );
+  }
+
+  public addChips(...chips: BlockView[]) {
+    this.blockContainer.addChild(...chips);
+
+    chips.forEach(chip => {
+      this.chipMap.set(chip.id, chip);
+    });
   }
 
   public getChipByPosition(globalPosition: {x: number; y: number}) {
