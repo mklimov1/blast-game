@@ -1,23 +1,14 @@
-import { Container, Sprite, type Size } from 'pixi.js';
-
 import { Text } from '@/shared';
+import { Scoreboard } from '@/shared/ui/Scoreboard';
 
-export class Score extends Container {
-  private frame = Sprite.from('ui/panel_score');
-
+export class Score extends Scoreboard {
   private scoreLabel = this.createScoreLabel();
 
   private scoreValue = this.createScoreValueText();
 
-  private defaultSize: Size = {
-    width: this.frame.width,
-    height: this.frame.height,
-  };
-
   constructor() {
     super();
-    this.pivot.set(this.defaultSize.width, this.defaultSize.height * 0.5);
-    this.addChild(this.frame, this.scoreLabel, this.scoreValue);
+    this.addChild(this.scoreLabel, this.scoreValue);
   }
 
   private createScoreLabel() {
@@ -46,14 +37,5 @@ export class Score extends Container {
 
   updateScore(value: number) {
     this.scoreValue.text = value;
-  }
-
-  public resize({ width, height }: Size) {
-    const scale = Math.min(
-      width * 0.4 / this.defaultSize.width,
-      height * 0.35 / this.defaultSize.height,
-    );
-    this.position.set(width * 0.95, height * 0.5);
-    this.scale.set(scale);
   }
 }
