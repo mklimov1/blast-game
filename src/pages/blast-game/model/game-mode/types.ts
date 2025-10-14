@@ -22,12 +22,6 @@ export type TClassicModeProgress = {
 
 export type TProgress = TTimerModeProgress | TClassicModeProgress;
 
-export interface IGameMode {
-  init(state: unknown): void;
-  update(count: number): void;
-  getProgress(): TProgress;
-}
-
 export type TTimerModeInitState = {
   duration: number;
 }
@@ -39,3 +33,9 @@ export type TClassicModeInitState = {
 }
 
 export type TInitState = TTimerModeInitState | TClassicModeInitState;
+
+export interface IGameMode {
+  init(state: TInitState): void;
+  update(count: number): void;
+  getProgress(): TProgress;
+}

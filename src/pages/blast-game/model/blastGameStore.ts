@@ -5,7 +5,7 @@ import { TimerMode } from './game-mode/TimerMode';
 import { Mode, type IGameMode, type TInitState, type TProgress } from './game-mode/types';
 
 export type BlastGameEvents = {
-  update: (payload: TProgress) => void;
+  update: () => void;
   finish: ({status: 'win'| 'lose', score: number})
 };
 
@@ -19,16 +19,15 @@ class BlastGameStore extends EventEmitter<BlastGameEvents> {
 
   init(mode: Mode, initState: TInitState) {
     this.mode = new modeMap[mode]();
-
     this.mode.init(initState);
   }
 
   update(points: number) {
     this.mode.update(points);
-    this.emit('update', this.getProgress());
+    this.emit('update');
   }
 
-  getProgress() {
+  getProgress(): TProgress {
     return this.mode.getProgress();
   }
 }
