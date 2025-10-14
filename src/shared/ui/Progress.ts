@@ -1,7 +1,9 @@
 import { Container, Sprite, type Size } from 'pixi.js';
 
-import { blastGameStore, Mode, type TProgress } from '@/pages';
-import { Text, ProgressBar } from '@/shared';
+import { Mode, type TProgress } from '@/pages';
+import { Text } from '@/shared';
+
+import { ProgressBar } from './ProgressBar';
 
 export class Progress extends Container {
   private frame = Sprite.from('progress-bar/progressBar');
@@ -25,8 +27,6 @@ export class Progress extends Container {
     this.text.y = this.frame.height * 0.23;
 
     this.addChild(this.frame, this.progressBar, this.text);
-
-    this.subscribeEvents();
   }
 
   public resize({ width, height }: Size) {
@@ -38,15 +38,11 @@ export class Progress extends Container {
     this.scale.set(scale);
   }
 
-  private setProgress(payload: TProgress) {
+  public setProgress(payload: TProgress) {
     if (payload.type !== Mode.CLASSIC) return;
     const animated = payload.score > 0;
     const progress = Math.min(payload.score / payload.goal, 1);
 
     this.progressBar.setProgress(progress, animated);
-  }
-
-  private subscribeEvents() {
-    blastGameStore.on('update', this.setProgress, this);
   }
 }

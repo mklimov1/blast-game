@@ -1,8 +1,8 @@
-import { Mode, type TProgress, blastGameStore } from '@/pages';
+import { Mode, type TProgress } from '@/pages';
 import { Text } from '@/shared';
 import { Scoreboard } from '@/shared/ui/Scoreboard';
 
-export class GameStats extends Scoreboard {
+export class GameStatistics extends Scoreboard {
   private attemptsLeftText = this.createAttemptsLeftText();
 
   private scoreLabel = this.createScoreLabel();
@@ -13,9 +13,7 @@ export class GameStats extends Scoreboard {
     super();
 
     this.attemptsLeftText.text = attempts;
-
     this.addChild(this.attemptsLeftText, this.scoreLabel, this.scoreValueText);
-    this.subscribeEvents();
   }
 
   private createAttemptsLeftText() {
@@ -53,13 +51,9 @@ export class GameStats extends Scoreboard {
     return text;
   }
 
-  private updateStats(payload: TProgress) {
+  public updateStatistics(payload: TProgress) {
     if (payload.type !== Mode.CLASSIC) return;
     this.attemptsLeftText.text = payload.step;
     this.scoreValueText.text = payload.score;
-  }
-
-  private subscribeEvents() {
-    blastGameStore.on('update', this.updateStats, this);
   }
 }

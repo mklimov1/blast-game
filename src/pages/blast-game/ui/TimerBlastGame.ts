@@ -1,6 +1,5 @@
 import { blastGameStore, Mode } from '@/pages';
-import { AssetsLoader, ParallaxBackground, Timer } from '@/shared';
-import { Score } from '@/widgets';
+import { AssetsLoader, ParallaxBackground, Score, Timer } from '@/shared';
 
 import { BlastGame } from './BlastGame';
 
