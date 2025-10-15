@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import { AssetPipe } from '@assetpack/core';
+import { type AssetPipe } from '@assetpack/core';
 
 import { generateAssetTypes } from './generateAssetTypes';
 
@@ -10,13 +10,14 @@ export function generateAssetTypesPipe(): AssetPipe {
 
     defaultOptions: {},
 
-    async finish(asset, options, pipeSystem): Promise<void> {
+    async finish(_asset, _options, pipeSystem): Promise<void> {
       try {
         const manifestPath = pipeSystem.getPipe('pixi-manifest').defaultOptions.output;
 
         const stat = fs.statSync(manifestPath);
 
         if (stat.isFile()) {
+
           // eslint-disable-next-line no-console
           console.log('generate types...');
           await generateAssetTypes({});

@@ -1,26 +1,20 @@
-import { defineConfig } from 'eslint/config';
+// @ts-check
+
+import eslint from '@eslint/js';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import pluginImport from 'eslint-plugin-import';
-import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-export default defineConfig([
+export default defineConfig(
+  globalIgnores(['node_modules/**', 'dist/**', 'src/shared/generated/**', '.assetpack/**']),
+  eslint.configs.recommended,
+  tseslint.configs.recommended,
   {
-    ignores: ['node_modules/**', 'dist/**', 'src/shared/generated/**', '.assetpack/**'],
-  },
-  {
-    files: ['**/*.{ts,mts,cts}'],
+    files: ['src/**/*.{ts,mts,cts}', 'config/**/*.{ts,mts,cts}'],
     plugins: {
       '@typescript-eslint': tseslint.plugin,
       import: pluginImport,
     },
-  },
-  {
-    files: ['**/*.{ts,mts,cts}'],
-    languageOptions: { globals: globals.browser },
-  },
-  ...tseslint.configs.recommended,
-  {
-    files: ['**/*.{ts,mts,cts}'],
     rules: {
       'semi': ['error', 'always'],
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
@@ -84,4 +78,4 @@ export default defineConfig([
       'quotes': ['error', 'single'],
     },
   },
-]);
+);

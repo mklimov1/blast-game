@@ -1,4 +1,4 @@
-import '@/shared/styles/global.scss';
+import '@/shared/styles/global.css';
 import { App } from '@/app';
 
 (async () => {
