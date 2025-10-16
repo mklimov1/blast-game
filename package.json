@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@tweenjs/tween.js": "^25.0.0",
+    "eventemitter3": "5.0.1",
     "pixi.js": "8.10.2"
   }
 }

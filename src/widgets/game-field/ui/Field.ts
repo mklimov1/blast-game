@@ -1,17 +1,15 @@
 import { Container, Rectangle, type Size } from 'pixi.js';
 
-import { BlockView } from '@/entities';
-import { fieldStore, spawnNewBlocks, type Chip } from '@/features';
-
 import Background from './Background';
+import { RenderChip } from './RenderChip';
 
 export class Field extends Container {
 
   private background = new Background();
 
-  public blockContainer = new Container<BlockView>();
+  public blockContainer = new Container<RenderChip>();
 
-  protected chipMap: Map<string, BlockView>;
+  protected chipMap: Map<string, RenderChip>;
 
   constructor() {
     super();
@@ -39,14 +37,13 @@ export class Field extends Container {
     const chips = ids.map(id => this.chipMap.get(id)).filter(chip => !!chip);
 
     this.blockContainer.removeChild(...chips);
+    chips.forEach(chip => chip.destroy());
     ids.forEach(id => {
       this.chipMap.delete(id);
     });
   }
 
-  public fill(...chips: Chip[]) {
-    spawnNewBlocks(chips, this);
-
+  public updateHitArea() {
     this.hitArea = new Rectangle(
       this.blockContainer.width * -0.5,
       this.blockContainer.height * -0.5,
@@ -55,7 +52,7 @@ export class Field extends Container {
     );
   }
 
-  public addChips(...chips: BlockView[]) {
+  public addChips(...chips: RenderChip[]) {
     this.blockContainer.addChild(...chips);
 
     chips.forEach(chip => {
@@ -70,16 +67,19 @@ export class Field extends Container {
     return chip;
   }
 
-  public setup() {
-    const { cols, rows } = fieldStore.getGridSettings();
+  public getChips() {
+    return this.blockContainer.children;
+  }
+
+  public setup(rows: number, cols: number) {
     const size: Size = {
-      width: BlockView.SIZE * cols,
-      height: BlockView.SIZE * rows,
+      width: RenderChip.SIZE * cols,
+      height: RenderChip.SIZE * rows,
     };
 
     this.blockContainer.pivot.set(
-      BlockView.SIZE * rows / 2,
-      BlockView.SIZE * cols / 2,
+      RenderChip.SIZE * rows / 2,
+      RenderChip.SIZE * cols / 2,
     );
     this.background.width = size.width + 150;
     this.background.height = size.height + 150;

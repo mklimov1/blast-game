@@ -1,4 +1,4 @@
-import type { BlockColor } from '@/entities';
+import { BlockColor } from '../../model';
 
 export class Chip {
   readonly id: string;

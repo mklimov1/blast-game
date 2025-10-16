@@ -1,6 +1,6 @@
 import { Graphics, Ticker } from 'pixi.js';
 
-import type { BlockColor } from '@/entities';
+import { BlockColor } from '@/widgets';
 
 interface Particle {
   x: number;
@@ -13,11 +13,11 @@ interface Particle {
 }
 
 const colorMap: Record<BlockColor, string> = {
-  blue: '#0098E8',
-  green: '#3BBD23',
-  orange: '#F19E00',
-  purple: '#C8399D',
-  red: '#EC2C44',
+  [BlockColor.BLUE]: '#0098E8',
+  [BlockColor.GREEN]: '#3BBD23',
+  [BlockColor.ORANGE]: '#F19E00',
+  [BlockColor.PURPLE]: '#C8399D',
+  [BlockColor.RED]: '#EC2C44',
 };
 
 export class ShatterEffect extends Graphics {

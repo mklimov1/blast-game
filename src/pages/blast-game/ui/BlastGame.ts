@@ -1,10 +1,8 @@
 import { Container, Ticker, type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
-import { type BlockView, blockTweenGroup } from '@/entities';
-import { fieldStore, onFieldClick, type Chip } from '@/features';
 import { delay, appEventEmitter, AssetsLoader, Scene, ShatterEffect, animations, tweenGroup, defer, type Defer } from '@/shared';
-import { Field } from '@/widgets';
+import { GameFieldController, type Chip, type RenderChip } from '@/widgets';
 
 import { blastGameStore } from '../model/blastGameStore';
 
@@ -13,7 +11,7 @@ export class BlastGame extends Scene {
 
   protected wrapper!: Container;
 
-  private chipField!: Field;
+  protected gameField!: GameFieldController;
 
   private destroyEffect!: ShatterEffect;
 
@@ -23,10 +21,10 @@ export class BlastGame extends Scene {
 
   protected create() {
     this.wrapper = new Container();
-    this.chipField = new Field();
+    this.gameField = new GameFieldController();
     this.destroyEffect = new ShatterEffect();
 
-    this.wrapper.addChild(this.chipField, this.destroyEffect);
+    this.wrapper.addChild(this.gameField.view, this.destroyEffect);
     this.view.addChild(this.wrapper);
     this.destroyEffect.start();
   }
@@ -41,26 +39,8 @@ export class BlastGame extends Scene {
 
   public async init() {
     await super.init();
-    this.enable();
 
-    fieldStore.init(8, 8, 3);
-    const blocks = fieldStore.fill();
-
-    this.chipField.setup();
-    this.chipField.fill(...blocks);
-
-    this.ticker.add(() => {
-      blockTweenGroup.update();
-    });
-    this.ticker.start();
-  }
-
-  private enable() {
-    this.chipField.enable();
-  }
-
-  private disable() {
-    this.chipField.disable();
+    this.gameField.setup({ rows: 8, cols: 8, uniqueChipsCount: 3 });
   }
 
   protected finishScene(isWin: boolean) {
@@ -74,23 +54,24 @@ export class BlastGame extends Scene {
   }
 
   protected unsubscribeEvents() {
-    fieldStore.removeAllListeners();
-    blastGameStore.removeAllListeners();
     appEventEmitter.off('resize', this.resize, this);
+    blastGameStore.off('finish', this.finish, this);
+    this.gameField.off('destroyedChips', this.onChipsDestroyed, this);
+    this.gameField.off('updateField', this.onFieldUpdated, this);
   }
 
   protected resize(size: Size) {
-    this.chipField.resize(size);
+    this.gameField.resize(size);
   }
 
   private async win() {
-    this.disable();
+    this.gameField.disable();
     await delay(1000);
     this.finishScene(true);
   }
 
   private async lose() {
-    this.disable();
+    this.gameField.disable();
     await delay(1000);
     this.finishScene(false);
   }
@@ -107,11 +88,11 @@ export class BlastGame extends Scene {
   }
 
   private showDestroyEffect(...chips: Chip[]) {
-    const displayBlocks = this.chipField.blockContainer.children;
+    const displayBlocks = this.gameField.view.getChips();
     const displayBlockMap = new Map(displayBlocks.map(block => [block.id, block]));
-    const destroyedBlocks: BlockView[] = chips
+    const destroyedBlocks: RenderChip[] = chips
       .map(chip => displayBlockMap.get(chip.id))
-      .filter((b): b is BlockView => b !== undefined);
+      .filter((b): b is RenderChip => b !== undefined);
 
     destroyedBlocks.forEach((block) => {
       const global = block.toGlobal({
@@ -125,24 +106,23 @@ export class BlastGame extends Scene {
   protected destroy() {
     this.ticker.stop();
     this.ticker.destroy();
-    blockTweenGroup.removeAll();
     super.destroy();
+  }
+
+  private onChipsDestroyed(chips: Chip[]) {
+    this.deferred = defer();
+    this.showDestroyEffect(...chips);
+    blastGameStore.update(chips.length);
+  };
+
+  private onFieldUpdated() {
+    this.deferred.resolve();
   }
 
   protected subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
-    fieldStore.on('blocks:destroyed', this.disable, this);
-    fieldStore.on('blocks:destroyed', this.showDestroyEffect, this);
-    fieldStore.on('blocks:added', this.enable, this);
     blastGameStore.on('finish', this.finish, this);
-
-    fieldStore.on('blocks:destroyed', () => {
-      this.deferred = defer();
-    }, this);
-    blastGameStore.on('update', () => {
-      this.deferred.resolve();
-    });
-
-    this.chipField.on('pointertap', (e) => onFieldClick(e, this.chipField));
+    this.gameField.on('destroyedChips', this.onChipsDestroyed, this);
+    this.gameField.on('updateField', this.onFieldUpdated, this);
   }
 }

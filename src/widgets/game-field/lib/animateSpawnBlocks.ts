@@ -1,14 +1,15 @@
-import type { BlockView } from '@/entities';
 import { delay } from '@/shared';
 
-import { Chip } from './Chip';
+import { Chip } from './entities/Chip';
 import { moveChipOnGrid } from './moveChipOnGrid';
 
+import type { RenderChip } from '../ui/RenderChip';
+
 export const animateSpawnBlocks = async (
-  viewBlocks: BlockView[],
+  viewBlocks: RenderChip[],
   blockMap: Map<string, Chip>,
 ): Promise<void> => {
-  const byColumn: Record<number, BlockView[]> = {};
+  const byColumn: Record<number, RenderChip[]> = {};
 
   viewBlocks.forEach(block => {
     const { col } = blockMap.get(block.id) as Chip;

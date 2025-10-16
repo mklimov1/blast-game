@@ -1,5 +1,5 @@
-import { EventEmitter, type Size } from 'pixi.js';
-
+import EventEmitter from 'eventemitter3';
+import { type Size } from 'pixi.js';
 type TEvents = {
   resize: (size: Size) => void;
 }

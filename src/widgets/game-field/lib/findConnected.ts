@@ -1,8 +1,6 @@
-import type { Position } from '@/widgets';
+import { Chip } from './entities/Chip';
 
-import { Chip } from './Chip';
-
-import type { Grid } from './types';
+import type { Grid, Position } from './../model/types';
 
 export const findConnected = (
   grid: Grid,

@@ -1,18 +1,10 @@
-import { EventEmitter, uid } from 'pixi.js';
+import { uid } from 'pixi.js';
 
-import { getRandomBlockColor } from '@/entities';
-
-import { Chip } from './Chip';
+import { Chip, getRandomBlockColor } from '../lib';
 
 import type { Grid } from './types';
 
-export type FieldEvents = {
-  'blocks:destroyed': (...blocks: Chip[]) => void;
-  'blocks:clear': () => void;
-  'blocks:added': () => void;
-};
-
-class FieldStore extends EventEmitter<FieldEvents> {
+export class FieldStore {
   private grid: Grid = [];
 
   private rows: number= 0;
@@ -98,21 +90,12 @@ class FieldStore extends EventEmitter<FieldEvents> {
       chip !== null && chip.row !== chip.prevRow) as Chip[];
   }
 
-  clear() {
-    this.chipMap.clear();
-    this.init(this.rows, this.cols, this.maxColors);
-  }
-
   removeCluster(...chips: Chip[]) {
     chips.forEach(({ row, col, id }) => {
       this.chipMap.delete(id);
       this.grid[row][col] = null;
     });
 
-    this.emit('blocks:destroyed', ...chips);
-
     return chips;
   }
 }
-
-export const fieldStore = new FieldStore();

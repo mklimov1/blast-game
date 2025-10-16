@@ -1,10 +1,10 @@
 import { Easing, Tween } from '@tweenjs/tween.js';
 import { Sprite, Texture } from 'pixi.js';
 
-import { type BlockColor, blockTweenGroup } from '@/entities';
-import type { Position } from '@/widgets';
+import { blockTweenGroup } from '../lib';
+import { BlockColor, type Position } from './../model/types';
 
-export class BlockView extends Sprite {
+export class RenderChip extends Sprite {
   static SIZE = 200;
 
   readonly id: string;
@@ -12,14 +12,14 @@ export class BlockView extends Sprite {
   color: BlockColor;
 
   constructor(id: string, color: BlockColor) {
-    const texture = Texture.from(`game/tile/${color}`);
+    const texture = Texture.from(`game/tile/${color.toLowerCase()}`);
     super(texture);
     this.id = id;
     this.color = color;
     this.subcsribeEvents();
   }
 
-  destroyBlock(delay = 0): Promise<void> {
+  hide(delay = 0): Promise<void> {
     return new Promise((resolve) => {
       new Tween({ alpha: 1 })
         .to({ alpha: 0 })
@@ -29,7 +29,6 @@ export class BlockView extends Sprite {
           this.alpha = alpha;
         })
         .onComplete(() => {
-          this.destroy();
           resolve();
         })
         .group(blockTweenGroup)
@@ -38,7 +37,7 @@ export class BlockView extends Sprite {
   }
 
   setGridPosition(row: number, col: number) {
-    this.position.set(col * BlockView.SIZE, row * BlockView.SIZE);
+    this.position.set(col * RenderChip.SIZE, row * RenderChip.SIZE);
   }
 
   show() {
@@ -55,9 +54,9 @@ export class BlockView extends Sprite {
 
   moveY(to: Position, duration: number): Promise<void> {
     const fromY = this.y;
-    const targetY = to.row * BlockView.SIZE;
+    const targetY = to.row * RenderChip.SIZE;
 
-    this.position.x = to.col * BlockView.SIZE;
+    this.position.x = to.col * RenderChip.SIZE;
 
     return new Promise((resolve) => {
       new Tween({ y: fromY })

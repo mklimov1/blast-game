@@ -1,4 +1,5 @@
-import { EventEmitter } from 'pixi.js';
+
+import EventEmitter from 'eventemitter3';
 
 import { ClassicMode } from './game-mode/ClassicMode';
 import { TimerMode } from './game-mode/TimerMode';
