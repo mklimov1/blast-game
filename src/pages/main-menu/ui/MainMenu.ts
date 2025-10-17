@@ -27,7 +27,9 @@ export class MainMenu extends Scene {
   }
 
   private createTitleText() {
-    const text = new Text('BLAST GAME');
+    const text = new Text('BLAST GAME', {
+      fontSize: 400,
+    });
     text.anchor.set(0.5);
     return text;
   }
