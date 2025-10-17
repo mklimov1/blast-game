@@ -2,7 +2,7 @@ import { Easing, Tween } from '@tweenjs/tween.js';
 import { Sprite, Texture } from 'pixi.js';
 
 import { blockTweenGroup } from '../lib';
-import { BlockColor, type Position } from './../model/types';
+import { BlockColor, type Position } from '../types';
 
 export class RenderChip extends Sprite {
   static SIZE = 200;

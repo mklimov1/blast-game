@@ -7,10 +7,22 @@ import { blockTweenGroup } from '../lib/entities/blockTweenGroup';
 import { Field } from '../ui/Field';
 import { type RenderChip } from '../ui/RenderChip';
 
-import type { EventTypes, TFieldOptions } from './types';
 import type { Chip } from '../lib/entities/Chip';
 
-export class GameFieldController extends EventEmitter<EventTypes> {
+type TFieldOptions = {
+  rows: number;
+  cols: number;
+  uniqueChipsCount: number;
+}
+
+type TEventTypes = {
+  chipClick: (id: string) => void;
+  destroyedChips: (chips: Chip[]) => void;
+  addedChips: (chips: Chip[]) => void;
+  updateField: (payload: {destroyed: Chip[], added: Chip[]}) => void;
+}
+
+export class GameFieldController extends EventEmitter<TEventTypes> {
   view = new Field();
 
   store = new FieldStore();

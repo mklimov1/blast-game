@@ -1,4 +1,4 @@
-import type { Position } from './../model/types';
+import type { Position } from '../types';
 
 export const sortByDistance = <T extends { row: number; col: number; }>(
   chips: T[],

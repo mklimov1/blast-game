@@ -2,7 +2,7 @@ import { uid } from 'pixi.js';
 
 import { Chip, getRandomBlockColor } from '../lib';
 
-import type { Grid } from './types';
+import type { Grid } from '../types/types';
 
 export class FieldStore {
   private grid: Grid = [];

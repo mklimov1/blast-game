@@ -1,4 +1,4 @@
-import { BlockColor } from '../../model';
+import { BlockColor } from './../../types';
 
 export class Chip {
   readonly id: string;

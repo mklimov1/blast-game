@@ -1,4 +1,4 @@
-import { BlockColor } from '../model';
+import { BlockColor } from './../types';
 
 export const getRandomBlockColor = (maxColors: number): BlockColor => {
   const colors = Object.values(BlockColor);
