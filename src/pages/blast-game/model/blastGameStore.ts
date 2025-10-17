@@ -5,7 +5,7 @@ import { ClassicMode } from './game-mode/ClassicMode';
 import { TimerMode } from './game-mode/TimerMode';
 import { Mode, type IGameMode, type TInitState, type TProgress } from './game-mode/types';
 
-export type BlastGameEvents = {
+type EventTypes = {
   update: () => void;
   finish: ({status: 'win'| 'lose', score: number})
 };
@@ -15,7 +15,7 @@ const modeMap = {
   [Mode.TIMER]: TimerMode,
 };
 
-class BlastGameStore extends EventEmitter<BlastGameEvents> {
+class BlastGameStore extends EventEmitter<EventTypes> {
   private mode!: IGameMode;
 
   init(mode: Mode, initState: TInitState) {

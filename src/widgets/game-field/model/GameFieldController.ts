@@ -9,27 +9,27 @@ import { type RenderChip } from '../ui/RenderChip';
 
 import type { Chip } from '../lib/entities/Chip';
 
-type TFieldOptions = {
+type FieldOptions = {
   rows: number;
   cols: number;
   uniqueChipsCount: number;
 }
 
-type TEventTypes = {
+type EventTypes = {
   chipClick: (id: string) => void;
   destroyedChips: (chips: Chip[]) => void;
   addedChips: (chips: Chip[]) => void;
   updateField: (payload: {destroyed: Chip[], added: Chip[]}) => void;
 }
 
-export class GameFieldController extends EventEmitter<TEventTypes> {
+export class GameFieldController extends EventEmitter<EventTypes> {
   view = new Field();
 
   store = new FieldStore();
 
   ticker = new Ticker();
 
-  setup(fieldOptions: TFieldOptions) {
+  setup(fieldOptions: FieldOptions) {
     this.store.init(fieldOptions.rows, fieldOptions.cols, fieldOptions.uniqueChipsCount);
     this.attachEvents();
 
