@@ -3,12 +3,11 @@ import { type Size } from 'pixi.js';
 import { AssetsLoader, GameStatistics, ParallaxBackground, Progress } from '@/shared';
 
 import { BlastGame } from './BlastGame';
-import { blastGameStore } from '../model/blastGameStore';
-import { Mode } from '../model/game-mode/types';
+import { ClassicMode } from '../model/game-mode/ClassicMode';
 
-export class ClassicBlastGame extends BlastGame {
-  private mode = Mode.CLASSIC;
+import type { Mode, TClassicModeProgress } from '../model/game-mode/types';
 
+export class ClassicBlastGame extends BlastGame<Mode.CLASSIC> {
   private gameStatistics!: GameStatistics;
 
   private progress!: Progress;
@@ -16,12 +15,13 @@ export class ClassicBlastGame extends BlastGame {
   private background!: ParallaxBackground;
 
   public async init() {
-    blastGameStore.init(this.mode, {
+    this.mode = new ClassicMode({
       goal: 100,
       step: 20,
       score: 0,
     });
     await super.init();
+    this.mode.update(0);
   }
 
   protected async load(): Promise<void> {
@@ -37,7 +37,6 @@ export class ClassicBlastGame extends BlastGame {
 
     this.wrapper.addChildAt(this.background, 0);
     this.wrapper.addChild(this.gameStatistics, this.progress);
-    this.updateStatistics();
   }
 
   protected resize(size: Size) {
@@ -47,20 +46,18 @@ export class ClassicBlastGame extends BlastGame {
     this.background.resize(size);
   }
 
-  private updateStatistics() {
-    const progress = blastGameStore.getProgress();
-
-    this.progress.setProgress(progress);
-    this.gameStatistics.updateStatistics(progress);
+  private updateStatistics(payload: TClassicModeProgress) {
+    this.progress.setProgress(payload);
+    this.gameStatistics.updateStatistics(payload);
   }
 
   protected unsubscribeEvents(): void {
     super.unsubscribeEvents();
-    blastGameStore.off('update', this.updateStatistics, this);
+    this.mode.off('update', this.updateStatistics, this);
   }
 
   protected subscribeEvents(): void {
     super.subscribeEvents();
-    blastGameStore.on('update', this.updateStatistics, this);
+    this.mode.on('update', this.updateStatistics, this);
   }
 }

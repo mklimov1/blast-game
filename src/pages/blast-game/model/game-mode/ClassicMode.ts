@@ -1,7 +1,18 @@
-import { blastGameStore } from '../blastGameStore';
-import { Mode, type IGameMode, type TClassicModeInitState } from './types';
+import EventEmitter from 'eventemitter3';
 
-export class ClassicMode implements IGameMode {
+import { Mode, type EventTypes, type IGameMode, type TClassicModeProgress } from './types';
+
+export type TClassicModeConfig = {
+  goal: number;
+  step: number;
+  score: number;
+}
+
+type ModeEventTypes = EventTypes & {
+  update: (progress: TClassicModeProgress) => void
+}
+
+export class ClassicMode extends EventEmitter<ModeEventTypes> implements IGameMode<Mode.CLASSIC> {
   private type: Mode.CLASSIC = Mode.CLASSIC;
 
   private score = 0;
@@ -10,23 +21,26 @@ export class ClassicMode implements IGameMode {
 
   private step!: number;
 
-  init(initState: TClassicModeInitState) {
+  constructor({ goal, step }: TClassicModeConfig) {
+    super();
+
     this.score = 0;
-    this.goal = initState.goal;
-    this.step = initState.step;
+    this.goal = goal;
+    this.step = step;
   }
 
   update(count: number) {
     this.score += count;
     this.step -= 1;
+    this.emit('update', this.getProgress());
 
     if (this.score >= this.goal) {
-      blastGameStore.emit('finish', { status: 'win', score: this.score });
+      this.emit('finish', { status: 'win', score: this.score });
       return;
     }
 
     if (this.step <= 0) {
-      blastGameStore.emit('finish', { status: 'lose', score: this.score });
+      this.emit('finish', { status: 'lose', score: this.score });
       return;
     }
   }

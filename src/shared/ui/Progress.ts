@@ -1,6 +1,5 @@
 import { Container, Sprite, type Size } from 'pixi.js';
 
-import { Mode, type TProgress } from '@/pages';
 import { Text } from '@/shared';
 
 import { ProgressBar } from './ProgressBar';
@@ -38,8 +37,7 @@ export class Progress extends Container {
     this.scale.set(scale);
   }
 
-  public setProgress(payload: TProgress) {
-    if (payload.type !== Mode.CLASSIC) return;
+  public setProgress(payload: {score: number; goal: number}) {
     const animated = payload.score > 0;
     const progress = Math.min(payload.score / payload.goal, 1);
 

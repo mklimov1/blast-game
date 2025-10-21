@@ -1,7 +1,16 @@
-import { blastGameStore } from '../blastGameStore';
-import { Mode, type IGameMode, type TTimerModeInitState } from './types';
+import EventEmitter from 'eventemitter3';
 
-export class TimerMode implements IGameMode {
+import { Mode, type EventTypes, type IGameMode, type TTimerModeProgress } from './types';
+
+export type TTimerModeConfig = {
+  duration: number;
+}
+
+type ModeEventTypes = EventTypes & {
+  update: (progress: TTimerModeProgress) => void
+}
+
+export class TimerMode extends EventEmitter<ModeEventTypes> implements IGameMode<Mode.TIMER> {
   private type: Mode.TIMER = Mode.TIMER;
 
   private score = 0;
@@ -12,19 +21,22 @@ export class TimerMode implements IGameMode {
 
   private duration!: number;
 
-  init(initState: TTimerModeInitState) {
+  constructor({ duration }: TTimerModeConfig) {
+    super();
+
     this.score = 0;
     this.startTime = Date.now();
-    this.duration = initState.duration;
+    this.duration = duration;
     this.endTime = this.startTime + this.duration;
 
     setTimeout(() => {
-      blastGameStore.emit('finish', { status: 'win', score: this.score });
+      this.emit('finish', { status: 'win', score: this.score });
     }, this.duration);
   }
 
   update(count: number) {
     this.score += count;
+    this.emit('update', this.getProgress());
   }
 
   getProgress() {

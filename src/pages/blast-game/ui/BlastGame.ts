@@ -4,9 +4,11 @@ import { sceneManager } from '@/app';
 import { delay, appEventEmitter, AssetsLoader, Scene, ShatterEffect, animations, tweenGroup, defer, type Defer } from '@/shared';
 import { GameFieldController, type Chip, type RenderChip } from '@/widgets';
 
-import { blastGameStore } from '../model/blastGameStore';
+import type { IGameMode, Mode } from '../model/game-mode/types';
 
-export class BlastGame extends Scene {
+export class BlastGame<M extends Mode> extends Scene {
+  protected mode!: IGameMode<M>;
+
   public view = new Container();
 
   protected wrapper!: Container;
@@ -39,7 +41,6 @@ export class BlastGame extends Scene {
 
   public async init() {
     await super.init();
-
     this.gameField.setup({ rows: 8, cols: 8, uniqueChipsCount: 3 });
   }
 
@@ -55,7 +56,6 @@ export class BlastGame extends Scene {
 
   protected unsubscribeEvents() {
     appEventEmitter.off('resize', this.resize, this);
-    blastGameStore.off('finish', this.finish, this);
     this.gameField.off('destroyedChips', this.onChipsDestroyed, this);
     this.gameField.off('updateField', this.onFieldUpdated, this);
   }
@@ -112,7 +112,7 @@ export class BlastGame extends Scene {
   private onChipsDestroyed(chips: Chip[]) {
     this.deferred = defer();
     this.showDestroyEffect(...chips);
-    blastGameStore.update(chips.length);
+    this.mode.update(chips.length);
   };
 
   private onFieldUpdated() {
@@ -121,7 +121,7 @@ export class BlastGame extends Scene {
 
   protected subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
-    blastGameStore.on('finish', this.finish, this);
+    this.mode.on('finish', this.finish, this);
     this.gameField.on('destroyedChips', this.onChipsDestroyed, this);
     this.gameField.on('updateField', this.onFieldUpdated, this);
   }

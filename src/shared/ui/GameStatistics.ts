@@ -1,4 +1,3 @@
-import { Mode, type TProgress } from '@/pages';
 import { Text } from '@/shared';
 import { Scoreboard } from '@/shared/ui/Scoreboard';
 
@@ -51,8 +50,7 @@ export class GameStatistics extends Scoreboard {
     return text;
   }
 
-  public updateStatistics(payload: TProgress) {
-    if (payload.type !== Mode.CLASSIC) return;
+  public updateStatistics(payload: {step: number; score: number}) {
     this.attemptsLeftText.text = payload.step;
     this.scoreValueText.text = payload.score;
   }

@@ -1,13 +1,12 @@
-import { blastGameStore, Mode } from '@/pages';
+import { Mode, type TTimerModeProgress } from '@/pages';
 import { AssetsLoader, ParallaxBackground, Score, Timer } from '@/shared';
 
 import { BlastGame } from './BlastGame';
+import { TimerMode } from '../model/game-mode/TimerMode';
 
 import type { Size } from 'pixi.js';
 
-export class TimerBlastGame extends BlastGame {
-  private mode = Mode.TIMER;
-
+export class TimerBlastGame extends BlastGame<Mode.TIMER> {
   private timer!: Timer;
 
   private score!: Score;
@@ -17,10 +16,11 @@ export class TimerBlastGame extends BlastGame {
   protected intervalId!: NodeJS.Timeout;
 
   public async init() {
-    blastGameStore.init(this.mode, {
+    this.mode = new TimerMode({
       duration: 30000,
     });
     await super.init();
+    this.mode.update(0);
   }
 
   protected async load(): Promise<void> {
@@ -37,8 +37,9 @@ export class TimerBlastGame extends BlastGame {
     this.wrapper.addChildAt(this.background, 0);
     this.wrapper.addChild(this.timer, this.score);
 
-    this.updateTimer();
-    this.updateScore();
+    const progress = this.mode.getProgress();
+    this.updateTimer(progress);
+    this.updateScore(progress);
   }
 
   protected resize(size: Size): void {
@@ -52,28 +53,27 @@ export class TimerBlastGame extends BlastGame {
     clearInterval(this.intervalId);
   }
 
-  private updateScore() {
-    const { score } = blastGameStore.getProgress();
-    this.score.updateScore(score);
+  private updateScore(payload: TTimerModeProgress) {
+    this.score.updateScore(payload.score);
   }
 
-  private updateTimer() {
-    const progress = blastGameStore.getProgress();
-    if (progress.type !== Mode.TIMER) return;
-    const msLeft = progress.endTime - progress.currentTime;
+  private updateTimer(payload: TTimerModeProgress) {
+    const msLeft = payload.endTime - payload.currentTime;
     this.timer.setTime(msLeft);
   }
 
   protected unsubscribeEvents(): void {
     super.unsubscribeEvents();
-    blastGameStore.off('finish', this.stopTimer, this);
+    this.mode.off('finish', this.stopTimer, this);
+    this.mode.off('update', this.updateScore, this);
     clearInterval(this.intervalId);
   }
 
   protected subscribeEvents(): void {
     super.subscribeEvents();
-    blastGameStore.on('finish', this.stopTimer, this);
-    blastGameStore.on('update', this.updateScore, this);
-    this.intervalId = setInterval(() => this.updateTimer(), 200);
+    this.mode.on('finish', this.stopTimer, this);
+    this.mode.on('update', this.updateScore, this);
+    this.intervalId = setInterval(() =>
+      this.updateTimer(this.mode.getProgress()), 200);
   }
 }

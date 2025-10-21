@@ -1,3 +1,5 @@
+import type EventEmitter from 'eventemitter3';
+
 export enum Mode {
   CLASSIC = 'CLASSIC',
   TIMER = 'TIMER'
@@ -20,22 +22,17 @@ export type TClassicModeProgress = {
   goal: number;
 }
 
-export type TProgress = TTimerModeProgress | TClassicModeProgress;
-
-export type TTimerModeInitState = {
-  duration: number;
+type Progress = {
+  [Mode.CLASSIC]: TClassicModeProgress;
+  [Mode.TIMER]: TTimerModeProgress;
 }
 
-export type TClassicModeInitState = {
-  goal: number;
-  step: number;
-  score: number;
-}
-
-export type TInitState = TTimerModeInitState | TClassicModeInitState;
-
-export interface IGameMode {
-  init(state: TInitState): void;
+export interface IGameMode<M extends Mode> extends EventEmitter {
   update(count: number): void;
-  getProgress(): TProgress;
+  getProgress(): Progress[M];
+}
+
+export type EventTypes = {
+  update: () => void;
+  finish: ({status: 'win'| 'lose', score: number})
 }
