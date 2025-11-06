@@ -16,7 +16,7 @@ export class GameOverScene extends Scene {
   protected create() {
     this.background = new StarField();
     this.textEl = this.createText(this.text);
-    this.button = new Button('MAIN MENU', 1);
+    this.button = new Button('MENU', 1);
 
     this.view.addChild(this.background, this.textEl, this.button);
 
@@ -75,17 +75,38 @@ export class GameOverScene extends Scene {
     }
   }
 
-  private resize({ width, height }: Size) {
-    this.background.resize({ width, height });
+  private resizeButton({ width, height }: Size) {
+    const { button } = this;
+    const scale = Math.min(
+      height * 0.15 / button.defaultSize.height,
+      width * 0.45 / button.defaultSize.width,
+    );
 
-    this.textEl.position.set(
+    button.scale.set(scale);
+    button.position.set(
       width * 0.5,
-      height * 0.5,
+      height * 0.5 + button.height * 0.6,
     );
-    this.button.position.set(
+  }
+
+  private resizeText({ width, height }: Size) {
+    const text = this.textEl;
+    const scale = Math.min(
+      height * 0.15 / text.defaultSize.height,
+      width * 0.7 / text.defaultSize.width,
+    );
+
+    text.scale.set(scale);
+    text.position.set(
       width * 0.5,
-      height * 0.5 + this.button.height,
+      height * 0.5 - text.height * 0.6,
     );
+  }
+
+  private resize(size: Size) {
+    this.background.resize(size);
+    this.resizeText(size);
+    this.resizeButton(size);
   }
 
   finishScene() {

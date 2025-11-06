@@ -61,12 +61,9 @@ export class MainMenu extends Scene {
   }
 
   private resizeTitle(size: Size) {
-    const defaultHeight = this.title.height / this.title.scale.y;
-    const defaultWidth = this.title.width / this.title.scale.x;
-
     const scale = Math.min(
-      size.height * 0.1 / defaultHeight,
-      size.width * 0.9 / defaultWidth,
+      size.height * 0.1 / this.title.defaultSize.height,
+      size.width * 0.9 / this.title.defaultSize.width,
     );
 
     this.title.scale.set(scale);
