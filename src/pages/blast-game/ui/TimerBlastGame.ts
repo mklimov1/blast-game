@@ -1,5 +1,5 @@
 import { Mode, type TTimerModeProgress } from '@/pages';
-import { AssetsLoader, ParallaxBackground, Score, Timer } from '@/shared';
+import { AssetsLoader, ParallaxBackground, Score, Timer, type Breakpoint } from '@/shared';
 
 import { BlastGame } from './BlastGame';
 import { TimerMode } from '../model/game-mode/TimerMode';
@@ -42,10 +42,10 @@ export class TimerBlastGame extends BlastGame<Mode.TIMER> {
     this.updateScore(progress);
   }
 
-  protected resize(size: Size): void {
-    super.resize(size);
+  protected resize(size: Size, breakpoint: Breakpoint): void {
+    super.resize(size, breakpoint);
     this.timer.resize(size);
-    this.score.resize(size);
+    this.score.resize(size, breakpoint);
     this.background.resize(size);
   }
 

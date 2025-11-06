@@ -1,9 +1,9 @@
 import { Container, type Size } from 'pixi.js';
 
 import { appEventEmitter } from '../lib';
+import { detectBreakpoint } from '../lib/detectBreakpoint';
 
 import type { Scene } from './Scene';
-import type { Breakpoint } from '../types/responsive';
 
 export class SceneManager<T extends Record<string, new () => Scene>> {
   private currentScene: Scene | null = null;
@@ -45,8 +45,6 @@ export class SceneManager<T extends Record<string, new () => Scene>> {
       width: this.node.clientWidth,
       height: this.node.clientHeight,
     };
-    const breakpoint: Breakpoint = size.width < 768 ? 'mobile' : 'desktop';
-
-    appEventEmitter.emit('resize', size, breakpoint);
+    appEventEmitter.emit('resize', size, detectBreakpoint(size.width));
   }
 }

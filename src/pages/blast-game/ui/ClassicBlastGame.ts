@@ -1,6 +1,6 @@
 import { type Size } from 'pixi.js';
 
-import { AssetsLoader, GameStatistics, ParallaxBackground, Progress } from '@/shared';
+import { AssetsLoader, GameStatistics, ParallaxBackground, Progress, type Breakpoint } from '@/shared';
 
 import { BlastGame } from './BlastGame';
 import { ClassicMode } from '../model/game-mode/ClassicMode';
@@ -39,9 +39,9 @@ export class ClassicBlastGame extends BlastGame<Mode.CLASSIC> {
     this.wrapper.addChild(this.gameStatistics, this.progress);
   }
 
-  protected resize(size: Size) {
-    super.resize(size);
-    this.gameStatistics.resize(size);
+  protected resize(size: Size, breakpoint: Breakpoint) {
+    super.resize(size, breakpoint);
+    this.gameStatistics.resize(size, breakpoint);
     this.progress.resize(size);
     this.background.resize(size);
   }

@@ -1,1 +1,1 @@
-export type Breakpoint = 'mobile' | 'desktop';
+export type Breakpoint = 'mobile' | 'tablet' | 'desktop';

@@ -1,5 +1,7 @@
 import { Container, Rectangle, type Size } from 'pixi.js';
 
+import type { Breakpoint } from '@/shared';
+
 import Background from './Background';
 import { RenderChip } from './RenderChip';
 
@@ -85,11 +87,24 @@ export class Field extends Container {
     this.background.height = size.height + 150;
   }
 
-  public resize({ width, height }: Size) {
-    this.position.set(
-      width * 0.5, height * 0.5,
+  public resize({ width, height }: Size, breakpoint: Breakpoint) {
+    const scale = Math.min(
+      height * 0.5 / this.background.height,
+      width * 0.95 / this.background.width,
     );
 
-    this.scale.set(height * 0.5 / this.background.height);
+    if (breakpoint === 'mobile' || breakpoint === 'tablet') {
+      this.position.set(
+        width * 0.5,
+        height * 0.45,
+      );
+    } else {
+      this.position.set(
+        width * 0.45,
+        height * 0.5,
+      );
+    }
+
+    this.scale.set(scale);
   }
 }

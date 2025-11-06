@@ -1,7 +1,7 @@
 import { Container, Ticker, type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
-import { delay, appEventEmitter, AssetsLoader, Scene, ShatterEffect, animations, tweenGroup, defer, type Defer } from '@/shared';
+import { delay, appEventEmitter, AssetsLoader, Scene, ShatterEffect, animations, tweenGroup, defer, type Defer, type Breakpoint } from '@/shared';
 import { GameFieldController, type Chip, type RenderChip } from '@/widgets';
 
 import type { IGameMode, Mode } from '../model/game-mode/types';
@@ -60,8 +60,8 @@ export class BlastGame<M extends Mode> extends Scene {
     this.gameField.off('updateField', this.onFieldUpdated, this);
   }
 
-  protected resize(size: Size) {
-    this.gameField.resize(size);
+  protected resize(size: Size, breakpoint: Breakpoint) {
+    this.gameField.resize(size, breakpoint);
   }
 
   private async win() {
