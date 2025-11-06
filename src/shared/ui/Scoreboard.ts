@@ -1,5 +1,7 @@
 import { Container, Sprite, type Size } from 'pixi.js';
 
+import type { Breakpoint } from '../types/responsive';
+
 export class Scoreboard extends Container {
   protected frame: Sprite;
 
@@ -11,12 +13,23 @@ export class Scoreboard extends Container {
     this.addChild(this.frame);
   }
 
-  public resize({ width, height }: Size) {
+  public resize({ width, height }: Size, breakpoint?: Breakpoint) {
     const scale = Math.min(
-      width * 0.4 / this.frame.width,
-      height * 0.35 / this.frame.height,
+      width * 0.6 / this.frame.width,
+      height * 0.25 / this.frame.height,
     );
-    this.position.set(width - (this.frame.width * 0.5) * scale, height * 0.5);
     this.scale.set(scale);
+
+    if (breakpoint === 'mobile' || breakpoint === 'tablet') {
+      this.position.set(
+        width * 0.5,
+        height - ((this.frame.height * 0.5) * scale),
+      );
+      return;
+    }
+    this.position.set(
+      width - (this.frame.width * 0.5) * scale,
+      height * 0.5,
+    );
   }
 }

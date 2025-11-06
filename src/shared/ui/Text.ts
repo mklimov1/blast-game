@@ -1,4 +1,4 @@
-import { TextStyle, Text as PixiText, type TextStyleOptions } from 'pixi.js';
+import { TextStyle, Text as PixiText, type TextStyleOptions, type Size } from 'pixi.js';
 
 const defaultTextStyle: Partial<TextStyleOptions> = {
   fill: 0xffffff,
@@ -7,6 +7,8 @@ const defaultTextStyle: Partial<TextStyleOptions> = {
 };
 
 export class Text extends PixiText {
+  readonly defaultSize: Size;
+
   constructor(text: string, style?: Partial<TextStyleOptions>) {
     const textStyle = new TextStyle({
       ...defaultTextStyle,
@@ -17,5 +19,9 @@ export class Text extends PixiText {
       text,
       style: textStyle,
     });
+    this.defaultSize = {
+      width: this.width,
+      height: this.height,
+    };
   }
 }

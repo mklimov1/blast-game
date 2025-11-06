@@ -30,7 +30,12 @@ export class Timer extends Container {
   }
 
   public resize({ width, height }: Size) {
+    const scale = Math.min(
+      height * 0.1 / this.frame.height,
+      width * 0.4 / this.frame.width,
+    );
+
     this.position.set(width * 0.5, 0);
-    this.scale.set(height * 0.1 / this.frame.height);
+    this.scale.set(scale);
   }
 }

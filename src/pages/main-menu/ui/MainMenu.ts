@@ -13,8 +13,8 @@ export class MainMenu extends Scene {
   private title = this.createTitleText();
 
   protected create() {
-    this.playClassicButton = new Button('CLASSIC', 2);
-    this.playTimerButton = new Button('TIMER', 2);
+    this.playClassicButton = new Button('CLASSIC MODE', 2);
+    this.playTimerButton = new Button('TIMER MODE', 2);
     this.background = new StarField('#1A1A2E');
 
     this.view.addChild(
@@ -50,15 +50,23 @@ export class MainMenu extends Scene {
   }
 
   private resizeButton(button: Button, size: Size, yOffset: number) {
-    button.scale.set(size.height * 0.15 / button.defaultSize.height);
+    const scale = Math.min(
+      size.height * 0.13 / button.defaultSize.height,
+      size.width * 0.8 / button.defaultSize.width,
+    );
+
+    button.scale.set(scale);
     button.x = size.width * 0.5;
     button.y = size.height * 0.5 + button.height * yOffset;
   }
 
   private resizeTitle(size: Size) {
-    const defaultHeight = this.title.height / this.title.scale.y;
+    const scale = Math.min(
+      size.height * 0.1 / this.title.defaultSize.height,
+      size.width * 0.55 / this.title.defaultSize.width,
+    );
 
-    this.title.scale.set(size.height * 0.1 / defaultHeight);
+    this.title.scale.set(scale);
     this.title.x = size.width * 0.5;
     this.title.y = size.height * 0.3;
   }

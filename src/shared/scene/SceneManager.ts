@@ -1,6 +1,7 @@
-import { Container } from 'pixi.js';
+import { Container, type Size } from 'pixi.js';
 
 import { appEventEmitter } from '../lib';
+import { detectBreakpoint } from '../lib/detectBreakpoint';
 
 import type { Scene } from './Scene';
 
@@ -40,9 +41,10 @@ export class SceneManager<T extends Record<string, new () => Scene>> {
 
   private resize() {
     if (!this.node) return;
-    appEventEmitter.emit('resize', {
+    const size: Size = {
       width: this.node.clientWidth,
       height: this.node.clientHeight,
-    });
+    };
+    appEventEmitter.emit('resize', size, detectBreakpoint(size.width));
   }
 }
