@@ -1,9 +1,6 @@
-import type EventEmitter from 'eventemitter3';
+import type { Mode } from '@/shared';
 
-export enum Mode {
-  CLASSIC = 'CLASSIC',
-  TIMER = 'TIMER'
-}
+import type EventEmitter from 'eventemitter3';
 
 export type TTimerModeProgress = {
   type: Mode.TIMER;
@@ -28,6 +25,7 @@ type Progress = {
 }
 
 export interface IGameMode<M extends Mode> extends EventEmitter {
+  readonly type: M;
   update(count: number): void;
   getProgress(): Progress[M];
 }

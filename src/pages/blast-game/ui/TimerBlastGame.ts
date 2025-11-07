@@ -1,5 +1,5 @@
-import { Mode, type TTimerModeProgress } from '@/pages';
-import { AssetsLoader, ParallaxBackground, Score, Timer, type Breakpoint } from '@/shared';
+import { type TTimerModeProgress } from '@/pages';
+import { AssetsLoader, Mode, ParallaxBackground, Score, Timer, type Breakpoint } from '@/shared';
 
 import { BlastGame } from './BlastGame';
 import { TimerMode } from '../model/game-mode/TimerMode';

@@ -1,6 +1,8 @@
 import EventEmitter from 'eventemitter3';
 
-import { Mode, type EventTypes, type IGameMode, type TClassicModeProgress } from './types';
+import { Mode } from '@/shared';
+
+import { type EventTypes, type IGameMode, type TClassicModeProgress } from './types';
 
 export type TClassicModeConfig = {
   goal: number;
@@ -13,7 +15,7 @@ type ModeEventTypes = EventTypes & {
 }
 
 export class ClassicMode extends EventEmitter<ModeEventTypes> implements IGameMode<Mode.CLASSIC> {
-  private type: Mode.CLASSIC = Mode.CLASSIC;
+  public readonly type: Mode.CLASSIC = Mode.CLASSIC;
 
   private score = 0;
 

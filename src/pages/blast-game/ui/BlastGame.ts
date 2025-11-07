@@ -1,10 +1,10 @@
 import { Container, Ticker, type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
-import { delay, appEventEmitter, AssetsLoader, Scene, ShatterEffect, animations, tweenGroup, defer, type Defer, type Breakpoint } from '@/shared';
+import { delay, appEventEmitter, AssetsLoader, Scene, ShatterEffect, animations, tweenGroup, defer, type Defer, type Breakpoint, Mode, scoreStore } from '@/shared';
 import { GameFieldController, type Chip, type RenderChip } from '@/widgets';
 
-import type { IGameMode, Mode } from '../model/game-mode/types';
+import type { IGameMode } from '../model/game-mode/types';
 
 export class BlastGame<M extends Mode> extends Scene {
   protected mode!: IGameMode<M>;
@@ -76,8 +76,10 @@ export class BlastGame<M extends Mode> extends Scene {
     this.finishScene(false);
   }
 
-  private async finish({ status }: {status: 'win' | 'lose'}) {
+  private async finish({ status, score }: {status: 'win' | 'lose', score: number}) {
     await this.deferred.promise;
+
+    scoreStore.set(this.mode.type, score);
 
     if (status === 'win') {
       this.win();
