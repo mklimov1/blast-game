@@ -1,12 +1,14 @@
 import { type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
-import { appEventEmitter, AssetsLoader, animations, Scene, Button, StarField, Text, tweenGroup } from '@/shared';
+import { appEventEmitter, AssetsLoader, animations, Scene, Button, StarField, Text, tweenGroup, Mode, scoreStore } from '@/shared';
 
 export class MainMenu extends Scene {
   private playClassicButton!: Button;
 
   private playTimerButton!: Button;
+
+  private bestScoreText!: Text;
 
   private background!: StarField;
 
@@ -17,13 +19,27 @@ export class MainMenu extends Scene {
     this.playTimerButton = new Button('TIMER MODE', 2);
     this.background = new StarField('#1A1A2E');
 
+    this.bestScoreText = new Text('', {
+      fill: '#ffffff',
+      fontSize: 50,
+      lineHeight: 70,
+      align: 'left',
+    });
+    this.bestScoreText.anchor.set(-0.05, 1.05);
+
     this.view.addChild(
       this.background,
       this.title,
       this.playClassicButton,
       this.playTimerButton,
+      this.bestScoreText,
     );
 
+    const timerModeScore = scoreStore.get(Mode.TIMER);
+
+    if (timerModeScore > 0) {
+      this.bestScoreText.text =`Best score:\nTimer mode: ${timerModeScore}`;
+    }
   }
 
   private createTitleText() {
@@ -71,12 +87,26 @@ export class MainMenu extends Scene {
     this.title.y = size.height * 0.3;
   }
 
+  private resizeBestScoreText(size: Size) {
+    const bounds = this.bestScoreText.getLocalBounds();
+    const scale = Math.min(
+      size.height * 0.05 / bounds.height,
+      size.width * 0.4 / bounds.width,
+    );
+    this.bestScoreText.scale.set(scale);
+    this.bestScoreText.position.set(
+      0,
+      size.height,
+    );
+  }
+
   private resize(size: Size) {
     this.resizeButton(this.playClassicButton, size, 0);
     this.resizeButton(this.playTimerButton, size, 1.05);
 
     this.resizeTitle(size);
     this.background.resize(size);
+    this.resizeBestScoreText(size);
   }
 
   playClassicBlastGame() {

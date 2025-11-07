@@ -1,6 +1,8 @@
 import EventEmitter from 'eventemitter3';
 
-import { Mode, type EventTypes, type IGameMode, type TTimerModeProgress } from './types';
+import { Mode } from '@/shared';
+
+import { type EventTypes, type IGameMode, type TTimerModeProgress } from './types';
 
 export type TTimerModeConfig = {
   duration: number;
@@ -11,7 +13,7 @@ type ModeEventTypes = EventTypes & {
 }
 
 export class TimerMode extends EventEmitter<ModeEventTypes> implements IGameMode<Mode.TIMER> {
-  private type: Mode.TIMER = Mode.TIMER;
+  public readonly type: Mode.TIMER = Mode.TIMER;
 
   private score = 0;
 
