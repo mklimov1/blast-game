@@ -1,6 +1,6 @@
 import { Graphics, Ticker } from 'pixi.js';
 
-import { BlockColor } from '@/widgets';
+import { ChipPower, Color } from '@/widgets';
 
 interface Particle {
   x: number;
@@ -12,12 +12,13 @@ interface Particle {
   color: string;
 }
 
-const colorMap: Record<BlockColor, string> = {
-  [BlockColor.BLUE]: '#0098E8',
-  [BlockColor.GREEN]: '#3BBD23',
-  [BlockColor.ORANGE]: '#F19E00',
-  [BlockColor.PURPLE]: '#C8399D',
-  [BlockColor.RED]: '#EC2C44',
+const colorMap: Record<Color | ChipPower, string> = {
+  [Color.BLUE]: '#0098E8',
+  [Color.GREEN]: '#3BBD23',
+  [Color.ORANGE]: '#F19E00',
+  [Color.PURPLE]: '#C8399D',
+  [Color.RED]: '#EC2C44',
+  [ChipPower.BOMB]: '#4a4a4a',
 };
 
 export class ShatterEffect extends Graphics {
@@ -36,7 +37,7 @@ export class ShatterEffect extends Graphics {
     this.ticker = new Ticker();
   }
 
-  spawn(x: number, y: number, color: BlockColor) {
+  spawn(x: number, y: number, color: Color | ChipPower) {
     for (let i = 0; i < 8; i++) {
       this.particles.push({
         x,
@@ -45,7 +46,7 @@ export class ShatterEffect extends Graphics {
         vy: (Math.random() - 0.5) * 10,
         life: this.life,
         size: 8 + Math.random() * 3,
-        color: colorMap[color],
+        color: colorMap[color] || '#ffffff',
       });
     }
   }

@@ -101,7 +101,7 @@ export class BlastGame<M extends Mode> extends Scene {
         x: block.width * 0.5,
         y: block.height * 0.5,
       });
-      this.destroyEffect.spawn(global.x, global.y, block.color);
+      this.destroyEffect.spawn(global.x, global.y, block.power);
     });
   }
 

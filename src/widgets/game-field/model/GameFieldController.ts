@@ -6,6 +6,7 @@ import type { Breakpoint } from '@/shared';
 import { FieldStore } from './FieldStore';
 import { createRenderChip, animateSpawnBlocks, findConnected, moveChipOnGrid, sortByDistance } from '../lib';
 import { blockTweenGroup } from '../lib/entities/blockTweenGroup';
+import { ChipKind, ChipPower } from '../types';
 import { Field } from '../ui/Field';
 import { type RenderChip } from '../ui/RenderChip';
 
@@ -63,10 +64,7 @@ export class GameFieldController extends EventEmitter<EventTypes> {
   };
 
   private findConnectedChips(chip: Chip): Chip[] {
-    const connectedChips = findConnected(this.store.getGrid(), chip.row, chip.col);
-
-    if (connectedChips.length < 3) return [];
-    return connectedChips;
+    return findConnected(this.store.getGrid(), chip.row, chip.col);
   }
 
   async destroyChipsAnimation(chips: Chip[]): Promise<void>  {
@@ -112,6 +110,21 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     await Promise.all(promises);
   };
 
+  private addPowerChip(targetChip: Chip, destroyedChips: Chip[]) {
+    if (targetChip.kind !== ChipKind.COLOR) return;
+    if (destroyedChips.length > 5) {
+      const bombChip = this.store.add(
+        ChipKind.POWER,
+        ChipPower.BOMB,
+        targetChip.row,
+        targetChip.col,
+      );
+      if (!bombChip) return;
+      this.emit('addedChips', [bombChip]);
+      return bombChip;
+    }
+  }
+
   private async handleFieldClick(e: FederatedPointerEvent) {
     const chip = this.getChipByGlobalCoords(e.globalX, e.globalY);
     if (!chip) return false;
@@ -123,6 +136,13 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     const sortedChips = sortByDistance(connectedChips, chip);
     this.emit('destroyedChips', sortedChips);
     await this.destroyChipsAnimation(sortedChips);
+
+    const powerChip = this.addPowerChip(chip, sortedChips);
+
+    if (powerChip) {
+      await this.spawnNewChips([powerChip], false);
+    }
+
     const movedChips = this.store.gravityGrid();
 
     await this.dropChipsAnimation(movedChips);

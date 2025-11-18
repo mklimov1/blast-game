@@ -1,15 +1,16 @@
 import { uid } from 'pixi.js';
 
 import { Chip, getRandomBlockColor } from '../lib';
+import { ChipKind, ChipPower, Color } from '../types';
 
 import type { Grid } from '../types/types';
 
 export class FieldStore {
   private grid: Grid = [];
 
-  private rows: number= 0;
+  rows: number= 0;
 
-  private cols: number= 0;
+  cols: number= 0;
 
   private maxColors: number= 0;
 
@@ -27,6 +28,20 @@ export class FieldStore {
     return this.chipMap.get(id);
   }
 
+  getByCoords(row: number, col: number) {
+    return this.grid[row][col];
+  }
+
+  add(kind: ChipKind, power: Color | ChipPower, row: number, col: number) {
+    if (this.getByCoords(row, col)) return;
+
+    const chip = new Chip(uid().toString(), kind, power, row, col);
+    this.chipMap.set(chip.id, chip);
+    this.grid[row][col] = chip;
+
+    return chip;
+  }
+
   fill() {
     const { maxColors } = this;
     const newChips: Chip[] = [];
@@ -35,7 +50,7 @@ export class FieldStore {
       return row.map((col, colIndex) => {
         if (col === null) {
           const color = getRandomBlockColor(maxColors);
-          const block =  new Chip(uid().toString(), color, rowIndex, colIndex);
+          const block =  new Chip(uid().toString(), ChipKind.COLOR, color, rowIndex, colIndex);
           newChips.push(block);
           this.chipMap.set(block.id, block);
           return block;

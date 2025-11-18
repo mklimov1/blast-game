@@ -1,6 +1,6 @@
-import { BlockColor } from './../types';
+import { Color } from './../types';
 
-const COLORS = Object.values(BlockColor);
+const COLORS = Object.values(Color);
 
-export const getRandomBlockColor = (maxColors: number): BlockColor =>
+export const getRandomBlockColor = (maxColors: number): Color =>
   COLORS[Math.floor(Math.random() * maxColors)];
