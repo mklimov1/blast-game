@@ -1,9 +1,7 @@
-import { BlockColor } from './../../types';
+import { Color, ChipKind, ChipPower } from './../../types';
 
 export class Chip {
   readonly id: string;
-
-  readonly color: BlockColor;
 
   private _row: number;
 
@@ -13,9 +11,14 @@ export class Chip {
 
   prevCol: number;
 
-  constructor(id: string, color: BlockColor, row: number, col: number) {
+  readonly kind: ChipKind;
+
+  readonly type: Color | ChipPower;
+
+  constructor(id: string, kind: ChipKind, type: Color | ChipPower, row: number, col: number) {
     this.id = id;
-    this.color = color;
+    this.kind = kind;
+    this.type = type;
     this._row = row;
     this._col = col;
     this.prevRow = row;

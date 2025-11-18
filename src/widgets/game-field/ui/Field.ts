@@ -17,6 +17,7 @@ export class Field extends Container {
     super();
     this.addChild(this.background, this.blockContainer);
     this.disable();
+    this.blockContainer.sortableChildren = true;
     this.interactiveChildren = false;
     this.eventMode = 'static';
     this.cursor = 'pointer';

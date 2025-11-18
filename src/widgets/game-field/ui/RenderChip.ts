@@ -2,20 +2,23 @@ import { Easing, Tween } from '@tweenjs/tween.js';
 import { Sprite, Texture } from 'pixi.js';
 
 import { blockTweenGroup } from '../lib';
-import { BlockColor, type Position } from '../types';
+import { ChipKind, ChipPower, Color, type Position } from '../types';
 
 export class RenderChip extends Sprite {
   static SIZE = 200;
 
   readonly id: string;
 
-  color: BlockColor;
+  readonly kind: ChipKind;
 
-  constructor(id: string, color: BlockColor) {
-    const texture = Texture.from(`game/tile/${color.toLowerCase()}`);
+  readonly power: Color | ChipPower;
+
+  constructor(id: string, kind: ChipKind, power: Color | ChipPower) {
+    const texture = Texture.from(`game/tile/${power.toLowerCase()}`);
     super(texture);
     this.id = id;
-    this.color = color;
+    this.kind = kind;
+    this.power = power;
     this.subcsribeEvents();
   }
 
@@ -38,6 +41,7 @@ export class RenderChip extends Sprite {
 
   setGridPosition(row: number, col: number) {
     this.position.set(col * RenderChip.SIZE, row * RenderChip.SIZE);
+    this.zIndex = -row;
   }
 
   show() {

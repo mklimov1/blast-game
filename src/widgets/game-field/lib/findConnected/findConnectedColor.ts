@@ -1,8 +1,7 @@
-import { Chip } from './entities/Chip';
+import { ChipKind, Color, type Grid, type Position } from '../../types';
+import { Chip } from '../entities/Chip';
 
-import type { Grid, Position } from '../types';
-
-export const findConnected = (
+export const findConnectedColor = (
   grid: Grid,
   startRow: number,
   startCol: number,
@@ -14,8 +13,10 @@ export const findConnected = (
   visited.add(key);
 
   const targetBlock = grid[startRow][startCol];
-  const color = targetBlock?.color;
-  if (!color) return [];
+  if (!targetBlock) return [];
+  if (targetBlock.kind !== ChipKind.COLOR) return [];
+
+  const color = targetBlock.type as Color;
 
   const neighbors: Position[] = [
     { row: startRow - 1, col: startCol },
@@ -30,9 +31,9 @@ export const findConnected = (
     const block = grid?.[row]?.[col];
     const neighborKey = `${row},${col}`;
 
-    if (!block || block.color !== color || visited.has(neighborKey)) continue;
+    if (!block || block.type !== color || visited.has(neighborKey)) continue;
 
-    connected.push(...findConnected(grid, row, col, visited));
+    connected.push(...findConnectedColor(grid, row, col, visited));
   }
 
   return [targetBlock, ...connected];
