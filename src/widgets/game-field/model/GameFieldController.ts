@@ -4,7 +4,7 @@ import { FederatedPointerEvent, Ticker, type Size } from 'pixi.js';
 import type { Breakpoint } from '@/shared';
 
 import { FieldStore } from './FieldStore';
-import { createRenderChip, animateSpawnBlocks, findConnected, moveChipOnGrid, sortByDistance } from '../lib';
+import { createRenderChip, animateSpawnBlocks, findConnected, moveChipOnGrid, sortByDistance, type SpawnAnimation } from '../lib';
 import { blockTweenGroup } from '../lib/entities/blockTweenGroup';
 import { ChipKind, ChipPower } from '../types';
 import { Field } from '../ui/Field';
@@ -38,7 +38,7 @@ export class GameFieldController extends EventEmitter<EventTypes> {
 
     const chips = this.store.fill();
     this.view.setup(fieldOptions.rows, fieldOptions.cols);
-    this.spawnNewChips(chips, false);
+    this.spawnNewChips(chips, 'none');
     this.view.updateHitArea();
     this.ticker.start();
   }
@@ -89,7 +89,7 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     await Promise.all(promises);
   };
 
-  private async spawnNewChips(newChips: Chip[], animated = false): Promise<void> {
+  private async spawnNewChips(newChips: Chip[], animation: SpawnAnimation = 'none'): Promise<void> {
     const promises: Promise<void>[] = [];
     const chipMap = new Map(newChips.map(block => [block.id, block]));
 
@@ -101,11 +101,7 @@ export class GameFieldController extends EventEmitter<EventTypes> {
 
     this.view.addChips(...renderChips.reverse());
 
-    if (animated) {
-      promises.push(animateSpawnBlocks(renderChips, chipMap));
-    } else {
-      renderChips.forEach((chip) => chip.show());
-    }
+    promises.push(animateSpawnBlocks(renderChips, chipMap, animation));
 
     await Promise.all(promises);
   };
@@ -140,14 +136,14 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     const powerChip = this.addPowerChip(chip, sortedChips);
 
     if (powerChip) {
-      await this.spawnNewChips([powerChip], false);
+      await this.spawnNewChips([powerChip], 'fade');
     }
 
     const movedChips = this.store.gravityGrid();
 
     await this.dropChipsAnimation(movedChips);
     const newChips = this.store.fill();
-    await this.spawnNewChips(newChips, true);
+    await this.spawnNewChips(newChips, 'drop');
     this.emit('addedChips', newChips);
     this.emit('updateField', { destroyed: sortedChips, added: newChips });
 

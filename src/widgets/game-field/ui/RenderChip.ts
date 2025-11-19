@@ -16,6 +16,7 @@ export class RenderChip extends Sprite {
   constructor(id: string, kind: ChipKind, power: Color | ChipPower) {
     const texture = Texture.from(`game/tile/${power.toLowerCase()}`);
     super(texture);
+    this.anchor.set(0.5);
     this.id = id;
     this.kind = kind;
     this.power = power;

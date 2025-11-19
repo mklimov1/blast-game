@@ -1,4 +1,4 @@
-export { animateSpawnBlocks } from './animateSpawnBlocks';
+export { animateSpawnBlocks, type SpawnAnimation } from './animateSpawnBlocks';
 export { createRenderChip } from './createRenderChip';
 export { Chip } from './entities/Chip';
 export { blockTweenGroup } from './entities/blockTweenGroup';

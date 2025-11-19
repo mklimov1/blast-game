@@ -1,15 +1,41 @@
-import { delay } from '@/shared';
+import { delay, tweenGroup } from '@/shared';
+import { fadeIn } from '@/shared/lib/animations';
 
 import { Chip } from './entities/Chip';
 import { moveChipOnGrid } from './moveChipOnGrid';
 
 import type { RenderChip } from '../ui/RenderChip';
 
+export type SpawnAnimation = 'fade' | 'drop' | 'none';
+
+const drop = async (chip: Chip, renderChip: RenderChip) => {
+  chip.prevRow = -1;
+  renderChip.setGridPosition(chip.prevRow, chip.col);
+  renderChip.show();
+  return moveChipOnGrid(chip, renderChip);
+};
+
+const fade = async (_: Chip, renderChip: RenderChip) => {
+  return fadeIn(renderChip, tweenGroup);
+};
+
+const animationMap: Record<
+  SpawnAnimation, (chip: Chip, renderChip: RenderChip) => Promise<void>
+> = {
+  drop,
+  fade,
+  none: async (_, renderChip: RenderChip) => {
+    renderChip.show();
+  },
+};
+
 export const animateSpawnBlocks = async (
   viewBlocks: RenderChip[],
   blockMap: Map<string, Chip>,
+  animation: SpawnAnimation = 'none',
 ): Promise<void> => {
   const byColumn: Record<number, RenderChip[]> = {};
+  const animate = animationMap[animation];
 
   viewBlocks.forEach(block => {
     const { col } = blockMap.get(block.id) as Chip;
@@ -27,15 +53,12 @@ export const animateSpawnBlocks = async (
 
   for (let i = 0; i < maxLength; i++) {
     for (const colBlocks of Object.values(byColumn)) {
-      const block = colBlocks[i];
-      if (!block) continue;
+      const renderChip = colBlocks[i];
+      if (!renderChip) continue;
 
-      const chip = blockMap.get(block.id);
+      const chip = blockMap.get(renderChip.id);
       if (!chip) continue;
-      chip.prevRow = -1;
-      block.setGridPosition(chip.prevRow, chip.col);
-      block.show();
-      promises.push(moveChipOnGrid(chip, block));
+      promises.push(animate(chip, renderChip));
     }
 
     await delay(100);

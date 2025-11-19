@@ -1,8 +1,6 @@
 import { Group, Tween } from '@tweenjs/tween.js';
 
-import type { Container } from 'pixi.js';
-
-export const show = (target: Container, group: Group) => {
+export const show = (target: { alpha: number }, group: Group) => {
   target.alpha = 0;
   return new Tween({ alpha: 0 })
     .to({ alpha: 1 })
