@@ -61,7 +61,9 @@ export const animateSpawnBlocks = async (
       promises.push(animate(chip, renderChip));
     }
 
-    await delay(100);
+    if (animation !== 'none') {
+      await delay(100);
+    }
   }
 
   await Promise.all(promises);
