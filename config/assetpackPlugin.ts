@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import { AssetPack, type AssetPackConfig  } from '@assetpack/core';
+import { AssetPack, type AssetPackConfig } from '@assetpack/core';
 import { pixiPipes } from '@assetpack/core/pixi';
 import { type Plugin, type ResolvedConfig } from 'vite';
 

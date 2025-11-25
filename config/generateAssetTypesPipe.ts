@@ -17,7 +17,6 @@ export function generateAssetTypesPipe(): AssetPipe {
         const stat = fs.statSync(manifestPath);
 
         if (stat.isFile()) {
-
           // eslint-disable-next-line no-console
           console.log('generate types...');
           await generateAssetTypes({});
@@ -27,4 +26,4 @@ export function generateAssetTypesPipe(): AssetPipe {
       }
     },
   };
-};
+}

@@ -1,7 +1,7 @@
 export interface Defer<T = void> {
-  resolve: (res: T) => void
-  reject: (err?: Error) => void
-  promise: Promise<T>
+  resolve: (res: T) => void;
+  reject: (err?: Error) => void;
+  promise: Promise<T>;
 }
 
 export const defer = <T = void>(): Defer<T> => {

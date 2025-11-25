@@ -50,7 +50,7 @@ export class GameStatistics extends Scoreboard {
     return text;
   }
 
-  public updateStatistics(payload: {step: number; score: number}) {
+  public updateStatistics(payload: { step: number; score: number }) {
     this.attemptsLeftText.text = payload.step;
     this.scoreValueText.text = payload.score;
   }

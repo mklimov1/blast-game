@@ -1,11 +1,11 @@
 import { Graphics, Ticker, type FillInput, type Size } from 'pixi.js';
 
 interface Star {
-    x: number;
-    y: number;
-    size: number;
-    speed: number;
-    alpha: number;
+  x: number;
+  y: number;
+  size: number;
+  speed: number;
+  alpha: number;
 }
 
 export class StarField extends Graphics {

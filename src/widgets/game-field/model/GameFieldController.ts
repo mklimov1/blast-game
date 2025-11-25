@@ -4,7 +4,14 @@ import { FederatedPointerEvent, Ticker, type Size } from 'pixi.js';
 import type { Breakpoint } from '@/shared';
 
 import { FieldStore } from './FieldStore';
-import { createRenderChip, animateSpawnBlocks, findConnected, moveChipOnGrid, sortByDistance, type SpawnAnimation } from '../lib';
+import {
+  createRenderChip,
+  animateSpawnBlocks,
+  findConnected,
+  moveChipOnGrid,
+  sortByDistance,
+  type SpawnAnimation,
+} from '../lib';
 import { blockTweenGroup } from '../lib/entities/blockTweenGroup';
 import { ChipKind, ChipPower } from '../types';
 import { Field } from '../ui/Field';
@@ -16,14 +23,14 @@ type FieldOptions = {
   rows: number;
   cols: number;
   uniqueChipsCount: number;
-}
+};
 
 type EventTypes = {
   chipClick: (id: string) => void;
   destroyedChips: (chips: Chip[]) => void;
   addedChips: (chips: Chip[]) => void;
-  updateField: (payload: {destroyed: Chip[], added: Chip[]}) => void;
-}
+  updateField: (payload: { destroyed: Chip[]; added: Chip[] }) => void;
+};
 
 export class GameFieldController extends EventEmitter<EventTypes> {
   view = new Field();
@@ -67,17 +74,17 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     return findConnected(this.store.getGrid(), chip.row, chip.col);
   }
 
-  async destroyChipsAnimation(chips: Chip[]): Promise<void>  {
+  async destroyChipsAnimation(chips: Chip[]): Promise<void> {
     const removedBlocks = this.store.removeCluster(...chips);
     const renderChips = this.getRenderChips();
 
     const promises: Promise<void>[] = renderChips
-      .filter(block => removedBlocks.some(({ id }) => block.id === id))
-      .map(block => block.hide());
+      .filter((block) => removedBlocks.some(({ id }) => block.id === id))
+      .map((block) => block.hide());
 
     await Promise.all(promises);
     this.view.removeChips(...chips.map(({ id }) => id));
-  };
+  }
 
   async dropChipsAnimation(chips: Chip[]): Promise<void> {
     const promises = chips.map(async (chip) => {
@@ -87,13 +94,13 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     });
 
     await Promise.all(promises);
-  };
+  }
 
   private async spawnNewChips(newChips: Chip[], animation: SpawnAnimation = 'none'): Promise<void> {
     const promises: Promise<void>[] = [];
-    const chipMap = new Map(newChips.map(block => [block.id, block]));
+    const chipMap = new Map(newChips.map((block) => [block.id, block]));
 
-    const renderChips: RenderChip[] = newChips.map(chip => {
+    const renderChips: RenderChip[] = newChips.map((chip) => {
       const renderChip = createRenderChip(chip);
       renderChip.setGridPosition(chip.row, chip.col);
       return renderChip;
@@ -104,7 +111,7 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     promises.push(animateSpawnBlocks(renderChips, chipMap, animation));
 
     await Promise.all(promises);
-  };
+  }
 
   private addPowerChip(targetChip: Chip, destroyedChips: Chip[]) {
     if (targetChip.kind !== ChipKind.COLOR) return;

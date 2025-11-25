@@ -1,7 +1,18 @@
 import { type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
-import { appEventEmitter, AssetsLoader, animations, Scene, Button, StarField, Text, tweenGroup, Mode, scoreStore } from '@/shared';
+import {
+  appEventEmitter,
+  AssetsLoader,
+  animations,
+  Scene,
+  Button,
+  StarField,
+  Text,
+  tweenGroup,
+  Mode,
+  scoreStore,
+} from '@/shared';
 
 export class MainMenu extends Scene {
   private playClassicButton!: Button;
@@ -38,7 +49,7 @@ export class MainMenu extends Scene {
     const timerModeScore = scoreStore.get(Mode.TIMER);
 
     if (timerModeScore > 0) {
-      this.bestScoreText.text =`Best score:\nTimer mode: ${timerModeScore}`;
+      this.bestScoreText.text = `Best score:\nTimer mode: ${timerModeScore}`;
     }
   }
 
@@ -67,8 +78,8 @@ export class MainMenu extends Scene {
 
   private resizeButton(button: Button, size: Size, yOffset: number) {
     const scale = Math.min(
-      size.height * 0.13 / button.defaultSize.height,
-      size.width * 0.8 / button.defaultSize.width,
+      (size.height * 0.13) / button.defaultSize.height,
+      (size.width * 0.8) / button.defaultSize.width,
     );
 
     button.scale.set(scale);
@@ -78,8 +89,8 @@ export class MainMenu extends Scene {
 
   private resizeTitle(size: Size) {
     const scale = Math.min(
-      size.height * 0.1 / this.title.defaultSize.height,
-      size.width * 0.55 / this.title.defaultSize.width,
+      (size.height * 0.1) / this.title.defaultSize.height,
+      (size.width * 0.55) / this.title.defaultSize.width,
     );
 
     this.title.scale.set(scale);
@@ -89,15 +100,9 @@ export class MainMenu extends Scene {
 
   private resizeBestScoreText(size: Size) {
     const bounds = this.bestScoreText.getLocalBounds();
-    const scale = Math.min(
-      size.height * 0.05 / bounds.height,
-      size.width * 0.4 / bounds.width,
-    );
+    const scale = Math.min((size.height * 0.05) / bounds.height, (size.width * 0.4) / bounds.width);
     this.bestScoreText.scale.set(scale);
-    this.bestScoreText.position.set(
-      0,
-      size.height,
-    );
+    this.bestScoreText.position.set(0, size.height);
   }
 
   private resize(size: Size) {

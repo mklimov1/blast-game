@@ -19,7 +19,5 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
   },
-  plugins: [
-    assetpackPlugin(),
-  ],
+  plugins: [assetpackPlugin()],
 });

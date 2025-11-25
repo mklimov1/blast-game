@@ -1,6 +1,6 @@
 import type { Position } from '../types';
 
-export const sortByDistance = <T extends { row: number; col: number; }>(
+export const sortByDistance = <T extends { row: number; col: number }>(
   chips: T[],
   center: Position,
 ): T[] => {

@@ -10,19 +10,19 @@ export type TTimerModeProgress = {
   leftTime: number;
   currentTime: number;
   duration: number;
-}
+};
 
 export type TClassicModeProgress = {
   type: Mode.CLASSIC;
   score: number;
   step: number;
   goal: number;
-}
+};
 
 type Progress = {
   [Mode.CLASSIC]: TClassicModeProgress;
   [Mode.TIMER]: TTimerModeProgress;
-}
+};
 
 export interface IGameMode<M extends Mode> extends EventEmitter {
   readonly type: M;
@@ -32,5 +32,5 @@ export interface IGameMode<M extends Mode> extends EventEmitter {
 
 export type EventTypes = {
   update: () => void;
-  finish: ({status: 'win'| 'lose', score: number})
-}
+  finish: { status: 'win' | 'lose'; score: number };
+};

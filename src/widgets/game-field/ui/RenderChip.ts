@@ -79,10 +79,10 @@ export class RenderChip extends Sprite {
 
   private subcsribeEvents() {
     this.on('pointerenter', () => {
-      this.tint = 0xCCCCCC;
+      this.tint = 0xcccccc;
     });
     this.on('pointerleave', () => {
-      this.tint = 0xFFFFFF;
+      this.tint = 0xffffff;
     });
   }
 }

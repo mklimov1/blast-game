@@ -6,7 +6,6 @@ import Background from './Background';
 import { RenderChip } from './RenderChip';
 
 export class Field extends Container {
-
   private background = new Background();
 
   public blockContainer = new Container<RenderChip>();
@@ -37,11 +36,11 @@ export class Field extends Container {
   }
 
   removeChips(...ids: string[]) {
-    const chips = ids.map(id => this.chipMap.get(id)).filter(chip => !!chip);
+    const chips = ids.map((id) => this.chipMap.get(id)).filter((chip) => !!chip);
 
     this.blockContainer.removeChild(...chips);
-    chips.forEach(chip => chip.destroy());
-    ids.forEach(id => {
+    chips.forEach((chip) => chip.destroy());
+    ids.forEach((id) => {
       this.chipMap.delete(id);
     });
   }
@@ -58,13 +57,13 @@ export class Field extends Container {
   public addChips(...chips: RenderChip[]) {
     this.blockContainer.addChild(...chips);
 
-    chips.forEach(chip => {
+    chips.forEach((chip) => {
       this.chipMap.set(chip.id, chip);
     });
   }
 
-  public getChipByPosition(globalPosition: {x: number; y: number}) {
-    const chip = this.blockContainer.children.find(chip =>
+  public getChipByPosition(globalPosition: { x: number; y: number }) {
+    const chip = this.blockContainer.children.find((chip) =>
       chip.getBounds().containsPoint(globalPosition.x, globalPosition.y),
     );
     return chip;
@@ -82,8 +81,8 @@ export class Field extends Container {
     const chipPivotOffset = RenderChip.SIZE * -0.5;
 
     this.blockContainer.pivot.set(
-      RenderChip.SIZE * rows / 2 + chipPivotOffset ,
-      RenderChip.SIZE * cols / 2 + chipPivotOffset,
+      (RenderChip.SIZE * rows) / 2 + chipPivotOffset,
+      (RenderChip.SIZE * cols) / 2 + chipPivotOffset,
     );
     this.background.width = size.width + 150;
     this.background.height = size.height + 150;
@@ -91,20 +90,14 @@ export class Field extends Container {
 
   public resize({ width, height }: Size, breakpoint: Breakpoint) {
     const scale = Math.min(
-      height * 0.5 / this.background.height,
-      width * 0.95 / this.background.width,
+      (height * 0.5) / this.background.height,
+      (width * 0.95) / this.background.width,
     );
 
     if (breakpoint === 'mobile' || breakpoint === 'tablet') {
-      this.position.set(
-        width * 0.5,
-        height * 0.45,
-      );
+      this.position.set(width * 0.5, height * 0.45);
     } else {
-      this.position.set(
-        width * 0.45,
-        height * 0.5,
-      );
+      this.position.set(width * 0.45, height * 0.5);
     }
 
     this.scale.set(scale);

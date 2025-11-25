@@ -16,9 +16,7 @@ export class ProgressBar extends Container {
     progress.anchor.set(0.5);
     progress.y = frame.height * -0.03;
 
-    mask
-      .roundRect(0, 0, progress.width, progress.height, 40)
-      .fill(0xffffff);
+    mask.roundRect(0, 0, progress.width, progress.height, 40).fill(0xffffff);
     mask.pivot.set(progress.width * 0.5, progress.height * 0.5);
     mask.x = progress.x;
     mask.y = progress.y;
@@ -28,7 +26,7 @@ export class ProgressBar extends Container {
   }
 
   setProgress(value: number, animated = true) {
-    const newX =  (value - 1) * this.progress.width;
+    const newX = (value - 1) * this.progress.width;
 
     if (!animated) {
       this.progress.x = newX;

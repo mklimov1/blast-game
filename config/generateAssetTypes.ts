@@ -17,10 +17,12 @@ export const generateAssetTypes = async ({
 
     const manifest = JSON.parse(content);
 
-    const bundles = manifest.bundles.map(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (b: any) => `  "${b.name.toUpperCase()}": "${b.name}"`,
-    ).join(',\n');
+    const bundles = manifest.bundles
+      .map(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (b: any) => `  "${b.name.toUpperCase()}": "${b.name}"`,
+      )
+      .join(',\n');
 
     const assetKeys = new Set<string>();
 
@@ -29,11 +31,10 @@ export const generateAssetTypes = async ({
       Object.keys(b.assets).forEach((key) => assetKeys.add(key)),
     );
 
-    const assets = [...assetKeys].map(
-      (k) => `  "${k}": "${k}"`,
-    ).join(',\n');
+    const assets = [...assetKeys].map((k) => `  "${k}": "${k}"`).join(',\n');
 
-    const tsContent = '// 🚨 AUTO-GENERATED — DO NOT EDIT\n' +
+    const tsContent =
+      '// 🚨 AUTO-GENERATED — DO NOT EDIT\n' +
       '// Generated from manifest.json\n\n' +
       `export const Bundles = {\n${bundles}\n} as const;\n\n` +
       `export const Assets = {\n${assets}\n} as const;\n\n` +

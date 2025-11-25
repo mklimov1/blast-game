@@ -1,4 +1,3 @@
-
 import { findConnectedColor } from './findConnectedColor';
 import { findConnectedPower } from './findConnectedPower';
 import { ChipKind, type Grid } from '../../types';
@@ -18,7 +17,7 @@ export const findConnected = (
 
   if (chip.kind === ChipKind.POWER) {
     return findConnectedPower(grid, startRow, startCol);
-  };
+  }
 
   const connectedChips = findConnectedColor(grid, startRow, startCol);
 

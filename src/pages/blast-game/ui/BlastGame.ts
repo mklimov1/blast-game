@@ -1,7 +1,20 @@
 import { Container, Ticker, type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
-import { delay, appEventEmitter, AssetsLoader, Scene, ShatterEffect, animations, tweenGroup, defer, type Defer, type Breakpoint, Mode, scoreStore } from '@/shared';
+import {
+  delay,
+  appEventEmitter,
+  AssetsLoader,
+  Scene,
+  ShatterEffect,
+  animations,
+  tweenGroup,
+  defer,
+  type Defer,
+  type Breakpoint,
+  Mode,
+  scoreStore,
+} from '@/shared';
 import { GameFieldController, type Chip, type RenderChip } from '@/widgets';
 
 import type { IGameMode } from '../model/game-mode/types';
@@ -76,7 +89,7 @@ export class BlastGame<M extends Mode> extends Scene {
     this.finishScene(false);
   }
 
-  private async finish({ status, score }: {status: 'win' | 'lose', score: number}) {
+  private async finish({ status, score }: { status: 'win' | 'lose'; score: number }) {
     await this.deferred.promise;
 
     scoreStore.set(this.mode.type, score);
@@ -91,9 +104,9 @@ export class BlastGame<M extends Mode> extends Scene {
 
   private showDestroyEffect(...chips: Chip[]) {
     const displayBlocks = this.gameField.view.getChips();
-    const displayBlockMap = new Map(displayBlocks.map(block => [block.id, block]));
+    const displayBlockMap = new Map(displayBlocks.map((block) => [block.id, block]));
     const destroyedBlocks: RenderChip[] = chips
-      .map(chip => displayBlockMap.get(chip.id))
+      .map((chip) => displayBlockMap.get(chip.id))
       .filter((b): b is RenderChip => b !== undefined);
 
     destroyedBlocks.forEach((block) => {
@@ -115,7 +128,7 @@ export class BlastGame<M extends Mode> extends Scene {
     this.deferred = defer();
     this.showDestroyEffect(...chips);
     this.mode.update(chips.length);
-  };
+  }
 
   private onFieldUpdated() {
     this.deferred.resolve();

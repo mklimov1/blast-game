@@ -5,8 +5,8 @@ type Target = {
   scale: {
     x: number;
     y: number;
-  }
-}
+  };
+};
 
 export const fadeIn = (target: Target, group: Group): Promise<void> => {
   const toScale = target.scale.x;

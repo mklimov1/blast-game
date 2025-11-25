@@ -1,0 +1,9 @@
+dist
+build
+package-lock.json
+package.json
+
+public/assets/
+src/shared/generated/
+.assetpack
+_sources

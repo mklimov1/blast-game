@@ -30,14 +30,14 @@ export class Progress extends Container {
 
   public resize({ width, height }: Size) {
     const scale = Math.min(
-      width * 0.5 / this.defaultSize.width,
-      height * 0.15 / this.defaultSize.height,
+      (width * 0.5) / this.defaultSize.width,
+      (height * 0.15) / this.defaultSize.height,
     );
     this.position.set(width * 0.5, 0);
     this.scale.set(scale);
   }
 
-  public setProgress(payload: {score: number; goal: number}) {
+  public setProgress(payload: { score: number; goal: number }) {
     const animated = payload.score > 0;
     const progress = Math.min(payload.score / payload.goal, 1);
 

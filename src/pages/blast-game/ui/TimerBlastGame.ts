@@ -32,7 +32,13 @@ export class TimerBlastGame extends BlastGame<Mode.TIMER> {
     super.create();
     this.timer = new Timer();
     this.score = new Score();
-    this.background = new ParallaxBackground(['city3-1','city3-2', 'city3-3', 'city3-4', 'city3-5']);
+    this.background = new ParallaxBackground([
+      'city3-1',
+      'city3-2',
+      'city3-3',
+      'city3-4',
+      'city3-5',
+    ]);
 
     this.wrapper.addChildAt(this.background, 0);
     this.wrapper.addChild(this.timer, this.score);
@@ -73,7 +79,6 @@ export class TimerBlastGame extends BlastGame<Mode.TIMER> {
     super.subscribeEvents();
     this.mode.on('finish', this.stopTimer, this);
     this.mode.on('update', this.updateScore, this);
-    this.intervalId = setInterval(() =>
-      this.updateTimer(this.mode.getProgress()), 200);
+    this.intervalId = setInterval(() => this.updateTimer(this.mode.getProgress()), 200);
   }
 }

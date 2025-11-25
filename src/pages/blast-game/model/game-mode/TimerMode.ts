@@ -6,11 +6,11 @@ import { type EventTypes, type IGameMode, type TTimerModeProgress } from './type
 
 export type TTimerModeConfig = {
   duration: number;
-}
+};
 
 type ModeEventTypes = EventTypes & {
-  update: (progress: TTimerModeProgress) => void
-}
+  update: (progress: TTimerModeProgress) => void;
+};
 
 export class TimerMode extends EventEmitter<ModeEventTypes> implements IGameMode<Mode.TIMER> {
   public readonly type: Mode.TIMER = Mode.TIMER;

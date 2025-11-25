@@ -1,7 +1,7 @@
 import { Container, FederatedPointerEvent, Sprite, Texture, type Size } from 'pixi.js';
 
 interface ParallaxSprite extends Sprite {
-    speedFactor: number;
+  speedFactor: number;
 }
 
 export class ParallaxBackground extends Container {

@@ -1,4 +1,3 @@
-
 import { findConnectedBomb } from './findConnectedBomb';
 import { ChipKind, ChipPower, type Grid } from '../../types';
 import { Chip } from '../entities/Chip';
@@ -18,7 +17,7 @@ export const findConnectedPower = (
 
   if (chip.type === ChipPower.BOMB) {
     return findConnectedBomb(grid, startRow, startCol, visited);
-  };
+  }
 
   return [];
 };

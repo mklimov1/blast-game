@@ -8,11 +8,11 @@ import type { Grid } from '../types/types';
 export class FieldStore {
   private grid: Grid = [];
 
-  rows: number= 0;
+  rows: number = 0;
 
-  cols: number= 0;
+  cols: number = 0;
 
-  private maxColors: number= 0;
+  private maxColors: number = 0;
 
   private chipMap!: Map<string, Chip>;
 
@@ -24,7 +24,7 @@ export class FieldStore {
     this.grid = Array.from({ length: rows }, () => Array(cols).fill(null));
   }
 
-  getChipById(id:string): Chip | undefined {
+  getChipById(id: string): Chip | undefined {
     return this.chipMap.get(id);
   }
 
@@ -50,7 +50,7 @@ export class FieldStore {
       return row.map((col, colIndex) => {
         if (col === null) {
           const color = getRandomBlockColor(maxColors);
-          const block =  new Chip(uid().toString(), ChipKind.COLOR, color, rowIndex, colIndex);
+          const block = new Chip(uid().toString(), ChipKind.COLOR, color, rowIndex, colIndex);
           newChips.push(block);
           this.chipMap.set(block.id, block);
           return block;
@@ -74,11 +74,11 @@ export class FieldStore {
     };
   }
 
-  gravityColumn(col: number): (Chip|null)[] {
+  gravityColumn(col: number): (Chip | null)[] {
     const { grid } = this;
-    const columnChips = grid.map(row => row[col]);
-    const filteredColmun = columnChips.filter(chip => chip !== null);
-    const result: (Chip|null)[] = Array(columnChips.length - filteredColmun.length)
+    const columnChips = grid.map((row) => row[col]);
+    const filteredColmun = columnChips.filter((chip) => chip !== null);
+    const result: (Chip | null)[] = Array(columnChips.length - filteredColmun.length)
       .fill(null)
       .concat(...filteredColmun);
 
@@ -101,8 +101,7 @@ export class FieldStore {
       });
     }
 
-    return this.grid.flat().filter((chip) =>
-      chip !== null && chip.row !== chip.prevRow) as Chip[];
+    return this.grid.flat().filter((chip) => chip !== null && chip.row !== chip.prevRow) as Chip[];
   }
 
   removeCluster(...chips: Chip[]) {

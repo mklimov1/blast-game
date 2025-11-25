@@ -8,11 +8,11 @@ export type TClassicModeConfig = {
   goal: number;
   step: number;
   score: number;
-}
+};
 
 type ModeEventTypes = EventTypes & {
-  update: (progress: TClassicModeProgress) => void
-}
+  update: (progress: TClassicModeProgress) => void;
+};
 
 export class ClassicMode extends EventEmitter<ModeEventTypes> implements IGameMode<Mode.CLASSIC> {
   public readonly type: Mode.CLASSIC = Mode.CLASSIC;

@@ -2,7 +2,15 @@ import { Tween } from '@tweenjs/tween.js';
 import { type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
-import { tweenGroup, Button, Text, AssetsLoader, appEventEmitter, Scene, StarField } from '@/shared';
+import {
+  tweenGroup,
+  Button,
+  Text,
+  AssetsLoader,
+  appEventEmitter,
+  Scene,
+  StarField,
+} from '@/shared';
 
 export class GameOverScene extends Scene {
   private background!: StarField;
@@ -78,29 +86,23 @@ export class GameOverScene extends Scene {
   private resizeButton({ width, height }: Size) {
     const { button } = this;
     const scale = Math.min(
-      height * 0.15 / button.defaultSize.height,
-      width * 0.45 / button.defaultSize.width,
+      (height * 0.15) / button.defaultSize.height,
+      (width * 0.45) / button.defaultSize.width,
     );
 
     button.scale.set(scale);
-    button.position.set(
-      width * 0.5,
-      height * 0.5 + button.height * 0.6,
-    );
+    button.position.set(width * 0.5, height * 0.5 + button.height * 0.6);
   }
 
   private resizeText({ width, height }: Size) {
     const text = this.textEl;
     const scale = Math.min(
-      height * 0.15 / text.defaultSize.height,
-      width * 0.7 / text.defaultSize.width,
+      (height * 0.15) / text.defaultSize.height,
+      (width * 0.7) / text.defaultSize.width,
     );
 
     text.scale.set(scale);
-    text.position.set(
-      width * 0.5,
-      height * 0.5 - text.height * 0.6,
-    );
+    text.position.set(width * 0.5, height * 0.5 - text.height * 0.6);
   }
 
   private resize(size: Size) {
@@ -118,7 +120,6 @@ export class GameOverScene extends Scene {
   protected unsubscribeEvents() {
     appEventEmitter.off('resize', this.resize, this);
     this.button.off('pointerup', this.finishScene, this);
-
   }
 
   protected subscribeEvents() {

@@ -1,6 +1,13 @@
 import { type Size } from 'pixi.js';
 
-import { AssetsLoader, GameStatistics, Mode, ParallaxBackground, Progress, type Breakpoint } from '@/shared';
+import {
+  AssetsLoader,
+  GameStatistics,
+  Mode,
+  ParallaxBackground,
+  Progress,
+  type Breakpoint,
+} from '@/shared';
 
 import { BlastGame } from './BlastGame';
 import { ClassicMode } from '../model/game-mode/ClassicMode';
@@ -33,7 +40,7 @@ export class ClassicBlastGame extends BlastGame<Mode.CLASSIC> {
     super.create();
     this.gameStatistics = new GameStatistics(0);
     this.progress = new Progress();
-    this.background = new ParallaxBackground(['Ocean_6-1','Ocean_6-2', 'Ocean_6-3', 'Ocean_6-4']);
+    this.background = new ParallaxBackground(['Ocean_6-1', 'Ocean_6-2', 'Ocean_6-3', 'Ocean_6-4']);
 
     this.wrapper.addChildAt(this.background, 0);
     this.wrapper.addChild(this.gameStatistics, this.progress);
