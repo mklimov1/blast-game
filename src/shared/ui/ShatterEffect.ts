@@ -18,7 +18,7 @@ const colorMap: Record<Color | ChipPower, string> = {
   [Color.ORANGE]: '#F19E00',
   [Color.PURPLE]: '#C8399D',
   [Color.RED]: '#EC2C44',
-  [ChipPower.BOMB]: '#4a4a4a',
+  [ChipPower.BOMB]: '#ee00ff',
 };
 
 export class ShatterEffect extends Graphics {

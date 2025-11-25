@@ -111,8 +111,8 @@ export class BlastGame<M extends Mode> extends Scene {
 
     destroyedBlocks.forEach((block) => {
       const global = block.toGlobal({
-        x: block.width * 0.5,
-        y: block.height * 0.5,
+        x: 0,
+        y: 0,
       });
       this.destroyEffect.spawn(global.x, global.y, block.power);
     });
