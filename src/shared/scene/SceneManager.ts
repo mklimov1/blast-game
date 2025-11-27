@@ -25,7 +25,6 @@ export class SceneManager<T extends Record<string, new () => Scene>> {
 
     window.addEventListener('resize', resize);
 
-    // Инициализируем сцену загрузки, если указана
     if (loadingSceneKey) {
       this.loadingScene = new this.scenes[loadingSceneKey]();
       await this.loadingScene.init();
