@@ -59,7 +59,7 @@ export class BlastGame<M extends Mode> extends Scene {
 
   protected finishScene(isWin: boolean) {
     super.finishScene();
-    sceneManager.changeScene(isWin ? 'gameWin' : 'gameLose');
+    sceneManager.changeScene(isWin ? 'gameWin' : 'gameLose', 0);
     this.destroyEffect.stop();
   }
 
