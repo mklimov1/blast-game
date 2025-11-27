@@ -1,6 +1,7 @@
 import { Application, Ticker } from 'pixi.js';
 
 import { MainMenu, ClassicBlastGame, TimerBlastGame, GameLose, GameWin } from '@/pages';
+import { LoadingScreen } from '@/pages/loading-screen';
 import { AssetsLoader, tweenGroup } from '@/shared';
 
 import { sceneManager } from './providers/sceneManager';
@@ -16,6 +17,7 @@ export class App {
     gameLose: GameLose,
     classicBlastGame: ClassicBlastGame,
     timerBlastGame: TimerBlastGame,
+    loading: LoadingScreen,
   };
 
   private node!: HTMLElement;
@@ -30,7 +32,7 @@ export class App {
       autoDensity: true,
     });
     await AssetsLoader.init();
-    sceneManager.init(this.scenes, this.app.stage, node);
+    await sceneManager.init(this.scenes, this.app.stage, node, 'loading');
     this.node = node;
   }
 
