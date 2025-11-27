@@ -9,8 +9,8 @@ export class LoadingScreen extends Scene {
 
   protected create(): void {
     this.background = new Graphics();
-    this.background.fill('#110017');
     this.background.rect(0, 0, 300, 300);
+    this.background.fill('#1A1A2E');
 
     this.text = this.createLoadingText('Loading...');
 
