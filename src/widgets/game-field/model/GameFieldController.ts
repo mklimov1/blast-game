@@ -1,7 +1,7 @@
 import EventEmitter from 'eventemitter3';
-import { FederatedPointerEvent, Ticker, type Size } from 'pixi.js';
+import { FederatedPointerEvent, type Size } from 'pixi.js';
 
-import type { Breakpoint } from '@/shared';
+import { type Breakpoint } from '@/shared';
 
 import { FieldStore } from './FieldStore';
 import {
@@ -12,12 +12,22 @@ import {
   sortByDistance,
   type SpawnAnimation,
 } from '../lib';
-import { blockTweenGroup } from '../lib/entities/blockTweenGroup';
 import { ChipKind, ChipPower } from '../types';
 import { Field } from '../ui/Field';
 import { type RenderChip } from '../ui/RenderChip';
 
 import type { Chip } from '../lib/entities/Chip';
+
+// Field configuration constraints
+const MIN_ROWS = 4;
+const MAX_ROWS = 20;
+const MIN_COLS = 4;
+const MAX_COLS = 20;
+const MIN_UNIQUE_CHIPS = 2;
+const MAX_UNIQUE_CHIPS = 6;
+
+// Gameplay constants
+const POWER_CHIP_THRESHOLD = 5;
 
 type FieldOptions = {
   rows: number;
@@ -26,9 +36,7 @@ type FieldOptions = {
 };
 
 type EventTypes = {
-  chipClick: (id: string) => void;
   destroyedChips: (chips: Chip[]) => void;
-  addedChips: (chips: Chip[]) => void;
   updateField: (payload: { destroyed: Chip[]; added: Chip[] }) => void;
 };
 
@@ -37,9 +45,13 @@ export class GameFieldController extends EventEmitter<EventTypes> {
 
   store = new FieldStore();
 
-  ticker = new Ticker();
+  private isInitialized = false;
+
+  private isProcessing = false;
 
   setup(fieldOptions: FieldOptions) {
+    this.validateFieldOptions(fieldOptions);
+
     this.store.init(fieldOptions.rows, fieldOptions.cols, fieldOptions.uniqueChipsCount);
     this.attachEvents();
 
@@ -47,7 +59,26 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     this.view.setup(fieldOptions.rows, fieldOptions.cols);
     this.spawnNewChips(chips, 'none');
     this.view.updateHitArea();
-    this.ticker.start();
+
+    this.isInitialized = true;
+  }
+
+  private validateFieldOptions(options: FieldOptions): void {
+    const { rows, cols, uniqueChipsCount } = options;
+
+    if (rows < MIN_ROWS || rows > MAX_ROWS) {
+      throw new Error(`Field rows must be between ${MIN_ROWS} and ${MAX_ROWS}, got ${rows}`);
+    }
+
+    if (cols < MIN_COLS || cols > MAX_COLS) {
+      throw new Error(`Field cols must be between ${MIN_COLS} and ${MAX_COLS}, got ${cols}`);
+    }
+
+    if (uniqueChipsCount < MIN_UNIQUE_CHIPS || uniqueChipsCount > MAX_UNIQUE_CHIPS) {
+      throw new Error(
+        `Unique chips count must be between ${MIN_UNIQUE_CHIPS} and ${MAX_UNIQUE_CHIPS}, got ${uniqueChipsCount}`,
+      );
+    }
   }
 
   enable() {
@@ -76,10 +107,11 @@ export class GameFieldController extends EventEmitter<EventTypes> {
 
   async destroyChipsAnimation(chips: Chip[]): Promise<void> {
     const removedBlocks = this.store.removeCluster(...chips);
+    const removedIds = new Set(removedBlocks.map(({ id }) => id));
     const renderChips = this.getRenderChips();
 
     const promises: Promise<void>[] = renderChips
-      .filter((block) => removedBlocks.some(({ id }) => block.id === id))
+      .filter((block) => removedIds.has(block.id))
       .map((block) => block.hide());
 
     await Promise.all(promises);
@@ -97,7 +129,6 @@ export class GameFieldController extends EventEmitter<EventTypes> {
   }
 
   private async spawnNewChips(newChips: Chip[], animation: SpawnAnimation = 'none'): Promise<void> {
-    const promises: Promise<void>[] = [];
     const chipMap = new Map(newChips.map((block) => [block.id, block]));
 
     const renderChips: RenderChip[] = newChips.map((chip) => {
@@ -108,71 +139,85 @@ export class GameFieldController extends EventEmitter<EventTypes> {
 
     this.view.addChips(...renderChips.reverse());
 
-    promises.push(animateSpawnBlocks(renderChips, chipMap, animation));
-
-    await Promise.all(promises);
+    await animateSpawnBlocks(renderChips, chipMap, animation);
   }
 
-  private addPowerChip(targetChip: Chip, destroyedChips: Chip[]) {
+  private addPowerChip(targetChip: Chip, destroyedChips: Chip[]): Chip | undefined {
     if (targetChip.kind !== ChipKind.COLOR) return;
-    if (destroyedChips.length > 5) {
-      const bombChip = this.store.add(
-        ChipKind.POWER,
-        ChipPower.BOMB,
-        targetChip.row,
-        targetChip.col,
-      );
-      if (!bombChip) return;
-      this.emit('addedChips', [bombChip]);
-      return bombChip;
-    }
+    if (destroyedChips.length <= POWER_CHIP_THRESHOLD) return;
+
+    const bombChip = this.store.add(ChipKind.POWER, ChipPower.BOMB, targetChip.row, targetChip.col);
+
+    return bombChip;
   }
 
-  private async handleFieldClick(e: FederatedPointerEvent) {
-    const chip = this.getChipByGlobalCoords(e.globalX, e.globalY);
-    if (!chip) return false;
-
+  private async processChipDestruction(chip: Chip): Promise<Chip[]> {
     const connectedChips = this.findConnectedChips(chip);
-    if (!connectedChips.length) return false;
-    this.disable();
+    if (!connectedChips.length) return [];
 
     const sortedChips = sortByDistance(connectedChips, chip);
     this.emit('destroyedChips', sortedChips);
     await this.destroyChipsAnimation(sortedChips);
 
-    const powerChip = this.addPowerChip(chip, sortedChips);
+    return sortedChips;
+  }
+
+  private async handlePowerChipSpawn(targetChip: Chip, destroyedChips: Chip[]): Promise<void> {
+    const powerChip = this.addPowerChip(targetChip, destroyedChips);
 
     if (powerChip) {
       await this.spawnNewChips([powerChip], 'fade');
     }
+  }
 
+  private async refillField(): Promise<Chip[]> {
     const movedChips = this.store.gravityGrid();
-
     await this.dropChipsAnimation(movedChips);
+
     const newChips = this.store.fill();
     await this.spawnNewChips(newChips, 'drop');
-    this.emit('addedChips', newChips);
-    this.emit('updateField', { destroyed: sortedChips, added: newChips });
 
-    this.enable();
+    return newChips;
+  }
+
+  private async handleFieldClick(e: FederatedPointerEvent): Promise<void> {
+    if (!this.isInitialized) return;
+    if (this.isProcessing) return;
+
+    const chip = this.getChipByGlobalCoords(e.globalX, e.globalY);
+    if (!chip) return;
+
+    try {
+      this.isProcessing = true;
+      this.disable();
+
+      const destroyedChips = await this.processChipDestruction(chip);
+      if (!destroyedChips.length) return;
+
+      await this.handlePowerChipSpawn(chip, destroyedChips);
+      const addedChips = await this.refillField();
+
+      this.emit('updateField', { destroyed: destroyedChips, added: addedChips });
+    } catch (error) {
+      console.error('Error processing field click:', error);
+    } finally {
+      this.isProcessing = false;
+      this.enable();
+    }
   }
 
   destroy() {
     this.detachEvents();
-  }
-
-  private onTickerUpdate() {
-    blockTweenGroup.update();
+    this.isInitialized = false;
+    this.isProcessing = false;
   }
 
   private detachEvents() {
     this.view.off('pointertap', this.handleFieldClick, this);
-    this.ticker.remove(this.onTickerUpdate, this);
   }
 
   private attachEvents() {
     this.view.on('pointertap', this.handleFieldClick, this);
-    this.ticker.add(this.onTickerUpdate, this);
   }
 
   resize(size: Size, breakpoint: Breakpoint) {

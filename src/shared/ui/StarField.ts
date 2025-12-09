@@ -1,4 +1,6 @@
-import { Graphics, Ticker, type FillInput, type Size } from 'pixi.js';
+import { Graphics, type FillInput, type Size } from 'pixi.js';
+
+import { globalTicker } from '../lib';
 
 interface Star {
   x: number;
@@ -13,8 +15,6 @@ export class StarField extends Graphics {
 
   private backgroundColor: FillInput;
 
-  private ticker: Ticker = new Ticker();
-
   private starCount: number;
 
   private screenSize: Size = { width: 0, height: 0 };
@@ -23,8 +23,6 @@ export class StarField extends Graphics {
     super();
     this.starCount = starCount;
     this.backgroundColor = backgroundColor;
-
-    this.ticker.add(this.update, this);
   }
 
   private createStars() {
@@ -58,11 +56,11 @@ export class StarField extends Graphics {
   }
 
   public start() {
-    this.ticker.start();
+    globalTicker.add(this.update, this);
   }
 
   public stop() {
-    this.ticker.stop();
+    globalTicker.remove(this.update, this);
   }
 
   public resize(size: Size) {

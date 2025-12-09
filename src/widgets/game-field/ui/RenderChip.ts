@@ -1,7 +1,8 @@
 import { Easing, Tween } from '@tweenjs/tween.js';
 import { Sprite, Texture } from 'pixi.js';
 
-import { blockTweenGroup } from '../lib';
+import { globalTweenGroup } from '@/shared';
+
 import { ChipKind, ChipPower, Color, type Position } from '../types';
 
 export class RenderChip extends Sprite {
@@ -35,7 +36,7 @@ export class RenderChip extends Sprite {
         .onComplete(() => {
           resolve();
         })
-        .group(blockTweenGroup)
+        .group(globalTweenGroup)
         .start();
     });
   }
@@ -53,7 +54,7 @@ export class RenderChip extends Sprite {
       .onUpdate(({ alpha }) => {
         this.alpha = alpha;
       })
-      .group(blockTweenGroup)
+      .group(globalTweenGroup)
       .start();
   }
 
@@ -72,7 +73,7 @@ export class RenderChip extends Sprite {
           this.y = y;
         })
         .onComplete(() => resolve())
-        .group(blockTweenGroup)
+        .group(globalTweenGroup)
         .start();
     });
   }

@@ -9,7 +9,7 @@ import {
   Button,
   StarField,
   Text,
-  tweenGroup,
+  globalTweenGroup,
   Mode,
   scoreStore,
 } from '@/shared';
@@ -62,7 +62,7 @@ export class MainMenu extends Scene {
   }
 
   protected show() {
-    animations.show(this.view, tweenGroup);
+    animations.show(this.view, globalTweenGroup);
     this.background.start();
   }
 

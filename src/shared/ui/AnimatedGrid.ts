@@ -1,4 +1,6 @@
-import { Container, Graphics, Ticker, type Size } from 'pixi.js';
+import { Container, Graphics, type Size } from 'pixi.js';
+
+import { globalTicker } from '../lib';
 
 interface Point {
   x: number;
@@ -26,8 +28,6 @@ export class AnimatedGrid extends Container {
   private areaWidth: number;
 
   private areaHeight: number;
-
-  private ticker?: Ticker;
 
   constructor(width: number, height: number) {
     super();
@@ -111,17 +111,12 @@ export class AnimatedGrid extends Container {
     }
   };
 
-  public start(ticker: Ticker = Ticker.shared) {
-    if (this.ticker) return;
-    this.ticker = ticker;
-    this.ticker.add(this.update);
+  public start() {
+    globalTicker.add(this.update, this);
   }
 
   public stop() {
-    if (!this.ticker) return;
-    this.ticker.remove(this.update);
-    this.ticker.destroy();
-    this.ticker = undefined;
+    globalTicker.remove(this.update, this);
   }
 
   public resize({ width, height }: Size) {
