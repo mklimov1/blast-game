@@ -3,7 +3,7 @@ import { type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
 import {
-  tweenGroup,
+  globalTweenGroup,
   Button,
   Text,
   AssetsLoader,
@@ -57,7 +57,7 @@ export class GameOverScene extends Scene {
       .onUpdate(({ alpha }) => {
         this.view.alpha = alpha;
       })
-      .group(tweenGroup)
+      .group(globalTweenGroup)
       .duration(400)
       .onComplete(onComplete)
       .start();

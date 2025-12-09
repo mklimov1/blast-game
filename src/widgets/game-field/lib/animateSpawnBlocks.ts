@@ -1,4 +1,4 @@
-import { delay, tweenGroup } from '@/shared';
+import { delay, globalTweenGroup } from '@/shared';
 import { fadeIn } from '@/shared/lib/animations';
 
 import { Chip } from './entities/Chip';
@@ -16,7 +16,7 @@ const drop = async (chip: Chip, renderChip: RenderChip) => {
 };
 
 const fade = async (_: Chip, renderChip: RenderChip) => {
-  return fadeIn(renderChip, tweenGroup);
+  return fadeIn(renderChip, globalTweenGroup);
 };
 
 const animationMap: Record<SpawnAnimation, (chip: Chip, renderChip: RenderChip) => Promise<void>> =

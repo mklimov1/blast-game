@@ -1,7 +1,7 @@
 import EventEmitter from 'eventemitter3';
 import { FederatedPointerEvent, type Size } from 'pixi.js';
 
-import { globalTicker, type Breakpoint } from '@/shared';
+import { type Breakpoint } from '@/shared';
 
 import { FieldStore } from './FieldStore';
 import {
@@ -12,7 +12,6 @@ import {
   sortByDistance,
   type SpawnAnimation,
 } from '../lib';
-import { blockTweenGroup } from '../lib/entities/blockTweenGroup';
 import { ChipKind, ChipPower } from '../types';
 import { Field } from '../ui/Field';
 import { type RenderChip } from '../ui/RenderChip';
@@ -158,18 +157,12 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     this.detachEvents();
   }
 
-  private onTickerUpdate() {
-    blockTweenGroup.update();
-  }
-
   private detachEvents() {
     this.view.off('pointertap', this.handleFieldClick, this);
-    globalTicker.remove(this.onTickerUpdate, this);
   }
 
   private attachEvents() {
     this.view.on('pointertap', this.handleFieldClick, this);
-    globalTicker.add(this.onTickerUpdate, this);
   }
 
   resize(size: Size, breakpoint: Breakpoint) {

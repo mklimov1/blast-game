@@ -2,7 +2,7 @@ import { Application } from 'pixi.js';
 
 import { MainMenu, ClassicBlastGame, TimerBlastGame, GameLose, GameWin } from '@/pages';
 import { LoadingScreen } from '@/pages/loading-screen';
-import { AssetsLoader, globalTicker, tweenGroup } from '@/shared';
+import { AssetsLoader, globalTicker, globalTweenGroup } from '@/shared';
 
 import { sceneManager } from './providers/sceneManager';
 
@@ -42,7 +42,7 @@ export class App {
     this.node.appendChild(this.app.canvas);
     this.app.resizeTo = this.node;
     globalTicker.add(() => {
-      tweenGroup.update();
+      globalTweenGroup.update();
     }, this);
     globalTicker.start();
   }

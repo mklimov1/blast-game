@@ -1,7 +1,7 @@
 export { AssetsLoader } from './AssetsLoader';
 export { appEventEmitter } from './appEventEmitter';
 export { formatTime } from './formatTime';
-export { tweenGroup } from './tween';
+export { globalTweenGroup } from './tweenGroup';
 export * as animations from './animations';
 export { delay } from './delay';
 export { defer, type Defer } from './defer';

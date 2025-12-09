@@ -8,7 +8,7 @@ import {
   Scene,
   ShatterEffect,
   animations,
-  tweenGroup,
+  globalTweenGroup,
   defer,
   type Defer,
   type Breakpoint,
@@ -62,7 +62,7 @@ export class BlastGame<M extends Mode> extends Scene {
   }
 
   protected show() {
-    animations.show(this.view, tweenGroup);
+    animations.show(this.view, globalTweenGroup);
   }
 
   protected unsubscribeEvents() {

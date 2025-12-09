@@ -1,6 +1,6 @@
 import { Graphics, type Size } from 'pixi.js';
 
-import { animations, appEventEmitter, AssetsLoader, Scene, Text, tweenGroup } from '@/shared';
+import { animations, appEventEmitter, AssetsLoader, Scene, Text, globalTweenGroup } from '@/shared';
 
 export class LoadingScreen extends Scene {
   private text!: Text;
@@ -28,7 +28,7 @@ export class LoadingScreen extends Scene {
   }
 
   protected show() {
-    animations.show(this.view, tweenGroup);
+    animations.show(this.view, globalTweenGroup);
   }
 
   private resize(size: Size) {
