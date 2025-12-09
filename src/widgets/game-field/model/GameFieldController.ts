@@ -1,7 +1,7 @@
 import EventEmitter from 'eventemitter3';
-import { FederatedPointerEvent, Ticker, type Size } from 'pixi.js';
+import { FederatedPointerEvent, type Size } from 'pixi.js';
 
-import type { Breakpoint } from '@/shared';
+import { globalTicker, type Breakpoint } from '@/shared';
 
 import { FieldStore } from './FieldStore';
 import {
@@ -37,8 +37,6 @@ export class GameFieldController extends EventEmitter<EventTypes> {
 
   store = new FieldStore();
 
-  ticker = new Ticker();
-
   setup(fieldOptions: FieldOptions) {
     this.store.init(fieldOptions.rows, fieldOptions.cols, fieldOptions.uniqueChipsCount);
     this.attachEvents();
@@ -47,7 +45,6 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     this.view.setup(fieldOptions.rows, fieldOptions.cols);
     this.spawnNewChips(chips, 'none');
     this.view.updateHitArea();
-    this.ticker.start();
   }
 
   enable() {
@@ -167,12 +164,12 @@ export class GameFieldController extends EventEmitter<EventTypes> {
 
   private detachEvents() {
     this.view.off('pointertap', this.handleFieldClick, this);
-    this.ticker.remove(this.onTickerUpdate, this);
+    globalTicker.remove(this.onTickerUpdate, this);
   }
 
   private attachEvents() {
     this.view.on('pointertap', this.handleFieldClick, this);
-    this.ticker.add(this.onTickerUpdate, this);
+    globalTicker.add(this.onTickerUpdate, this);
   }
 
   resize(size: Size, breakpoint: Breakpoint) {

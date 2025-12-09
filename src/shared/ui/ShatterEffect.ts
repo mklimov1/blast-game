@@ -1,6 +1,8 @@
-import { Graphics, Ticker } from 'pixi.js';
+import { Graphics, type Ticker } from 'pixi.js';
 
 import { ChipPower, Color } from '@/widgets';
+
+import { globalTicker } from '../lib';
 
 interface Particle {
   x: number;
@@ -30,11 +32,8 @@ export class ShatterEffect extends Graphics {
 
   private life = 50;
 
-  private ticker: Ticker;
-
   constructor() {
     super();
-    this.ticker = new Ticker();
   }
 
   spawn(x: number, y: number, color: Color | ChipPower) {
@@ -83,12 +82,10 @@ export class ShatterEffect extends Graphics {
   }
 
   public start() {
-    this.ticker.add(this.update, this);
-    this.ticker.start();
+    globalTicker.add(this.update, this);
   }
 
   public stop() {
-    this.ticker.stop();
-    this.ticker.remove(this.update, this);
+    globalTicker.remove(this.update, this);
   }
 }

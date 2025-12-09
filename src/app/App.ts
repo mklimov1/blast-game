@@ -1,8 +1,8 @@
-import { Application, Ticker } from 'pixi.js';
+import { Application } from 'pixi.js';
 
 import { MainMenu, ClassicBlastGame, TimerBlastGame, GameLose, GameWin } from '@/pages';
 import { LoadingScreen } from '@/pages/loading-screen';
-import { AssetsLoader, tweenGroup } from '@/shared';
+import { AssetsLoader, globalTicker, tweenGroup } from '@/shared';
 
 import { sceneManager } from './providers/sceneManager';
 
@@ -21,8 +21,6 @@ export class App {
   };
 
   private node!: HTMLElement;
-
-  private ticker = new Ticker();
 
   public async init(node: HTMLElement) {
     await this.app.init({
@@ -43,9 +41,9 @@ export class App {
   public render() {
     this.node.appendChild(this.app.canvas);
     this.app.resizeTo = this.node;
-    this.ticker.add(() => {
+    globalTicker.add(() => {
       tweenGroup.update();
-    });
-    this.ticker.start();
+    }, this);
+    globalTicker.start();
   }
 }
