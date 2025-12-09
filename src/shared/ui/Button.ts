@@ -26,12 +26,22 @@ export class Button extends Container {
     const textScale = Math.min((this.defaultSize.width * 0.85) / this.text.width, 1);
     this.text.scale.set(textScale);
 
-    this.on('pointerenter', () => {
-      this.tint = '#dddddd';
-    });
-    this.on('pointerleave', () => {
-      this.tint = '#ffffff';
-    });
+    this.on('pointerenter', this.onPointerEnter, this);
+    this.on('pointerleave', this.onPointerLeave, this);
+  }
+
+  override destroy(options?: boolean | Parameters<typeof Container.prototype.destroy>[0]): void {
+    this.off('pointerenter', this.onPointerEnter, this);
+    this.off('pointerleave', this.onPointerLeave, this);
+    super.destroy(options);
+  }
+
+  private onPointerEnter() {
+    this.tint = '#dddddd';
+  }
+
+  private onPointerLeave() {
+    this.tint = '#ffffff';
   }
 
   private createText(text: string) {
