@@ -1,4 +1,4 @@
-import { Container, Ticker, type Size } from 'pixi.js';
+import { Container, type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
 import {
@@ -29,8 +29,6 @@ export class BlastGame<M extends Mode> extends Scene {
   protected gameField!: GameFieldController;
 
   private destroyEffect!: ShatterEffect;
-
-  private ticker = new Ticker();
 
   private deferred!: Defer;
 
@@ -116,12 +114,6 @@ export class BlastGame<M extends Mode> extends Scene {
       });
       this.destroyEffect.spawn(global.x, global.y, block.power);
     });
-  }
-
-  protected destroy() {
-    this.ticker.stop();
-    this.ticker.destroy();
-    super.destroy();
   }
 
   private onChipsDestroyed(chips: Chip[]) {
