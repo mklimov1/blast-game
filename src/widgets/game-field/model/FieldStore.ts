@@ -77,10 +77,10 @@ export class FieldStore {
   gravityColumn(col: number): (Chip | null)[] {
     const { grid } = this;
     const columnChips = grid.map((row) => row[col]);
-    const filteredColmun = columnChips.filter((chip) => chip !== null);
-    const result: (Chip | null)[] = Array(columnChips.length - filteredColmun.length)
+    const filteredColumn = columnChips.filter((chip) => chip !== null);
+    const result: (Chip | null)[] = Array(columnChips.length - filteredColumn.length)
       .fill(null)
-      .concat(...filteredColmun);
+      .concat(...filteredColumn);
 
     result.forEach((chip, index) => {
       if (!chip) return;
