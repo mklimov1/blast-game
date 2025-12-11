@@ -9,7 +9,7 @@ export class LevelLoader {
     }
 
     try {
-      const response = await fetch(`/levels/level-${levelNumber}.json`);
+      const response = await fetch(`assets/levels/level-${levelNumber}.json`);
 
       if (!response.ok) {
         throw new Error(`Failed to load level ${levelNumber}: ${response.statusText}`);
