@@ -1,7 +1,16 @@
 import EventEmitter from 'eventemitter3';
 import { FederatedPointerEvent, type Size } from 'pixi.js';
 
-import { type Breakpoint } from '@/shared';
+import {
+  type Breakpoint,
+  MIN_ROWS,
+  MAX_ROWS,
+  MIN_COLS,
+  MAX_COLS,
+  MIN_UNIQUE_CHIPS,
+  MAX_UNIQUE_CHIPS,
+  POWER_CHIP_THRESHOLD,
+} from '@/shared';
 
 import { FieldStore } from './FieldStore';
 import {
@@ -17,17 +26,6 @@ import { Field } from '../ui/Field';
 import { type RenderChip } from '../ui/RenderChip';
 
 import type { Chip } from '../lib/entities/Chip';
-
-// Field configuration constraints
-const MIN_ROWS = 4;
-const MAX_ROWS = 20;
-const MIN_COLS = 4;
-const MAX_COLS = 20;
-const MIN_UNIQUE_CHIPS = 2;
-const MAX_UNIQUE_CHIPS = 6;
-
-// Gameplay constants
-const POWER_CHIP_THRESHOLD = 5;
 
 type FieldOptions = {
   rows: number;
