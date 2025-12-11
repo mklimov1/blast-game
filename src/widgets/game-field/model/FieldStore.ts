@@ -12,15 +12,15 @@ export class FieldStore {
 
   cols: number = 0;
 
-  private maxColors: number = 0;
+  private uniqueChipsCount: number = 0;
 
   private chipMap!: Map<string, Chip>;
 
-  init(rows: number, cols: number, maxColors: number) {
+  init(rows: number, cols: number, uniqueChipsCount: number) {
     this.chipMap = new Map();
     this.rows = rows;
     this.cols = cols;
-    this.maxColors = maxColors;
+    this.uniqueChipsCount = uniqueChipsCount;
     this.grid = Array.from({ length: rows }, () => Array(cols).fill(null));
   }
 
@@ -42,14 +42,14 @@ export class FieldStore {
     return chip;
   }
 
-  fill() {
-    const { maxColors } = this;
+  fill(): Chip[] {
+    const { uniqueChipsCount } = this;
     const newChips: Chip[] = [];
 
     this.grid = this.grid.map((row, rowIndex) => {
       return row.map((col, colIndex) => {
         if (col === null) {
-          const color = getRandomBlockColor(maxColors);
+          const color = getRandomBlockColor(uniqueChipsCount);
           const block = new Chip(uid().toString(), ChipKind.COLOR, color, rowIndex, colIndex);
           newChips.push(block);
           this.chipMap.set(block.id, block);
@@ -70,7 +70,7 @@ export class FieldStore {
     return {
       rows: this.rows,
       cols: this.cols,
-      maxColors: this.maxColors,
+      uniqueChipsCount: this.uniqueChipsCount,
     };
   }
 
