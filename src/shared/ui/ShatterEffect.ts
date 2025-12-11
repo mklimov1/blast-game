@@ -20,6 +20,7 @@ const colorMap: Record<Color | ChipPower, string> = {
   [Color.ORANGE]: '#F19E00',
   [Color.PURPLE]: '#C8399D',
   [Color.RED]: '#EC2C44',
+  [Color.TEAL]: '#045f5f',
   [ChipPower.BOMB]: '#ee00ff',
 };
 
