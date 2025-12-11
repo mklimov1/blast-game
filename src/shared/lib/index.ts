@@ -6,4 +6,6 @@ export * as animations from './animations';
 export { delay } from './delay';
 export { defer, type Defer } from './defer';
 export { scoreStore } from './store/scoreStore';
+export { levelStore } from './store/levelStore';
+export { LevelLoader } from './LevelLoader';
 export { globalTicker } from './ticker';
