@@ -78,11 +78,11 @@ export class Field extends Container {
       width: RenderChip.SIZE * cols,
       height: RenderChip.SIZE * rows,
     };
-    const chipPivotOffset = RenderChip.SIZE * -0.5;
+    const chipPivotOffset = -RenderChip.SIZE * 0.5;
 
     this.blockContainer.pivot.set(
-      (RenderChip.SIZE * rows) / 2 + chipPivotOffset,
-      (RenderChip.SIZE * cols) / 2 + chipPivotOffset,
+      size.width / 2 + chipPivotOffset,
+      size.height / 2 + chipPivotOffset,
     );
     this.background.width = size.width + 150;
     this.background.height = size.height + 150;
