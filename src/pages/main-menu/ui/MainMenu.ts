@@ -12,6 +12,7 @@ import {
   globalTweenGroup,
   Mode,
   scoreStore,
+  levelStore,
 } from '@/shared';
 
 export class MainMenu extends Scene {
@@ -26,7 +27,7 @@ export class MainMenu extends Scene {
   private title = this.createTitleText();
 
   protected create() {
-    this.playClassicButton = new Button('CLASSIC MODE', 2);
+    this.playClassicButton = new Button(`LEVEL ${levelStore.get()}`, 2);
     this.playTimerButton = new Button('TIMER MODE', 2);
     this.background = new StarField('#1A1A2E');
 

@@ -14,6 +14,7 @@ import {
   type Breakpoint,
   Mode,
   scoreStore,
+  type LevelConfig,
 } from '@/shared';
 import { GameFieldController, type Chip, type RenderChip } from '@/widgets';
 
@@ -32,9 +33,17 @@ export class BlastGame<M extends Mode> extends Scene {
 
   private deferred!: Defer;
 
+  protected currentLevelConfig!: LevelConfig;
+
   protected create() {
-    this.wrapper = new Container();
     this.gameField = new GameFieldController();
+    this.gameField.setup({
+      rows: this.currentLevelConfig.rows,
+      cols: this.currentLevelConfig.cols,
+      uniqueChipsCount: this.currentLevelConfig.uniqueChipsCount,
+    });
+
+    this.wrapper = new Container();
     this.destroyEffect = new ShatterEffect();
 
     this.wrapper.addChild(this.gameField.view, this.destroyEffect);
@@ -52,7 +61,6 @@ export class BlastGame<M extends Mode> extends Scene {
 
   public async init() {
     await super.init();
-    this.gameField.setup({ rows: 8, cols: 8, uniqueChipsCount: 3 });
   }
 
   protected finishScene(isWin: boolean) {
@@ -75,7 +83,7 @@ export class BlastGame<M extends Mode> extends Scene {
     this.gameField.resize(size, breakpoint);
   }
 
-  private async win() {
+  protected async win() {
     this.gameField.disable();
     await delay(1000);
     this.finishScene(true);

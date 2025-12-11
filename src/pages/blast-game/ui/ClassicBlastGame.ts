@@ -3,6 +3,9 @@ import { type Size } from 'pixi.js';
 import {
   AssetsLoader,
   GameStatistics,
+  generateLevelConfig,
+  LevelLoader,
+  levelStore,
   Mode,
   ParallaxBackground,
   Progress,
@@ -31,8 +34,19 @@ export class ClassicBlastGame extends BlastGame<Mode.CLASSIC> {
     this.mode.update(0);
   }
 
+  private async loadLevel() {
+    const currentLevel = levelStore.get();
+
+    try {
+      this.currentLevelConfig = await LevelLoader.load(currentLevel);
+    } catch {
+      this.currentLevelConfig = generateLevelConfig(currentLevel);
+    }
+  }
+
   protected async load(): Promise<void> {
     await super.load();
+    await this.loadLevel();
     await AssetsLoader.load('OCEAN_6');
   }
 
@@ -56,6 +70,11 @@ export class ClassicBlastGame extends BlastGame<Mode.CLASSIC> {
   private updateStatistics(payload: TClassicModeProgress) {
     this.progress.setProgress(payload);
     this.gameStatistics.updateStatistics(payload);
+  }
+
+  protected async win() {
+    levelStore.next();
+    super.win();
   }
 
   protected unsubscribeEvents(): void {

@@ -9,3 +9,5 @@ export { scoreStore } from './store/scoreStore';
 export { levelStore } from './store/levelStore';
 export { LevelLoader } from './LevelLoader';
 export { globalTicker } from './ticker';
+export { generateLevelConfig } from './generateLevelConfig';
+export { randomInt } from './randomInt';

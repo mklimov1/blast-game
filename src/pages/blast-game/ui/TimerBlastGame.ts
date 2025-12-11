@@ -1,5 +1,13 @@
 import { type TTimerModeProgress } from '@/pages';
-import { AssetsLoader, Mode, ParallaxBackground, Score, Timer, type Breakpoint } from '@/shared';
+import {
+  AssetsLoader,
+  generateLevelConfig,
+  Mode,
+  ParallaxBackground,
+  Score,
+  Timer,
+  type Breakpoint,
+} from '@/shared';
 
 import { BlastGame } from './BlastGame';
 import { TimerMode } from '../model/game-mode/TimerMode';
@@ -25,6 +33,7 @@ export class TimerBlastGame extends BlastGame<Mode.TIMER> {
 
   protected async load(): Promise<void> {
     await super.load();
+    this.currentLevelConfig = generateLevelConfig(0);
     await AssetsLoader.load('CITY3');
   }
 
