@@ -31,7 +31,7 @@ export class BlastGame<M extends Mode> extends Scene {
 
   private destroyEffect!: ShatterEffect;
 
-  private deferred!: Defer;
+  private deferred?: Defer;
 
   protected currentLevelConfig!: LevelConfig;
 
@@ -96,7 +96,7 @@ export class BlastGame<M extends Mode> extends Scene {
   }
 
   private async finish({ status, score }: { status: 'win' | 'lose'; score: number }) {
-    await this.deferred.promise;
+    await this.deferred?.promise;
 
     scoreStore.set(this.mode.type, score);
 
@@ -131,7 +131,7 @@ export class BlastGame<M extends Mode> extends Scene {
   }
 
   private onFieldUpdated() {
-    this.deferred.resolve();
+    this.deferred?.resolve();
   }
 
   protected subscribeEvents() {
