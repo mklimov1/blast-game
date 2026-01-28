@@ -17,16 +17,35 @@ const calcUniqueChipsCount = (rows: number): number => {
   return randomInt(5, MAX_UNIQUE_CHIPS);
 };
 
+const calcSteps = (level: number): number => {
+  return 18 + level * 2;
+};
+
+const calcGoal = (rows: number, cols: number, uniqueChipsCount: number, steps: number): number => {
+  const fieldSize = rows * cols;
+  const basePerStep = 5;
+  const fieldBonus = (fieldSize - 36) * 0.05;
+  const typePenalty = (uniqueChipsCount - 3) * 0.3;
+  const perStep = Math.max(basePerStep + fieldBonus - typePenalty, 4);
+
+  return Math.floor(steps * perStep);
+};
+
 export const generateLevelConfig = (level: number): LevelConfig => {
   const rows = randomInt(MIN_ROWS, MAX_ROWS);
   const minCols = Math.max(rows - 3, MIN_COLS);
   const maxCols = Math.min(rows + 3, MAX_COLS);
   const cols = randomInt(minCols, maxCols);
+  const uniqueChipsCount = calcUniqueChipsCount(rows);
+  const steps = calcSteps(level);
+  const goal = calcGoal(rows, cols, uniqueChipsCount, steps);
 
   return {
     level,
     rows,
     cols,
-    uniqueChipsCount: calcUniqueChipsCount(rows),
+    uniqueChipsCount,
+    steps,
+    goal,
   };
 };

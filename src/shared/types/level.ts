@@ -4,4 +4,6 @@ export interface LevelConfig {
   cols: number;
   uniqueChipsCount: number;
   initialGrid?: number[][];
+  goal: number;
+  steps: number;
 }
