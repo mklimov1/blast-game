@@ -46,7 +46,6 @@ export class ClassicBlastGame extends BlastGame<Mode.CLASSIC> {
       step: this.currentLevelConfig.steps,
       score: 0,
     });
-    this.mode.update(0);
 
     super.create();
 
@@ -83,5 +82,10 @@ export class ClassicBlastGame extends BlastGame<Mode.CLASSIC> {
   protected subscribeEvents(): void {
     super.subscribeEvents();
     this.mode.on('update', this.updateStatistics, this);
+  }
+
+  protected show() {
+    this.mode.update(0);
+    super.show();
   }
 }
