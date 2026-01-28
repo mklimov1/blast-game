@@ -24,16 +24,6 @@ export class ClassicBlastGame extends BlastGame<Mode.CLASSIC> {
 
   private background!: ParallaxBackground;
 
-  public async init() {
-    this.mode = new ClassicMode({
-      goal: 100,
-      step: 20,
-      score: 0,
-    });
-    await super.init();
-    this.mode.update(0);
-  }
-
   private async loadLevel() {
     const currentLevel = levelStore.get();
 
@@ -50,8 +40,16 @@ export class ClassicBlastGame extends BlastGame<Mode.CLASSIC> {
     await AssetsLoader.load('OCEAN_6');
   }
 
-  protected create() {
+  protected async create() {
+    this.mode = new ClassicMode({
+      goal: this.currentLevelConfig.goal,
+      step: this.currentLevelConfig.steps,
+      score: 0,
+    });
+    this.mode.update(0);
+
     super.create();
+
     this.gameStatistics = new GameStatistics(0);
     this.progress = new Progress();
     this.background = new ParallaxBackground(['Ocean_6-1', 'Ocean_6-2', 'Ocean_6-3', 'Ocean_6-4']);

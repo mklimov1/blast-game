@@ -2,5 +2,7 @@
   "level": 6,
   "rows": 8,
   "cols": 9,
-  "uniqueChipsCount": 4
+  "uniqueChipsCount": 5,
+  "goal": 190,
+  "steps": 30
 }
