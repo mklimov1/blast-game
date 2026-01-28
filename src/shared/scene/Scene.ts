@@ -11,8 +11,11 @@ export abstract class Scene {
     await this.load();
     this.create();
     this.subscribeEvents();
+    this.start();
     this.show();
   }
+
+  protected start(): void {}
 
   protected abstract unsubscribeEvents(): void;
 

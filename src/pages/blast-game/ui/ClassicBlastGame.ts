@@ -84,8 +84,11 @@ export class ClassicBlastGame extends BlastGame<Mode.CLASSIC> {
     this.mode.on('update', this.updateStatistics, this);
   }
 
-  protected show() {
+  protected start() {
     this.mode.update(0);
+  }
+
+  protected show() {
     super.show();
   }
 }
