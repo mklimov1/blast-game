@@ -1,6 +1,6 @@
 import { uid } from 'pixi.js';
 
-import { Chip, getRandomBlockColor } from '../lib';
+import { Chip, getColorByIndex, getRandomBlockColor } from '../lib';
 import { ChipKind, ChipPower, Color } from '../types';
 
 import type { Grid } from '../types/types';
@@ -42,14 +42,18 @@ export class FieldStore {
     return chip;
   }
 
-  fill(): Chip[] {
+  fill(preset?: number[][]): Chip[] {
     const { uniqueChipsCount } = this;
     const newChips: Chip[] = [];
 
     this.grid = this.grid.map((row, rowIndex) => {
       return row.map((col, colIndex) => {
         if (col === null) {
-          const color = getRandomBlockColor(uniqueChipsCount);
+          const presetIndex = preset?.[rowIndex]?.[colIndex];
+          const color =
+            presetIndex !== undefined
+              ? getColorByIndex(presetIndex)
+              : getRandomBlockColor(uniqueChipsCount);
           const block = new Chip(uid().toString(), ChipKind.COLOR, color, rowIndex, colIndex);
           newChips.push(block);
           this.chipMap.set(block.id, block);

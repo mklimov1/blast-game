@@ -31,6 +31,7 @@ type FieldOptions = {
   rows: number;
   cols: number;
   uniqueChipsCount: number;
+  grid?: number[][];
 };
 
 type EventTypes = {
@@ -53,7 +54,7 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     this.store.init(fieldOptions.rows, fieldOptions.cols, fieldOptions.uniqueChipsCount);
     this.attachEvents();
 
-    const chips = this.store.fill();
+    const chips = this.store.fill(fieldOptions.grid);
     this.view.setup(fieldOptions.rows, fieldOptions.cols);
     this.spawnNewChips(chips, 'none');
     this.view.updateHitArea();

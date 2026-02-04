@@ -3,7 +3,7 @@ export interface LevelConfig {
   rows: number;
   cols: number;
   uniqueChipsCount: number;
-  initialGrid?: number[][];
+  grid?: number[][];
   goal: number;
   steps: number;
 }

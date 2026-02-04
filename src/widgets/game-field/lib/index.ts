@@ -4,4 +4,4 @@ export { Chip } from './entities/Chip';
 export { findConnected } from './findConnected/findConnected';
 export { moveChipOnGrid } from './moveChipOnGrid';
 export { sortByDistance } from './sortByDistance';
-export { getRandomBlockColor } from './getRandomBlockColor';
+export { getRandomBlockColor, getColorByIndex } from './color';

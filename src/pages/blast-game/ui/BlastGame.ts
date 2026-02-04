@@ -41,6 +41,7 @@ export class BlastGame<M extends Mode> extends Scene {
       rows: this.currentLevelConfig.rows,
       cols: this.currentLevelConfig.cols,
       uniqueChipsCount: this.currentLevelConfig.uniqueChipsCount,
+      grid: this.currentLevelConfig.grid,
     });
 
     this.wrapper = new Container();
