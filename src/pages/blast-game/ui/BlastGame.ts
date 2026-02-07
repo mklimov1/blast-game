@@ -35,9 +35,9 @@ export class BlastGame<M extends Mode> extends Scene {
 
   protected currentLevelConfig!: LevelConfig;
 
-  protected create() {
+  protected async create() {
     this.gameField = new GameFieldController();
-    this.gameField.setup({
+    await this.gameField.setup({
       rows: this.currentLevelConfig.rows,
       cols: this.currentLevelConfig.cols,
       uniqueChipsCount: this.currentLevelConfig.uniqueChipsCount,

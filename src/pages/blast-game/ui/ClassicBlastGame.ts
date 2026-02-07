@@ -47,7 +47,7 @@ export class ClassicBlastGame extends BlastGame<Mode.CLASSIC> {
       score: 0,
     });
 
-    super.create();
+    await super.create();
 
     this.gameStatistics = new GameStatistics(0);
     this.progress = new Progress();

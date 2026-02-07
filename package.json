@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@assetpack/core": "1.5.3",
+    "@types/lodash": "^4.17.23",
     "eslint": "9.37.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
@@ -32,6 +33,7 @@
   "dependencies": {
     "@tweenjs/tween.js": "25.0.0",
     "eventemitter3": "5.0.1",
+    "lodash": "^4.17.23",
     "pixi.js": "8.10.2"
   }
 }

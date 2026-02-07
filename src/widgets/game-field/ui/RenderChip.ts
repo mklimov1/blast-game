@@ -43,6 +43,10 @@ export class RenderChip extends Sprite {
 
   setGridPosition(row: number, col: number) {
     this.position.set(col * RenderChip.SIZE, row * RenderChip.SIZE);
+    this.setZindexByRow(row);
+  }
+
+  setZindexByRow(row: number) {
     this.zIndex = -row;
   }
 
@@ -71,6 +75,38 @@ export class RenderChip extends Sprite {
         .duration(duration)
         .onUpdate(({ y }) => {
           this.y = y;
+        })
+        .onComplete(() => resolve())
+        .group(globalTweenGroup)
+        .start();
+    });
+  }
+
+  move(to: Position, duration: number): Promise<void> {
+    const fromY = this.y;
+    const fromX = this.x;
+    const targetY = to.row * RenderChip.SIZE;
+    const targetX = to.col * RenderChip.SIZE;
+
+    new Tween({ y: this.scale.x * 2, x: this.scale.x * 2 })
+      .to({ y: this.scale.x, x: this.scale.x })
+      .easing(Easing.Quartic.InOut)
+      .duration(duration)
+      .onUpdate(({ y, x }) => {
+        this.scale.y = y;
+        this.scale.x = x;
+      })
+      .group(globalTweenGroup)
+      .start();
+
+    return new Promise((resolve) => {
+      new Tween({ y: fromY, x: fromX })
+        .to({ y: targetY, x: targetX })
+        .easing(Easing.Quartic.InOut)
+        .duration(duration)
+        .onUpdate(({ y, x }) => {
+          this.y = y;
+          this.x = x;
         })
         .onComplete(() => resolve())
         .group(globalTweenGroup)

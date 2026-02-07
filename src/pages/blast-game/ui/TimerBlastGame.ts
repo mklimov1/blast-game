@@ -37,8 +37,8 @@ export class TimerBlastGame extends BlastGame<Mode.TIMER> {
     await AssetsLoader.load('CITY3');
   }
 
-  protected create(): void {
-    super.create();
+  protected async create() {
+    await super.create();
     this.timer = new Timer();
     this.score = new Score();
     this.background = new ParallaxBackground([

@@ -5,3 +5,4 @@ export { findConnected } from './findConnected/findConnected';
 export { moveChipOnGrid } from './moveChipOnGrid';
 export { sortByDistance } from './sortByDistance';
 export { getRandomBlockColor, getColorByIndex } from './color';
+export { hasAvailableMoves } from './hasAvailableMoves';
