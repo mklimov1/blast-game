@@ -1,4 +1,5 @@
 import EventEmitter from 'eventemitter3';
+import _ from 'lodash';
 import { FederatedPointerEvent, type Size } from 'pixi.js';
 
 import {
@@ -20,6 +21,7 @@ import {
   moveChipOnGrid,
   sortByDistance,
   type SpawnAnimation,
+  hasAvailableMoves,
 } from '../lib';
 import { ChipKind, ChipPower } from '../types';
 import { Field } from '../ui/Field';
@@ -48,7 +50,7 @@ export class GameFieldController extends EventEmitter<EventTypes> {
 
   private isProcessing = false;
 
-  setup(fieldOptions: FieldOptions) {
+  async setup(fieldOptions: FieldOptions) {
     this.validateFieldOptions(fieldOptions);
 
     this.store.init(fieldOptions.rows, fieldOptions.cols, fieldOptions.uniqueChipsCount);
@@ -57,6 +59,7 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     const chips = this.store.fill(fieldOptions.grid);
     this.view.setup(fieldOptions.rows, fieldOptions.cols);
     this.spawnNewChips(chips, 'none');
+    await this.checkAndShuffleIfNeeded();
     this.view.updateHitArea();
 
     this.isInitialized = true;
@@ -127,6 +130,31 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     await Promise.all(promises);
   }
 
+  private async checkAndShuffleIfNeeded(): Promise<void> {
+    if (hasAvailableMoves(this.store.getGrid())) {
+      return;
+    }
+
+    const grid = this.store.shuffleGrid();
+
+    await Promise.all(
+      _(grid)
+        .flatten()
+        .map((chip) => {
+          if (!chip) return;
+          const renderChip = this.view.getChipById(chip.id);
+          if (!renderChip) return;
+
+          renderChip.setZindexByRow(chip.row);
+          return renderChip.move(chip, 1300);
+        })
+        .compact()
+        .value(),
+    );
+
+    await this.checkAndShuffleIfNeeded();
+  }
+
   private async spawnNewChips(newChips: Chip[], animation: SpawnAnimation = 'none'): Promise<void> {
     const chipMap = new Map(newChips.map((block) => [block.id, block]));
 
@@ -139,6 +167,7 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     this.view.addChips(...renderChips.reverse());
 
     await animateSpawnBlocks(renderChips, chipMap, animation);
+    await this.checkAndShuffleIfNeeded();
   }
 
   private addPowerChip(targetChip: Chip, destroyedChips: Chip[]): Chip | undefined {

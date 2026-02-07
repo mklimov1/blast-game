@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { uid } from 'pixi.js';
 
 import { Chip, getColorByIndex, getRandomBlockColor } from '../lib';
@@ -106,6 +107,20 @@ export class FieldStore {
     }
 
     return this.grid.flat().filter((chip) => chip !== null && chip.row !== chip.prevRow) as Chip[];
+  }
+
+  shuffleGrid() {
+    _(this.grid)
+      .flatten()
+      .compact()
+      .shuffle()
+      .forEach((chip, index) => {
+        chip.row = Math.floor(index / this.cols);
+        chip.col = index % this.cols;
+        this.grid[chip.row][chip.col] = chip;
+      });
+
+    return this.grid;
   }
 
   removeCluster(...chips: Chip[]) {

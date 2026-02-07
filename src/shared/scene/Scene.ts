@@ -9,7 +9,7 @@ export abstract class Scene {
 
   async init() {
     await this.load();
-    this.create();
+    await this.create();
     this.subscribeEvents();
     this.start();
     this.show();
