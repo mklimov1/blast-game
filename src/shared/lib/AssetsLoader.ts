@@ -1,3 +1,4 @@
+import { Sound, sound } from '@pixi/sound';
 import { Assets } from 'pixi.js';
 
 import { Bundles } from '@/shared/generated';
@@ -15,6 +16,12 @@ export class AssetsLoader {
     this.inited = true;
   }
 
+  private static registerSounds(loaded: Record<string, unknown>): void {
+    Object.entries(loaded)
+      .filter(([key, asset]) => asset instanceof Sound && !sound.exists(key))
+      .forEach(([key, asset]) => sound.add(key, asset as Sound));
+  }
+
   static async load(bundle: keyof typeof Bundles): Promise<void> {
     if (!this.inited) {
       throw new Error('AssetsLoader.init() must be called before load().');
@@ -23,8 +30,9 @@ export class AssetsLoader {
     const bundleName = Bundles[bundle];
 
     if (!this.loadedBundles.has(bundleName)) {
-      await Assets.loadBundle(bundleName);
+      const loaded = await Assets.loadBundle(bundleName);
       this.loadedBundles.add(bundleName);
+      AssetsLoader.registerSounds(loaded);
     }
   }
 

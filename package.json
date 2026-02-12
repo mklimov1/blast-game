@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@assetpack/core": "1.5.3",
-    "@types/lodash": "^4.17.23",
+    "@types/lodash": "4.17.23",
     "eslint": "9.37.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
@@ -24,16 +24,17 @@
     "husky": "9.1.7",
     "lint-staged": "16.1.2",
     "prettier": "3.6.2",
-    "rollup-plugin-visualizer": "^6.0.5",
+    "rollup-plugin-visualizer": "6.0.5",
     "typescript": "5.9.3",
     "typescript-eslint": "8.46.1",
     "vite": "7.0.0",
-    "vite-plugin-compression": "^0.5.1"
+    "vite-plugin-compression": "0.5.1"
   },
   "dependencies": {
+    "@pixi/sound": "6.0.1",
     "@tweenjs/tween.js": "25.0.0",
     "eventemitter3": "5.0.1",
-    "lodash": "^4.17.23",
+    "lodash": "4.17.23",
     "pixi.js": "8.10.2"
   }
 }
