@@ -54,10 +54,10 @@ export class BlastGame<M extends Mode> extends Scene {
 
   protected async load() {
     await AssetsLoader.load('FONTS');
-    await AssetsLoader.load('BUTTONS');
     await AssetsLoader.load('PROGRESS-BAR');
     await AssetsLoader.load('GAME');
     await AssetsLoader.load('UI');
+    await AssetsLoader.load('UISOUNDS');
   }
 
   public async init() {

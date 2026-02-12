@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 
 import { AssetPack, type AssetPackConfig } from '@assetpack/core';
+import { ffmpeg } from '@assetpack/core/ffmpeg';
 import { pixiPipes } from '@assetpack/core/pixi';
 import { type Plugin, type ResolvedConfig } from 'vite';
 
@@ -47,6 +48,29 @@ export const assetpackPlugin = (): Plugin => {
           basis: false,
           etc: false,
         },
+        audio: ffmpeg({
+          inputs: ['.mp3', '.ogg', '.wav'],
+          outputs: [
+            {
+              formats: ['.mp3'],
+              recompress: false,
+              options: {
+                audioBitrate: 96,
+                audioChannels: 1,
+                audioFrequency: 48000,
+              },
+            },
+            {
+              formats: ['.ogg'],
+              recompress: false,
+              options: {
+                audioBitrate: 32,
+                audioChannels: 1,
+                audioFrequency: 22050,
+              },
+            },
+          ],
+        }),
       }),
     ],
   };

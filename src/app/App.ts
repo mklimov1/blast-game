@@ -1,3 +1,4 @@
+import { sound } from '@pixi/sound';
 import { Application } from 'pixi.js';
 
 import { MainMenu, ClassicBlastGame, TimerBlastGame, GameLose, GameWin } from '@/pages';
@@ -30,12 +31,18 @@ export class App {
       autoDensity: true,
     });
     await AssetsLoader.init();
+    this.initSound();
     await sceneManager.init(this.scenes, this.app.stage, node, 'loading');
     this.node = node;
   }
 
   public create() {
     sceneManager.changeScene('mainMenu');
+  }
+
+  private initSound() {
+    sound.volumeAll = 0.5;
+    sound.disableAutoPause = false;
   }
 
   public render() {
