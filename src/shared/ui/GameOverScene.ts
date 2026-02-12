@@ -32,8 +32,9 @@ export class GameOverScene extends Scene {
   }
 
   protected async load() {
-    await AssetsLoader.load('BUTTONS');
+    await AssetsLoader.load('UI');
     await AssetsLoader.load('FONTS');
+    await AssetsLoader.load('UISOUNDS');
   }
 
   private createText(text: string) {
@@ -119,11 +120,11 @@ export class GameOverScene extends Scene {
 
   protected unsubscribeEvents() {
     appEventEmitter.off('resize', this.resize, this);
-    this.button.off('pointerup', this.finishScene, this);
+    this.button.off('pointertap', this.finishScene, this);
   }
 
   protected subscribeEvents() {
     appEventEmitter.on('resize', this.resize, this);
-    this.button.on('pointerup', this.finishScene, this);
+    this.button.on('pointertap', this.finishScene, this);
   }
 }

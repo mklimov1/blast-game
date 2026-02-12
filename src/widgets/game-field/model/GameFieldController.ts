@@ -1,3 +1,4 @@
+import { sound } from '@pixi/sound';
 import EventEmitter from 'eventemitter3';
 import _ from 'lodash';
 import { FederatedPointerEvent, type Size } from 'pixi.js';
@@ -23,7 +24,7 @@ import {
   type SpawnAnimation,
   hasAvailableMoves,
 } from '../lib';
-import { ChipKind, ChipPower } from '../types';
+import { ChipKind, ChipPower, Color } from '../types';
 import { Field } from '../ui/Field';
 import { type RenderChip } from '../ui/RenderChip';
 
@@ -179,12 +180,18 @@ export class GameFieldController extends EventEmitter<EventTypes> {
     return bombChip;
   }
 
+  private playDestoryChipSound(chipType: Color | ChipPower) {
+    const alias = chipType === ChipPower.BOMB ? 'explosion' : 'pop';
+    sound.play(alias);
+  }
+
   private async processChipDestruction(chip: Chip): Promise<Chip[]> {
     const connectedChips = this.findConnectedChips(chip);
     if (!connectedChips.length) return [];
 
     const sortedChips = sortByDistance(connectedChips, chip);
     this.emit('destroyedChips', sortedChips);
+    this.playDestoryChipSound(chip.type);
     await this.destroyChipsAnimation(sortedChips);
 
     return sortedChips;
@@ -221,7 +228,6 @@ export class GameFieldController extends EventEmitter<EventTypes> {
 
       const destroyedChips = await this.processChipDestruction(chip);
       if (!destroyedChips.length) return;
-
       await this.handlePowerChipSpawn(chip, destroyedChips);
       const addedChips = await this.refillField();
 

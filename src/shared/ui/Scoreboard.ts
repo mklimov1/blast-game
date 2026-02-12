@@ -7,7 +7,7 @@ export class Scoreboard extends Container {
 
   constructor() {
     super();
-    this.frame = Sprite.from('ui/panel_score');
+    this.frame = Sprite.from('game/panel_score');
 
     this.pivot.set(this.frame.width * 0.5, this.frame.height * 0.5);
     this.addChild(this.frame);

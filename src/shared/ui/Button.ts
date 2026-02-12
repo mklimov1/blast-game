@@ -1,3 +1,4 @@
+import { sound } from '@pixi/sound';
 import { Container, Sprite, type Size } from 'pixi.js';
 
 import { Text } from './Text';
@@ -28,11 +29,18 @@ export class Button extends Container {
 
     this.on('pointerenter', this.onPointerEnter, this);
     this.on('pointerleave', this.onPointerLeave, this);
+    this.on('pointertap', this.clickSound, this);
+  }
+
+  private clickSound() {
+    if (!sound.exists('click')) return;
+    sound.play('click');
   }
 
   override destroy(options?: boolean | Parameters<typeof Container.prototype.destroy>[0]): void {
     this.off('pointerenter', this.onPointerEnter, this);
     this.off('pointerleave', this.onPointerLeave, this);
+    this.off('pointertap', this.clickSound, this);
     super.destroy(options);
   }
 
