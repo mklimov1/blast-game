@@ -14,6 +14,7 @@ import {
   scoreStore,
   levelStore,
 } from '@/shared';
+import { SoundToggleButton } from '@/shared/ui/SoundToggleButton';
 
 export class MainMenu extends Scene {
   private playClassicButton!: Button;
@@ -24,12 +25,16 @@ export class MainMenu extends Scene {
 
   private background!: StarField;
 
+  private soundButton!: SoundToggleButton;
+
   private title = this.createTitleText();
 
   protected create() {
     this.playClassicButton = new Button(`LEVEL ${levelStore.get()}`, 2);
     this.playTimerButton = new Button('TIMER MODE', 2);
     this.background = new StarField('#1A1A2E');
+
+    this.soundButton = new SoundToggleButton();
 
     this.bestScoreText = new Text('', {
       fill: '#ffffff',
@@ -45,6 +50,7 @@ export class MainMenu extends Scene {
       this.playClassicButton,
       this.playTimerButton,
       this.bestScoreText,
+      this.soundButton,
     );
 
     const timerModeScore = scoreStore.get(Mode.TIMER);
@@ -108,6 +114,7 @@ export class MainMenu extends Scene {
   }
 
   private resize(size: Size) {
+    this.soundButton.resize(size);
     this.resizeButton(this.playClassicButton, size, 0);
     this.resizeButton(this.playTimerButton, size, 1.05);
 
