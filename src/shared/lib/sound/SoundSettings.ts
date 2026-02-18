@@ -16,6 +16,12 @@ export class SoundSettings {
     return this._enabled;
   }
 
+  static init() {
+    sound.volumeAll = 0.5;
+    sound.disableAutoPause = false;
+    this._apply();
+  }
+
   private static _apply() {
     if (this._enabled) {
       sound.unmuteAll();
