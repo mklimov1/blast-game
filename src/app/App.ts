@@ -2,7 +2,7 @@ import { Application } from 'pixi.js';
 
 import { MainMenu, ClassicBlastGame, TimerBlastGame, GameLose, GameWin } from '@/pages';
 import { LoadingScreen } from '@/pages/loading-screen';
-import { AssetsLoader, globalTicker, globalTweenGroup } from '@/shared';
+import { AssetsLoader, globalTicker, globalTweenGroup, initDebugStats } from '@/shared';
 import { SoundSettings } from '@/shared/lib/sound/SoundSettings';
 
 import { sceneManager } from './providers/sceneManager';
@@ -34,6 +34,8 @@ export class App {
     SoundSettings.init();
     await sceneManager.init(this.scenes, this.app.stage, node, 'loading');
     this.node = node;
+
+    initDebugStats(this.app.renderer);
   }
 
   public create() {
