@@ -11,3 +11,4 @@ export { LevelLoader } from './LevelLoader';
 export { globalTicker } from './ticker';
 export { generateLevelConfig } from './generateLevelConfig';
 export { randomInt } from './randomInt';
+export { GlitchFilter } from './filters/GlitchEffect';

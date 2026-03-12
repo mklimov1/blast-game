@@ -1,4 +1,13 @@
-import { Container, FederatedPointerEvent, Sprite, Texture, type Size } from 'pixi.js';
+import {
+  Container,
+  FederatedPointerEvent,
+  Sprite,
+  Texture,
+  type DestroyOptions,
+  type Size,
+} from 'pixi.js';
+
+import { GlitchFilter } from '../lib';
 
 interface ParallaxSprite extends Sprite {
   speedFactor: number;
@@ -10,6 +19,12 @@ export class ParallaxBackground extends Container {
   private defaultSize: Size = { width: 0, height: 0 };
 
   private maxOffset: number = 5;
+
+  private glitch = new GlitchFilter({ autoPlay: false });
+
+  private glitchTimerId?: NodeJS.Timeout;
+
+  private isGlitching = false;
 
   constructor(sources: (Texture | string)[]) {
     super();
@@ -31,8 +46,34 @@ export class ParallaxBackground extends Container {
 
     this.pivot.set(this.defaultSize.width * 0.5, this.defaultSize.height * 0.5);
     this.interactive = true;
-    this.on('globalpointermove', this.onMouseMove);
+    this.on('globalpointermove', this.onMouseMove, this);
+    window.addEventListener('pointerdown', this.onPointerDown);
+
+    this.playGlitch();
   }
+
+  private playGlitch() {
+    this.glitchTimerId = setTimeout(() => {
+      this.isGlitching = true;
+      this.filters = [this.glitch];
+      this.glitch.play();
+    }, 5000);
+  }
+
+  private stopGlitch() {
+    clearTimeout(this.glitchTimerId);
+
+    if (this.isGlitching) {
+      this.filters = [];
+      this.glitch.stop();
+      this.isGlitching = false;
+    }
+  }
+
+  private onPointerDown = () => {
+    this.stopGlitch();
+    this.playGlitch();
+  };
 
   private onMouseMove(event: FederatedPointerEvent) {
     const { x, y } = event.global;
@@ -67,5 +108,13 @@ export class ParallaxBackground extends Container {
     this.x = width * 0.5;
     this.y = height * 0.5;
     this.scale.set(scale);
+  }
+
+  override destroy(options?: DestroyOptions): void {
+    clearTimeout(this.glitchTimerId);
+    this.off('globalpointermove', this.onMouseMove, this);
+    window.removeEventListener('pointerdown', this.onPointerDown);
+    this.glitch.destroy();
+    super.destroy(options);
   }
 }
