@@ -2,6 +2,7 @@ import path from 'path';
 
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
+import { resolveNetwork } from 'vite-plugin-playable';
 
 import { assetpackPlugin } from './assetpackPlugin';
 
@@ -21,13 +22,10 @@ export default defineConfig({
     assetsDir: 'assets',
     rollupOptions: {
       output: {
-        manualChunks: {
-          pixi: ['pixi.js'],
-          tween: ['@tweenjs/tween.js'],
-          eventemitter: ['eventemitter3'],
-        },
+        inlineDynamicImports: true,
       },
     },
+    assetsInlineLimit: 100_000_000,
   },
   plugins: [
     assetpackPlugin(),
@@ -37,5 +35,6 @@ export default defineConfig({
       brotliSize: true,
       filename: 'dist/stats.html',
     }),
+    ...resolveNetwork('develop').plugins,
   ],
 });

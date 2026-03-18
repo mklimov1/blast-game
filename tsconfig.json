@@ -26,5 +26,5 @@
     "noUncheckedSideEffectImports": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*", "config/**/*"]
+  "include": ["src/**/*", "config/**/*", "node_modules/vite-plugin-playable/globals.d.ts"]
 }
