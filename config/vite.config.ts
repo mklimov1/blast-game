@@ -3,8 +3,9 @@ import path from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
 import { resolveNetwork } from 'vite-plugin-playable';
+import { assetpackPlugin, playablePipesConfig } from 'vite-plugin-playable/assetpack';
 
-import { assetpackPlugin } from './assetpackPlugin';
+// import { assetpackPlugin } from './assetpackPlugin';
 
 export default defineConfig({
   resolve: {
@@ -28,7 +29,7 @@ export default defineConfig({
     assetsInlineLimit: 100_000_000,
   },
   plugins: [
-    assetpackPlugin(),
+    assetpackPlugin({ pixiPipes: playablePipesConfig }),
     visualizer({
       open: false,
       gzipSize: true,
