@@ -26,6 +26,7 @@ Easy to learn but addictive to play — plan your moves, create big combos, and 
 ```bash
 # Install dependencies
 npm ci
+npx infra-init
 
 # Start development server
 npm run dev
