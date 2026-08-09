@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { uid } from 'pixi.js';
 
 import { Chip, getColorByIndex, getRandomBlockColor } from '../lib';
-import { ChipKind, ChipPower, Color } from '../types';
+import { ChipKind, type ChipPower, type Color } from '../types';
 
 import type { Grid } from '../types/types';
 

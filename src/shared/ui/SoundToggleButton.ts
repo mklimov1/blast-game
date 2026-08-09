@@ -1,4 +1,4 @@
-import { Assets, Sprite, Texture, type Size } from 'pixi.js';
+import { Assets, type Size, Sprite, type Texture } from 'pixi.js';
 
 import { SoundSettings } from '../lib/sound/SoundSettings';
 

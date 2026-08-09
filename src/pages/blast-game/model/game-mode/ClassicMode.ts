@@ -2,7 +2,7 @@ import EventEmitter from 'eventemitter3';
 
 import { Mode } from '@/shared';
 
-import { type EventTypes, type IGameMode, type TClassicModeProgress } from './types';
+import type { EventTypes, IGameMode, TClassicModeProgress } from './types';
 
 export type TClassicModeConfig = {
   goal: number;

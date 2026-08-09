@@ -1,21 +1,19 @@
-import { type Size } from 'pixi.js';
+import type { Size } from 'pixi.js';
 
 import {
   AssetsLoader,
+  type Breakpoint,
   GameStatistics,
   generateLevelConfig,
   LevelLoader,
   levelStore,
-  Mode,
+  type Mode,
   ParallaxBackground,
   Progress,
-  type Breakpoint,
 } from '@/shared';
-
-import { BlastGame } from './BlastGame';
 import { ClassicMode } from '../model/game-mode/ClassicMode';
-
 import type { TClassicModeProgress } from '../model/game-mode/types';
+import { BlastGame } from './BlastGame';
 
 export class ClassicBlastGame extends BlastGame<Mode.CLASSIC> {
   private gameStatistics!: GameStatistics;

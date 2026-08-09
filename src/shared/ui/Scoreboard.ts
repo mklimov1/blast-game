@@ -1,4 +1,4 @@
-import { Container, Sprite, type Size } from 'pixi.js';
+import { Container, type Size, Sprite } from 'pixi.js';
 
 import type { Breakpoint } from '../types/responsive';
 

@@ -6,24 +6,24 @@ export class SoundSettings {
   private static _enabled: boolean = localStorage.getItem(STORAGE_KEY) !== 'false';
 
   static get enabled() {
-    return this._enabled;
+    return SoundSettings._enabled;
   }
 
   static toggle(): boolean {
-    this._enabled = !this._enabled;
-    localStorage.setItem(STORAGE_KEY, String(this._enabled));
-    this._apply();
-    return this._enabled;
+    SoundSettings._enabled = !SoundSettings._enabled;
+    localStorage.setItem(STORAGE_KEY, String(SoundSettings._enabled));
+    SoundSettings._apply();
+    return SoundSettings._enabled;
   }
 
   static init() {
     sound.volumeAll = 0.5;
     sound.disableAutoPause = false;
-    this._apply();
+    SoundSettings._apply();
   }
 
   private static _apply() {
-    if (this._enabled) {
+    if (SoundSettings._enabled) {
       sound.unmuteAll();
     } else {
       sound.muteAll();

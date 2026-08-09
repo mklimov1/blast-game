@@ -1,34 +1,32 @@
 import { sound } from '@pixi/sound';
 import EventEmitter from 'eventemitter3';
 import _ from 'lodash';
-import { FederatedPointerEvent, type Size } from 'pixi.js';
+import type { FederatedPointerEvent, Size } from 'pixi.js';
 
 import {
   type Breakpoint,
-  MIN_ROWS,
-  MAX_ROWS,
-  MIN_COLS,
   MAX_COLS,
-  MIN_UNIQUE_CHIPS,
+  MAX_ROWS,
   MAX_UNIQUE_CHIPS,
+  MIN_COLS,
+  MIN_ROWS,
+  MIN_UNIQUE_CHIPS,
   POWER_CHIP_THRESHOLD,
 } from '@/shared';
-
-import { FieldStore } from './FieldStore';
 import {
-  createRenderChip,
   animateSpawnBlocks,
+  createRenderChip,
   findConnected,
-  moveChipOnGrid,
-  sortByDistance,
-  type SpawnAnimation,
   hasAvailableMoves,
+  moveChipOnGrid,
+  type SpawnAnimation,
+  sortByDistance,
 } from '../lib';
-import { ChipKind, ChipPower, Color } from '../types';
-import { Field } from '../ui/Field';
-import { type RenderChip } from '../ui/RenderChip';
-
 import type { Chip } from '../lib/entities/Chip';
+import { ChipKind, ChipPower, type Color } from '../types';
+import { Field } from '../ui/Field';
+import type { RenderChip } from '../ui/RenderChip';
+import { FieldStore } from './FieldStore';
 
 type FieldOptions = {
   rows: number;

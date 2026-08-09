@@ -1,14 +1,13 @@
-import { randomInt } from './randomInt';
 import {
   MAX_COLS,
   MAX_ROWS,
+  MAX_UNIQUE_CHIPS,
   MIN_COLS,
   MIN_ROWS,
-  MAX_UNIQUE_CHIPS,
   MIN_UNIQUE_CHIPS,
 } from '../config/fieldConfig';
-
 import type { LevelConfig } from '../types/level';
+import { randomInt } from './randomInt';
 
 const calcUniqueChipsCount = (rows: number): number => {
   if (rows <= 8) return randomInt(MIN_UNIQUE_CHIPS, 3);

@@ -3,7 +3,7 @@ import { Sprite, Texture } from 'pixi.js';
 
 import { globalTweenGroup } from '@/shared';
 
-import { ChipKind, ChipPower, Color, type Position } from '../types';
+import type { ChipKind, ChipPower, Color, Position } from '../types';
 
 export class RenderChip extends Sprite {
   static SIZE = 200;

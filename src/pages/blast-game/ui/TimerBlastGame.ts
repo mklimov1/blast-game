@@ -1,18 +1,16 @@
-import { type TTimerModeProgress } from '@/pages';
+import type { Size } from 'pixi.js';
+import type { TTimerModeProgress } from '@/pages';
 import {
   AssetsLoader,
+  type Breakpoint,
   generateLevelConfig,
-  Mode,
+  type Mode,
   ParallaxBackground,
   Score,
   Timer,
-  type Breakpoint,
 } from '@/shared';
-
-import { BlastGame } from './BlastGame';
 import { TimerMode } from '../model/game-mode/TimerMode';
-
-import type { Size } from 'pixi.js';
+import { BlastGame } from './BlastGame';
 
 export class TimerBlastGame extends BlastGame<Mode.TIMER> {
   private timer!: Timer;

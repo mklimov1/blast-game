@@ -1,4 +1,4 @@
-import { Color, ChipKind, ChipPower } from './../../types';
+import type { ChipKind, ChipPower, Color } from './../../types';
 
 export class Chip {
   readonly id: string;

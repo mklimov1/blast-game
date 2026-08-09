@@ -1,4 +1,4 @@
-import { TextStyle, Text as PixiText, type TextStyleOptions, type Size } from 'pixi.js';
+import { Text as PixiText, type Size, TextStyle, type TextStyleOptions } from 'pixi.js';
 
 const defaultTextStyle: Partial<TextStyleOptions> = {
   fill: 0xffffff,

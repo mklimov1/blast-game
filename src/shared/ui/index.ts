@@ -1,11 +1,11 @@
 export { AnimatedGrid } from './AnimatedGrid';
 export { Button } from './Button';
 export { GameOverScene } from './GameOverScene';
+export { GameStatistics } from './GameStatistics';
 export { ParallaxBackground } from './ParallaxBackground';
+export { Progress } from './Progress';
+export { Score } from './Score';
 export { ShatterEffect } from './ShatterEffect';
 export { StarField } from './StarField';
 export { Text } from './Text';
 export { Timer } from './Timer';
-export { Progress } from './Progress';
-export { GameStatistics } from './GameStatistics';
-export { Score } from './Score';

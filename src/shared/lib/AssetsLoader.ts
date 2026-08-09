@@ -10,10 +10,10 @@ export class AssetsLoader {
   private static inited = false;
 
   static async init(): Promise<void> {
-    if (this.inited) return;
+    if (AssetsLoader.inited) return;
 
     await Assets.init({ manifest, basePath: 'assets/' });
-    this.inited = true;
+    AssetsLoader.inited = true;
   }
 
   private static registerSounds(loaded: Record<string, unknown>): void {
@@ -23,15 +23,15 @@ export class AssetsLoader {
   }
 
   static async load(bundle: keyof typeof Bundles): Promise<void> {
-    if (!this.inited) {
+    if (!AssetsLoader.inited) {
       throw new Error('AssetsLoader.init() must be called before load().');
     }
 
     const bundleName = Bundles[bundle];
 
-    if (!this.loadedBundles.has(bundleName)) {
+    if (!AssetsLoader.loadedBundles.has(bundleName)) {
       const loaded = await Assets.loadBundle(bundleName);
-      this.loadedBundles.add(bundleName);
+      AssetsLoader.loadedBundles.add(bundleName);
       AssetsLoader.registerSounds(loaded);
     }
   }
@@ -39,6 +39,6 @@ export class AssetsLoader {
   static isLoaded(bundle: keyof typeof Bundles): boolean {
     const bundleName = Bundles[bundle];
 
-    return this.loadedBundles.has(bundleName);
+    return AssetsLoader.loadedBundles.has(bundleName);
   }
 }

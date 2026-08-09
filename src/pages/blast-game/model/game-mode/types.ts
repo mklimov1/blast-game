@@ -1,6 +1,5 @@
-import type { Mode } from '@/shared';
-
 import type EventEmitter from 'eventemitter3';
+import type { Mode } from '@/shared';
 
 export type TTimerModeProgress = {
   type: Mode.TIMER;

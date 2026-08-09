@@ -1,6 +1,6 @@
 import { Graphics, type Size } from 'pixi.js';
 
-import { animations, appEventEmitter, AssetsLoader, Scene, Text, globalTweenGroup } from '@/shared';
+import { AssetsLoader, animations, appEventEmitter, globalTweenGroup, Scene, Text } from '@/shared';
 
 export class LoadingScreen extends Scene {
   private text!: Text;

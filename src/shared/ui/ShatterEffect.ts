@@ -33,10 +33,6 @@ export class ShatterEffect extends Graphics {
 
   private life = 50;
 
-  constructor() {
-    super();
-  }
-
   spawn(x: number, y: number, color: Color | ChipPower) {
     for (let i = 0; i < 8; i++) {
       this.particles.push({
@@ -59,8 +55,8 @@ export class ShatterEffect extends Graphics {
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i];
 
-      p.vx *= Math.pow(this.friction, dt);
-      p.vy *= Math.pow(this.friction, dt);
+      p.vx *= this.friction ** dt;
+      p.vy *= this.friction ** dt;
       p.vy += this.gravity;
 
       p.x += p.vx * dt;

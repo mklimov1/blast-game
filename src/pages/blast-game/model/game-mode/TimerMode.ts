@@ -2,7 +2,7 @@ import EventEmitter from 'eventemitter3';
 
 import { Mode } from '@/shared';
 
-import { type EventTypes, type IGameMode, type TTimerModeProgress } from './types';
+import type { EventTypes, IGameMode, TTimerModeProgress } from './types';
 
 export type TTimerModeConfig = {
   duration: number;

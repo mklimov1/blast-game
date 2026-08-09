@@ -1,4 +1,4 @@
-import { Group, Tween } from '@tweenjs/tween.js';
+import { type Group, Tween } from '@tweenjs/tween.js';
 
 export const show = (target: { alpha: number }, group: Group) => {
   target.alpha = 0;

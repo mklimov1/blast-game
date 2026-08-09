@@ -1,4 +1,4 @@
-import { Tween, type Group, Easing } from '@tweenjs/tween.js';
+import { Easing, type Group, Tween } from '@tweenjs/tween.js';
 
 type Target = {
   alpha: number;

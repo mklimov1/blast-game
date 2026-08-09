@@ -23,7 +23,6 @@ export abstract class Scene {
 
   protected abstract show(): void;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected finishScene(_payload?: unknown) {
     this.destroy();
   }

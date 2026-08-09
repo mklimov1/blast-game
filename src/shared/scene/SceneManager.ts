@@ -1,4 +1,4 @@
-import { Container, type Size } from 'pixi.js';
+import type { Container, Size } from 'pixi.js';
 
 import { appEventEmitter, delay } from '../lib';
 import { detectBreakpoint } from '../lib/detectBreakpoint';

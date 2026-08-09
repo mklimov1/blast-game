@@ -1,6 +1,6 @@
 import { Application } from 'pixi.js';
 
-import { MainMenu, ClassicBlastGame, TimerBlastGame, GameLose, GameWin } from '@/pages';
+import { ClassicBlastGame, GameLose, GameWin, MainMenu, TimerBlastGame } from '@/pages';
 import { LoadingScreen } from '@/pages/loading-screen';
 import { AssetsLoader, globalTicker, globalTweenGroup, initDebugStats } from '@/shared';
 import { SoundSettings } from '@/shared/lib/sound/SoundSettings';

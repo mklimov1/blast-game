@@ -1,5 +1,5 @@
-import { ChipKind, Color, type Grid, type Position } from '../../types';
-import { Chip } from '../entities/Chip';
+import { ChipKind, type Color, type Grid, type Position } from '../../types';
+import type { Chip } from '../entities/Chip';
 
 export const findConnectedColor = (
   grid: Grid,

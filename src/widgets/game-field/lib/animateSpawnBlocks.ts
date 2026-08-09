@@ -1,10 +1,8 @@
 import { delay, globalTweenGroup } from '@/shared';
 import { fadeIn } from '@/shared/lib/animations';
-
-import { Chip } from './entities/Chip';
-import { moveChipOnGrid } from './moveChipOnGrid';
-
 import type { RenderChip } from '../ui/RenderChip';
+import type { Chip } from './entities/Chip';
+import { moveChipOnGrid } from './moveChipOnGrid';
 
 export type SpawnAnimation = 'fade' | 'drop' | 'none';
 

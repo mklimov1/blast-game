@@ -1,7 +1,6 @@
-import { Container, Sprite, type Size } from 'pixi.js';
-
-import { Text } from './Text';
+import { Container, type Size, Sprite } from 'pixi.js';
 import { formatTime } from '../lib';
+import { Text } from './Text';
 
 export class Timer extends Container {
   private frame = Sprite.from('progress-bar/progressBar');

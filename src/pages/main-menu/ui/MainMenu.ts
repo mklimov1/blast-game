@@ -1,18 +1,18 @@
-import { type Size } from 'pixi.js';
+import type { Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
 import {
-  appEventEmitter,
   AssetsLoader,
   animations,
-  Scene,
+  appEventEmitter,
   Button,
-  StarField,
-  Text,
   globalTweenGroup,
-  Mode,
-  scoreStore,
   levelStore,
+  Mode,
+  Scene,
+  StarField,
+  scoreStore,
+  Text,
 } from '@/shared';
 import { SoundToggleButton } from '@/shared/ui/SoundToggleButton';
 

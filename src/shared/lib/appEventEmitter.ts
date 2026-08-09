@@ -1,5 +1,5 @@
 import EventEmitter from 'eventemitter3';
-import { type Size } from 'pixi.js';
+import type { Size } from 'pixi.js';
 
 import type { Breakpoint } from '@/shared';
 

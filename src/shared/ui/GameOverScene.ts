@@ -1,15 +1,15 @@
 import { Tween } from '@tweenjs/tween.js';
-import { type Size } from 'pixi.js';
+import type { Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
 import {
-  globalTweenGroup,
-  Button,
-  Text,
   AssetsLoader,
   appEventEmitter,
+  Button,
+  globalTweenGroup,
   Scene,
   StarField,
+  Text,
 } from '@/shared';
 
 export class GameOverScene extends Scene {

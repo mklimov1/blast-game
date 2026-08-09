@@ -1,6 +1,6 @@
-import { findConnectedPower } from './findConnectedPower';
 import { ChipPower, type Grid, type Position } from '../../types';
-import { Chip } from '../entities/Chip';
+import type { Chip } from '../entities/Chip';
+import { findConnectedPower } from './findConnectedPower';
 
 export const findConnectedBomb = (
   grid: Grid,

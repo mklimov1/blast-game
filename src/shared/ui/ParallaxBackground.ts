@@ -1,10 +1,10 @@
 import {
   Container,
-  FederatedPointerEvent,
-  Sprite,
-  Texture,
   type DestroyOptions,
+  type FederatedPointerEvent,
   type Size,
+  Sprite,
+  type Texture,
 } from 'pixi.js';
 
 import { GlitchFilter } from '../lib';

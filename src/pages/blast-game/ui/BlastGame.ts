@@ -2,21 +2,21 @@ import { Container, type Size } from 'pixi.js';
 
 import { sceneManager } from '@/app';
 import {
-  delay,
-  appEventEmitter,
   AssetsLoader,
+  animations,
+  appEventEmitter,
+  type Breakpoint,
+  type Defer,
+  defer,
+  delay,
+  globalTweenGroup,
+  type LevelConfig,
+  type Mode,
   Scene,
   ShatterEffect,
-  animations,
-  globalTweenGroup,
-  defer,
-  type Defer,
-  type Breakpoint,
-  Mode,
   scoreStore,
-  type LevelConfig,
 } from '@/shared';
-import { GameFieldController, type Chip, type RenderChip } from '@/widgets';
+import { type Chip, GameFieldController, type RenderChip } from '@/widgets';
 
 import type { IGameMode } from '../model/game-mode/types';
 

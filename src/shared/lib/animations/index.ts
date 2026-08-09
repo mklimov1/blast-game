@@ -1,2 +1,2 @@
-export * from './show';
 export * from './fadeIn';
+export * from './show';

@@ -1,4 +1,4 @@
-import type { ClassicBlastGame, TimerBlastGame, GameLose, GameWin, MainMenu } from '@/pages';
+import type { ClassicBlastGame, GameLose, GameWin, MainMenu, TimerBlastGame } from '@/pages';
 import type { LoadingScreen } from '@/pages/loading-screen';
 
 export type SceneMap = {

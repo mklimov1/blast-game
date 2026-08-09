@@ -1,4 +1,4 @@
-import { Graphics, type FillInput, type Size } from 'pixi.js';
+import { type FillInput, Graphics, type Size } from 'pixi.js';
 
 import { globalTicker } from '../lib';
 

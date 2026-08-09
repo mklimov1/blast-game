@@ -4,8 +4,8 @@ export class LevelLoader {
   private static cache = new Map<number, LevelConfig>();
 
   static async load(levelNumber: number): Promise<LevelConfig> {
-    if (this.cache.has(levelNumber)) {
-      return this.cache.get(levelNumber)!;
+    if (LevelLoader.cache.has(levelNumber)) {
+      return LevelLoader.cache.get(levelNumber)!;
     }
 
     try {
@@ -17,9 +17,9 @@ export class LevelLoader {
 
       const levelConfig: LevelConfig = await response.json();
 
-      this.validateLevelConfig(levelConfig);
+      LevelLoader.validateLevelConfig(levelConfig);
 
-      this.cache.set(levelNumber, levelConfig);
+      LevelLoader.cache.set(levelNumber, levelConfig);
 
       return levelConfig;
     } catch (error) {
@@ -47,6 +47,6 @@ export class LevelLoader {
   }
 
   static clearCache(): void {
-    this.cache.clear();
+    LevelLoader.cache.clear();
   }
 }
